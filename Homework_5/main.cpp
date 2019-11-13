@@ -3,9 +3,9 @@ using namespace std;
 
 int main()
 {
-	outfile.open("error.txt", ios::out);
+	outfile.open("mips.txt", ios::out);
 	outfile.close();
-	outfile.open("error.txt", ios::app);
+	outfile.open("mips.txt", ios::app);
 	getWord();
 	isProgram();
 	outfile.close();

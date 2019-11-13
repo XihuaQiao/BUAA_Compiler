@@ -3,6 +3,7 @@
 #include<stdio.h>
 #include<iostream>
 #include<map>
+#include"Source.h"
 using namespace std;
 
 class Program
@@ -94,9 +95,39 @@ class Expression
 {
 public:
 	bool empty = false;
+	string name;
 	string type;
 	void setType(string s)
 	{
 		type = s;
+	}
+	void setName(string name)
+	{
+		this->name = name;
+	}
+};
+
+class MidCode
+{
+public:
+	string op;
+	string x;
+	string y;
+	string z;
+	void setOp(string op)
+	{
+		this->op = op;
+	}
+	void setX(string x)
+	{
+		this->x = x;
+	}
+	void setY(string y)
+	{
+		this->y = y;
+	}
+	void setZ(string z)
+	{
+		this->z = z;
 	}
 };

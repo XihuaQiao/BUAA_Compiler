@@ -4,6 +4,7 @@ vector<singleWord> words;
 vector<string> returnFunc;
 vector<string> nonReturnFunc;
 vector<Function> functions;
+vector<MidCode> midCode;
 ofstream outfile;
 Function globalFunc;
 
@@ -437,35 +438,50 @@ int isConstDef(Function& tmp)
 {
 	int rec = 0;
 	int rec_1 = 1;
+	MidCode temp;
 	preRead();
 	Variable var;
 	if (sym.content == "int") {
 		var.setType(sym.content);
 		now--;
 		nextSym();				// int
+		temp.setX(sym.content);
 		isIdenti(var);
+		temp.setY(sym.content);
 		rec = checkRepeat(tmp, var.name, sym.raw_num);
 		nextSym();				// =
+		temp.setOp(sym.content);
 		rec_1 = isSignInt(var);
+		temp.setZ(sym.content);
 		if (rec_1 == 0) {
 			errorOutput(sym.raw_num, 15);
 			nextSym();
 		}
 		var.setConst();
-		if (rec) { tmp.addConst(var); }
+		if (rec) 
+		{ 
+			tmp.addConst(var); 
+			midCode.push_back(temp);
+		}
 		while (preRead() && sym.content == ",") {
 			now--;
 			nextSym();			// ,
 			isIdenti(var);
+			temp.setY(sym.content);
 			rec = checkRepeat(tmp, var.name, sym.raw_num);
 			nextSym();			// =
+			temp.setOp(sym.content);
 			rec_1 = isSignInt(var);
+			temp.setZ(sym.content);
 			if (rec_1 == 0) {
 				errorOutput(sym.raw_num, 15);
 				nextSym();
 			}
 			var.setConst();
-			if (rec) { tmp.addConst(var); }
+			if (rec) { 
+				tmp.addConst(var); 
+				midCode.push_back(temp);
+			}
 		}
 		now--;
 		//			outfile << "<常量定义>" << endl;
@@ -475,31 +491,44 @@ int isConstDef(Function& tmp)
 		var.setType(sym.content);
 		now--;
 		nextSym();				//char
+		temp.setX(sym.content);
 		isIdenti(var);
+		temp.setY(sym.content);
 		rec = checkRepeat(tmp, var.name, sym.raw_num);
 		nextSym();				//'='
+		temp.setOp(sym.content);
 		rec_1 = isChar(var);
+		temp.setZ(sym.content);
 		if (rec_1 == 0)
 		{
 			errorOutput(sym.raw_num, 15);
 			nextSym();
 		}
 		var.setConst();
-		if (rec) { tmp.addConst(var); }
+		if (rec) { 
+			tmp.addConst(var); 
+			midCode.push_back(temp);
+		}
 		while (preRead() && sym.content == ",") {
 			now--;
 			nextSym();			// ,
 			isIdenti(var);
+			temp.setY(sym.content);
 			rec = checkRepeat(tmp, var.name, sym.raw_num);
 			nextSym();			// =
+			temp.setOp(sym.content);
 			rec_1 = isChar(var);
+			temp.setZ(sym.content);
 			if (rec_1 == 0)
 			{
 				errorOutput(sym.raw_num, 15);
 				nextSym();
 			}
 			var.setConst();
-			if (rec) { tmp.addConst(var); }
+			if (rec) { 
+				tmp.addConst(var); 
+				midCode.push_back(temp);
+			}
 		}
 		now--;
 		//			outfile << "<常量定义>" << endl;
@@ -514,8 +543,10 @@ int isConstDef(Function& tmp)
 int isAssignSent(Function& func)
 {
 	Expression exp;
+	MidCode temp;
 	Unit unit;
 	isIdenti(unit);
+	temp.setX = sym.content;
 	if (func.name2Unit.count(unit.name) > 0)
 	{
 		unit = func.name2Unit[unit.name];
@@ -535,12 +566,15 @@ int isAssignSent(Function& func)
 	if (preRead() && sym.content == "[") {
 		now--;
 		nextSym();			//'['
+		temp.x = temp.x + sym.content;
 		isExpression(func, exp);
+		temp.x = temp.x + exp.name;
 		if (exp.type != "int")
 		{
 			errorOutput(sym.raw_num, 9);
 		}
 		checkRBrack();			//']'
+		temp.x = temp.x + sym.content;
 	}
 	else {
 		now--;
@@ -548,7 +582,11 @@ int isAssignSent(Function& func)
 	if (preRead() && sym.content == "=") {
 		now--;
 		nextSym();
+		temp.setOp(sym.content);
 		isExpression(func, exp);
+		temp.setY(exp.name);
+		temp.setZ("");
+		midCode.push_back(temp);
 		//		outfile << "<赋值语句>" << endl;
 		return 1;
 	}
@@ -673,15 +711,27 @@ int isVarDes(Function& func)
 int isVarDef(Function& func)
 {
 	Variable var;
+	MidCode temp;
+	temp.setOp("var");
 	isTypeIdenti(var);
+	temp.setX(sym.content);
 	isIdenti(var);
-	if (checkRepeat(func, var.name, sym.raw_num)) { func.addVar(var); }
+	temp.setY(sym.content);
+	temp.setZ("");
 	if (preRead() && sym.content == "[") {
 		now--;
 		nextSym();				// [
+		temp.y = temp.y + sym.content;
 		Unit unit;
 		isUnSignInt(unit);
-		checkRBrack();
+		temp.y = temp.y + sym.content;
+		checkRBrack();			// ]
+		temp.y = temp.y + sym.content;
+	}
+	if (checkRepeat(func, var.name, sym.raw_num)) 
+	{ 
+		func.addVar(var); 
+		midCode.push_back(temp);
 	}
 	else {
 		now--;
@@ -690,13 +740,21 @@ int isVarDef(Function& func)
 		now--;
 		nextSym();				// ,
 		isIdenti(var);
-		if (checkRepeat(func, var.name, sym.raw_num)) { func.addVar(var); }
+		temp.setY(sym.content);
 		if (preRead() && sym.content == "[") {
 			now--;
 			nextSym();			// [
+			temp.y = temp.y + sym.content;
 			Unit unit;
 			isUnSignInt(unit);
+			temp.y = temp.y + sym.content;
 			checkRBrack();
+			temp.y = temp.y + sym.content;
+		}
+		if (checkRepeat(func, var.name, sym.raw_num)) 
+		{ 
+			func.addVar(var); 
+			midCode.push_back(temp);
 		}
 		else {
 			now--;

@@ -1,5 +1,5 @@
 #pragma once
-#include"function.h"
+#include"Class.h"
 #include<fstream>
 
 string readUntil(char x, FILE* fp);

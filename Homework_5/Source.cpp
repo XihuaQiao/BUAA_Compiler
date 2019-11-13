@@ -1,4 +1,4 @@
-﻿#include"class.h"
+﻿#include"Source.h"
 
 vector<singleWord> words;
 vector<string> returnFunc;
@@ -18,8 +18,10 @@ FILE* in;
 int raw = 0;
 int now = -1;
 singleWord sym;
-map<string, Function> name2Func;
-map<string, Unit> name2Unit;
+Program program;
+
+//map<string, Function> name2Func;
+//map<string, Unit> name2Unit;
 
 string readUntil(char x, FILE* fp)
 {
@@ -269,7 +271,6 @@ void getWord()
 	fclose(in);
 }
 
-
 int nextSym() {
 	now++;
 	if (now < words.size()) {
@@ -298,7 +299,7 @@ int preRead() {
 int checkRepeat(Function& func, string name, int raw)
 {
 	cout << name << endl;
-	if (name2Func.count(name) || func.name2Unit.count(name)) {
+	if (program.name2Func.count(name) || func.name2Unit.count(name)) {
 		errorOutput(raw, 2);
 		return 0;
 	}
@@ -359,7 +360,6 @@ void errorOutput(int raw_num, int code)
 		outfile << "wrong code" << endl;
 		break;
 	}
-
 }
 
 int checkSemicn()
@@ -371,7 +371,6 @@ int checkSemicn()
 	}
 	else {
 		now--;
-		//		nextSym();
 		errorOutput(sym.raw_num - 1, 11);
 		return 0;
 	}
@@ -386,7 +385,6 @@ int checkRBrack()
 	}
 	else {
 		now--;
-		//		nextSym();
 		errorOutput(sym.raw_num, 13);
 		return 0;
 	}
@@ -401,7 +399,6 @@ int checkRParent()
 	}
 	else {
 		now--;
-		//		nextSym();
 		errorOutput(sym.raw_num, 12);
 		return 0;
 	}
@@ -442,7 +439,6 @@ int isConstDef(Function& tmp)
 	int rec_1 = 1;
 	preRead();
 	Variable var;
-	var.aha = false;
 	if (sym.content == "int") {
 		var.setType(sym.content);
 		now--;
@@ -747,7 +743,7 @@ int isReturnFuncDef()
 		//			outfile << "<有返回值函数定义>" << endl;
 		if (rec) {
 			functions.push_back(tmp);
-			name2Func.insert(make_pair(tmp.name, tmp));
+			program.name2Func.insert(make_pair(tmp.name, tmp));
 		}
 		return 1;
 	}
@@ -779,7 +775,7 @@ int isNonReturnFuncDef()
 //			outfile << "<无返回值函数定义>" << endl;
 		if (rec) {
 			functions.push_back(tmp);
-			name2Func.insert(make_pair(tmp.name, tmp));
+			program.name2Func.insert(make_pair(tmp.name, tmp));
 		}
 		return 1;
 	}
@@ -1100,13 +1096,13 @@ int isReturnSent(Function& func)
 		{
 			errorOutput(sym.raw_num, 7);
 		}
-		if (func.hasReturn && expression.type != func.type) {			//  
-			if (expression.type != "")
-			{
-				errorOutput(sym.raw_num, 8);			/////////////////////////////////
-			}
-			//			if (func.type == "")
-		}
+		//if (func.hasReturn && expression.type != func.type) {			//  
+		//	if (expression.type != "")
+		//	{
+		//		errorOutput(sym.raw_num, 8);			/////////////////////////////////
+		//	}
+		//	//			if (func.type == "")
+		//}
 		checkRParent();
 	}
 	else {
@@ -1138,7 +1134,7 @@ int isReturnFuncSent()
 	Unit unit;
 	Function func;
 	isIdenti(unit);
-	func = name2Func[sym.content];
+	func = program.name2Func[sym.content];
 	nextSym();			//'('
 	isValueList(func);
 	checkRParent();			//')'
@@ -1215,9 +1211,9 @@ int isFactor(Function& func, Factor& factor)
 	Expression exp;
 	preRead();
 	if (sym.name == "IDENFR") {
-		if (name2Func.count(sym.content))
+		if (program.name2Func.count(sym.content))
 		{
-			Function func = name2Func[sym.content];
+			Function func = program.name2Func[sym.content];
 			factor.setType(func.type);
 			now--;
 			isReturnFuncSent();

@@ -5,6 +5,13 @@
 #include<map>
 using namespace std;
 
+class Program
+{
+public:
+	map<string, Function> name2Func;
+	map<string, Unit> name2Unit;
+};
+
 class Unit
 {
 public:
@@ -33,7 +40,7 @@ public:
 class Variable : public Unit
 {
 public:
-	bool aha = false;
+	bool var = false;
 };
 
 class Factor : public Unit
@@ -46,7 +53,7 @@ class Function : public Unit
 {
 public:
 	bool hasReturn = false;
-	bool returnError = false;
+	//bool returnError = false;
 	bool existReturn = false;
 	vector<Factor> factors;
 	vector<Variable> vars;
@@ -67,10 +74,10 @@ public:
 	{
 		existReturn = true;
 	}
-	void setReturnError()
-	{
-		returnError = true;
-	}
+	//void setReturnError()
+	//{
+	//	returnError = true;
+	//}
 	void setHasReturn()
 	{
 		hasReturn = true;
@@ -87,7 +94,7 @@ class Expression
 {
 public:
 	bool empty = false;
-	string type = "int";
+	string type;
 	void setType(string s)
 	{
 		type = s;

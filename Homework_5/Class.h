@@ -17,9 +17,14 @@ class Unit
 {
 public:
 	bool isConst = false;
+	string midName;
 	string name;
 	string type;
 	string content;
+	void setMidName(string midName)
+	{
+		this->midName = midName;
+	}
 	void setName(string name)
 	{
 		this->name = name;
@@ -110,10 +115,10 @@ public:
 class MidCode
 {
 public:
-	string op;
-	string x;
-	string y;
-	string z;
+	string op = "";
+	string x = "";
+	string y = "";
+	string z = "";
 	void setOp(string op)
 	{
 		this->op = op;

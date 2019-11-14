@@ -1,5 +1,4 @@
 ﻿#include"Source.h"
-
 vector<singleWord> words;
 vector<string> returnFunc;
 vector<string> nonReturnFunc;
@@ -7,8 +6,6 @@ vector<Function> functions;
 vector<MidCode> midCode;
 ofstream outfile;
 Function globalFunc;
-
-
 
 string spWord[13] = { "const", "int", "char", "void", "main",
 	"if", "else", "do", "while", "for", "scanf", "printf", "return" };
@@ -780,13 +777,19 @@ int isTypeIdenti(Unit& unit)
 
 int isReturnFuncDef()
 {
+	MidCode temp;
+	temp.setOp("function");
 	int rec = 0;
 	if (preRead() && (sym.content == "int" || sym.content == "char")) {
+		temp.setX(sym.content);
 		Function tmp;
 		tmp.setHasReturn();
 		tmp.setType(sym.content);
 		now--;
 		isStateHead(tmp);
+		temp.setY(sym.content);
+		temp.setZ("");
+		midCode.push_back(temp);
 		rec = checkRepeat(tmp, tmp.name, sym.raw_num);
 		nextSym();			// (
 		isFactorList(tmp);
@@ -813,6 +816,8 @@ int isReturnFuncDef()
 
 int isNonReturnFuncDef()
 {
+	MidCode temp;
+	temp.setOp("function");
 	int rec;
 	preRead();
 	string str1 = sym.content;
@@ -820,6 +825,10 @@ int isNonReturnFuncDef()
 	string str2 = sym.content;
 	if (str1 == "void" && str2 != "main") {
 		Function tmp;
+		temp.setX(str1);
+		temp.setY(str2);
+		temp.setZ("");
+		midCode.push_back(temp);
 		now = now - 2;
 		nextSym();			//void
 		isIdenti(tmp);
@@ -845,19 +854,34 @@ int isNonReturnFuncDef()
 
 int isFactorList(Function& func)
 {
+	MidCode temp;
+	temp.setOp("para");
 	int rec;
 	Factor tmp;
 	isTypeIdenti(tmp);
+	temp.setX(sym.content);
 	isIdenti(tmp);
+	temp.setY(sym.content);
+	temp.setZ("");
 	rec = checkRepeat(func, tmp.name, sym.raw_num);
-	if (rec && tmp.name != "") { func.addFactor(tmp); }
+	if (rec && tmp.name != "") 
+	{ 
+		func.addFactor(tmp); 
+		midCode.push_back(temp);
+	}
 	while (preRead() && sym.content == ",") {
 		now--;
 		nextSym();				// ,
 		isTypeIdenti(tmp);
+		temp.setX(sym.content);
 		isIdenti(tmp);
+		temp.setY(sym.content);
 		rec = checkRepeat(func, tmp.name, sym.raw_num);
-		if (rec) { func.addFactor(tmp); }
+		if (rec) 
+		{ 
+			func.addFactor(tmp); 
+			midCode.push_back(temp);
+		}
 	}
 	now--;
 	//		outfile << "<参数表>" << endl;
@@ -882,6 +906,8 @@ int isSentenses(Function& func)
 
 int isValueList(Function& func)
 {
+	MidCode temp;
+	temp.setOp("push");
 	preRead();
 	vector<Unit> values;
 	Unit unit;
@@ -892,12 +918,18 @@ int isValueList(Function& func)
 	else {
 		now--;
 		isExpression(func, exp);
+		temp.setX(exp.name);
+		temp.setY("");
+		temp.setZ("");
+		midCode.push_back(temp);
 		unit.setType(exp.type);
 		values.push_back(unit);
 		while (preRead() && sym.content == ",") {
 			now--;
 			nextSym();		//','
 			isExpression(func, exp);
+			temp.setX(exp.name);
+			midCode.push_back(temp);
 			unit.setType(exp.type);
 			values.push_back(unit);
 		}
@@ -989,20 +1021,26 @@ int isSentense(Function& func)
 
 int isCondition(Function& func)
 {
+	MidCode temp;
+	temp.setOp("cmp");
 	string type1, type2;
 	Expression exp;
 	isExpression(func, exp);
+	temp.setX(exp.name);
 	type1 = exp.type;
 	preRead();
 	if (sym.content == "<" || sym.content == "<=" || sym.content == ">" || sym.content == ">=" || sym.content == "!=" || sym.content == "==") {
 		now--;
 		isRelation();
+		temp.setY(sym.content);
 		isExpression(func, exp);
+		temp.setZ(exp.name);
 		type2 = exp.type;
 		if (type1 == "char" || type2 == "char")
 		{
 			errorOutput(sym.raw_num, 6);
 		}
+		midCode.push_back(temp);
 	}
 	else {
 		now--;
@@ -1019,36 +1057,77 @@ int isRelation()
 
 int isLoopSent(Function& func)
 {
+	MidCode temp;
+	temp.setX("");
+	temp.setY("");
+	temp.setZ("");
 	preRead();
 	Expression exp;
 	Unit unit;
 	if (sym.content == "while") {
+		temp.setOp("label");
+		temp.setX("label_1");
+		midCode.push_back(temp);
 		now--;
 		nextSym();
 		nextSym();		//'('
 		isCondition(func);
+		temp.setOp("BZ");
+		temp.setX("label_2");
+		midCode.push_back(temp);
 		checkRParent();		//')'
 		isSentense(func);
+		temp.setOp("GOTO");
+		temp.setX("label_1");
+		midCode.push_back(temp);
+		temp.setOp("label");
+		temp.setX("label_2");
+		midCode.push_back(temp);
 	}
 	else if (sym.content == "for") {
 		now--;
 		nextSym();
 		nextSym();			//'('
 		isIdenti(unit);
+		temp.setX(sym.content);
 		nextSym();			//'='
+		temp.setOp(sym.content);
 		isExpression(func, exp);
+		temp.setY(exp.name);
+		temp.setZ("");
+		midCode.push_back(temp);
 		checkSemicn();			//';'
+		temp.setOp("label");
+		temp.setX("label_1");
+		midCode.push_back(temp);
 		isCondition(func);
+		temp.setOp("BZ");
+		temp.setX("label_2");
+		midCode.push_back(temp);
 		checkSemicn();			//';'
 		isIdenti(unit);
+		temp.setX(sym.content);
 		nextSym();			//'='
 		isIdenti(unit);
+		temp.setY(sym.content);
 		nextSym();			//'(+|-)'
+		temp.setOp(sym.content);
 		isStepLen();
+		temp.setZ(sym.content);
 		checkRParent();			//')'
 		isSentense(func);
+		midCode.push_back(temp);
+		temp.setOp("GOTO");
+		temp.setX("label_1");
+		midCode.push_back(temp);
+		temp.setOp("label");
+		temp.setX("label_2");
+		midCode.push_back(temp);
 	}
 	else if (sym.content == "do") {
+		temp.setOp("label");
+		temp.setX("label_1");
+		midCode.push_back(temp);
 		now--;
 		nextSym();
 		isSentense(func);
@@ -1063,6 +1142,9 @@ int isLoopSent(Function& func)
 		}
 		nextSym();		//'('
 		isCondition(func);
+		temp.setOp("BNZ");
+		temp.setX("label_1");
+		midCode.push_back(temp);
 		checkRParent();		//')'
 	}
 	else {
@@ -1091,15 +1173,29 @@ int isStepLen()
 
 int isIfSent(Function& func)
 {
+	MidCode temp;
 	nextSym();			//'if'
 	nextSym();			//'('
 	isCondition(func);
 	checkRParent();			//')'
+	temp.setOp("BZ");
+	temp.setX("label_1");
+	temp.setY("");
+	temp.setZ("");
+	midCode.push_back(temp);
 	isSentense(func);
-	while (preRead() && sym.content == "else") {
+	if (preRead() && sym.content == "else") {
 		now--;
 		nextSym();		//'else'
-		isSentense(func);
+		temp.setOp("label");
+		temp.setX("label_1");
+		midCode.push_back(temp);
+		isSentense(func);	
+	}
+	else {
+		temp.setOp("label");
+		temp.setX("label_1");
+		midCode.push_back(temp);
 	}
 	now--;
 	//	outfile << "<条件语句>" << endl;
@@ -1108,10 +1204,20 @@ int isIfSent(Function& func)
 
 int isPrintfSent(Function& func)
 {
+	MidCode temp;
 	Expression exp;
 	nextSym();
+	temp.setOp(sym.content);
 	nextSym();		// '('
-	isChars();
+	int rec = isChars();
+	if (rec == 1)
+	{
+		temp.setX(sym.content);
+	}
+	else
+	{
+		temp.setX("");
+	}
 	if (preRead() && sym.content == ",") {
 		now--;
 		nextSym();
@@ -1120,6 +1226,8 @@ int isPrintfSent(Function& func)
 		now--;
 	}
 	isExpression(func, exp);
+	temp.setY(sym.content);
+	midCode.push_back(temp);
 	checkRParent();		// ')'
 //	outfile << "<写语句>" << endl;
 	return 1;
@@ -1127,14 +1235,20 @@ int isPrintfSent(Function& func)
 
 int isScanfSent(Function& func)
 {
+	MidCode temp;
 	Unit unit;
 	nextSym();		// scanf
+	temp.setOp(sym.content);
 	nextSym();		//'('
 	isIdenti(unit);
+	temp.setX(sym.content);
+	midCode.push_back(temp);
 	while (preRead() && sym.content == ",") {
 		now--;
 		nextSym();
 		isIdenti(unit);
+		temp.setX(sym.content);
+		midCode.push_back(temp);
 	}
 	now--;
 	checkRParent();		// ')'
@@ -1144,12 +1258,16 @@ int isScanfSent(Function& func)
 
 int isReturnSent(Function& func)
 {
+	MidCode temp;
 	nextSym();			// return
+	temp.setOp(sym.content);
 	if (preRead() && sym.content == "(") {
 		now--;
 		nextSym();
 		Expression expression;
 		isExpression(func, expression);
+		temp.setX(expression.name);
+		midCode.push_back(temp);
 		if (!func.hasReturn)
 		{
 			errorOutput(sym.raw_num, 7);
@@ -1164,6 +1282,8 @@ int isReturnSent(Function& func)
 		checkRParent();
 	}
 	else {
+		temp.setX("");
+		midCode.push_back(temp);
 		if (func.hasReturn) {
 			errorOutput(sym.raw_num, 8);
 		}
@@ -1189,22 +1309,28 @@ int isChars()
 
 int isReturnFuncSent()
 {
+	MidCode temp;
 	Unit unit;
 	Function func;
 	isIdenti(unit);
+	temp.setOp("call");
+	temp.setX(sym.content);
 	func = program.name2Func[sym.content];
 	nextSym();			//'('
 	isValueList(func);
 	checkRParent();			//')'
+	midCode.push_back(temp);
 //	outfile << "<有返回值函数调用语句>" << endl;
 	return 1;
 }
 
 int isExpression(Function& func, Expression& tmp)
 {
+	MidCode temp;
 	Unit unit;
 	preRead();
 	if ((sym.content == "+" || sym.content == "-") && sym.name != "CHARCON") {
+		temp.setX(sym.content);
 		now--;
 		nextSym();
 	}
@@ -1219,6 +1345,7 @@ int isExpression(Function& func, Expression& tmp)
 	{
 		now = now - 2;
 		isChar(unit);
+		temp.setX(temp.x + sym.content);
 		tmp.setType("char");
 		return 1;
 	}
@@ -1227,6 +1354,7 @@ int isExpression(Function& func, Expression& tmp)
 		tmp.setType("int");
 	}
 	if (isTerm(func, unit)) {
+		temp.setX(temp.x)
 		tmp.setType(unit.type);
 		while (preRead() && (sym.content == "+" || sym.content == "-")) {
 			now--;

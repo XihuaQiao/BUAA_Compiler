@@ -13,6 +13,8 @@ string spName[13] = { "CONSTTK", "INTTK", "CHARTK", "VOIDTK",
 	"MAINTK", "IFTK", "ELSETK", "DOTK", "WHILETK", "FORTK", "SCANFTK", "PRINTFTK", "RETURNTK" };
 FILE* in;
 
+int cnt = 0;
+
 int raw = 0;
 int now = -1;
 singleWord sym;
@@ -1330,7 +1332,8 @@ int isExpression(Function& func, Expression& tmp)
 	Unit unit;
 	preRead();
 	if ((sym.content == "+" || sym.content == "-") && sym.name != "CHARCON") {
-		temp.setX(sym.content);
+		temp.setOp(sym.content);
+		temp.setX("0");
 		now--;
 		nextSym();
 	}

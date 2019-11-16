@@ -1,0 +1,15 @@
+= int d 1 
+var int test  
+var int a  
+var int b  
+var int c  
+printf Hello World   
+scanf test   
++ 0 test $0 
+printf  $0  
++ 0 d $1 
+printf  $1  
++ 0 a $2 
++ $2 b $3 
++ $3 c $4 
+= d $4  

@@ -1,0 +1,12 @@
+﻿const int d = 1;
+int test;
+int a;
+int b;
+int c;
+void main(){
+    printf("Hello World");
+    scanf(test);
+    printf(test);
+	printf(d);
+	d = a + b + c;
+}

@@ -14,14 +14,26 @@ string spName[13] = { "CONSTTK", "INTTK", "CHARTK", "VOIDTK",
 FILE* in;
 
 int cnt = 0;
+int lcnt = 0;
+
+string getVarName()
+{
+	string name = "$" + to_string(cnt);
+	cnt++;
+	return name;
+}
+
+string getLabelName()
+{
+	string name = "label_" + to_string(lcnt);
+	lcnt++;
+	return name;
+}
 
 int raw = 0;
 int now = -1;
 singleWord sym;
 Program program;
-
-//map<string, Function> name2Func;
-//map<string, Unit> name2Unit;
 
 string readUntil(char x, FILE* fp)
 {
@@ -545,7 +557,7 @@ int isAssignSent(Function& func)
 	MidCode temp;
 	Unit unit;
 	isIdenti(unit);
-	temp.setX = sym.content;
+	temp.setX(sym.content);
 	if (func.name2Unit.count(unit.name) > 0)
 	{
 		unit = func.name2Unit[unit.name];
@@ -1059,6 +1071,7 @@ int isRelation()
 
 int isLoopSent(Function& func)
 {
+	string label_1, label_2;
 	MidCode temp;
 	temp.setX("");
 	temp.setY("");
@@ -1068,22 +1081,24 @@ int isLoopSent(Function& func)
 	Unit unit;
 	if (sym.content == "while") {
 		temp.setOp("label");
-		temp.setX("label_1");
+		label_1 = getLabelName();
+		label_2 = getLabelName();
+		temp.setX(label_1);
 		midCode.push_back(temp);
 		now--;
 		nextSym();
 		nextSym();		//'('
 		isCondition(func);
 		temp.setOp("BZ");
-		temp.setX("label_2");
+		temp.setX(label_2);
 		midCode.push_back(temp);
 		checkRParent();		//')'
 		isSentense(func);
 		temp.setOp("GOTO");
-		temp.setX("label_1");
+		temp.setX(label_1);
 		midCode.push_back(temp);
 		temp.setOp("label");
-		temp.setX("label_2");
+		temp.setX(label_2);
 		midCode.push_back(temp);
 	}
 	else if (sym.content == "for") {
@@ -1100,11 +1115,13 @@ int isLoopSent(Function& func)
 		midCode.push_back(temp);
 		checkSemicn();			//';'
 		temp.setOp("label");
-		temp.setX("label_1");
+		label_1 = getLabelName();
+		label_2 = getLabelName();
+		temp.setX(label_1);
 		midCode.push_back(temp);
 		isCondition(func);
 		temp.setOp("BZ");
-		temp.setX("label_2");
+		temp.setX(label_2);
 		midCode.push_back(temp);
 		checkSemicn();			//';'
 		isIdenti(unit);
@@ -1120,15 +1137,16 @@ int isLoopSent(Function& func)
 		isSentense(func);
 		midCode.push_back(temp);
 		temp.setOp("GOTO");
-		temp.setX("label_1");
+		temp.setX(label_1);
 		midCode.push_back(temp);
 		temp.setOp("label");
-		temp.setX("label_2");
+		temp.setX(label_2);
 		midCode.push_back(temp);
 	}
 	else if (sym.content == "do") {
 		temp.setOp("label");
-		temp.setX("label_1");
+		label_1 = getLabelName();
+		temp.setX(label_1);
 		midCode.push_back(temp);
 		now--;
 		nextSym();
@@ -1145,7 +1163,7 @@ int isLoopSent(Function& func)
 		nextSym();		//'('
 		isCondition(func);
 		temp.setOp("BNZ");
-		temp.setX("label_1");
+		temp.setX(label_1);
 		midCode.push_back(temp);
 		checkRParent();		//')'
 	}
@@ -1175,13 +1193,14 @@ int isStepLen()
 
 int isIfSent(Function& func)
 {
+	string label_1 = getLabelName();
 	MidCode temp;
 	nextSym();			//'if'
 	nextSym();			//'('
 	isCondition(func);
 	checkRParent();			//')'
 	temp.setOp("BZ");
-	temp.setX("label_1");
+	temp.setX(label_1);
 	temp.setY("");
 	temp.setZ("");
 	midCode.push_back(temp);
@@ -1190,13 +1209,13 @@ int isIfSent(Function& func)
 		now--;
 		nextSym();		//'else'
 		temp.setOp("label");
-		temp.setX("label_1");
+		temp.setX(label_1);
 		midCode.push_back(temp);
 		isSentense(func);	
 	}
 	else {
 		temp.setOp("label");
-		temp.setX("label_1");
+		temp.setX(label_1);
 		midCode.push_back(temp);
 	}
 	now--;
@@ -1228,7 +1247,7 @@ int isPrintfSent(Function& func)
 		now--;
 	}
 	isExpression(func, exp);
-	temp.setY(sym.content);
+	temp.setY(exp.name);
 	midCode.push_back(temp);
 	checkRParent();		// ')'
 //	outfile << "<写语句>" << endl;
@@ -1320,7 +1339,7 @@ int isReturnFuncSent()
 	func = program.name2Func[sym.content];
 	nextSym();			//'('
 	isValueList(func);
-	checkRParent();			//')'
+	checkRParent();		//')'
 	midCode.push_back(temp);
 //	outfile << "<有返回值函数调用语句>" << endl;
 	return 1;
@@ -1330,6 +1349,8 @@ int isExpression(Function& func, Expression& tmp)
 {
 	MidCode temp;
 	Unit unit;
+	Variable var;
+	string str;
 	preRead();
 	if ((sym.content == "+" || sym.content == "-") && sym.name != "CHARCON") {
 		temp.setOp(sym.content);
@@ -1338,6 +1359,8 @@ int isExpression(Function& func, Expression& tmp)
 		nextSym();
 	}
 	else {
+		temp.setOp("+");
+		temp.setX("0");
 		now--;
 	}
 	preRead();
@@ -1348,8 +1371,14 @@ int isExpression(Function& func, Expression& tmp)
 	{
 		now = now - 2;
 		isChar(unit);
-		temp.setX(temp.x + sym.content);
+		temp.setY("'" + sym.content + "'");
+		str = getVarName();
+		temp.setZ(str);
+		var.setName(str);
+		func.addVar(var);
+		midCode.push_back(temp);
 		tmp.setType("char");
+		tmp.setName(str);
 		return 1;
 	}
 	else {
@@ -1357,12 +1386,27 @@ int isExpression(Function& func, Expression& tmp)
 		tmp.setType("int");
 	}
 	if (isTerm(func, unit)) {
-		temp.setX(temp.x)
+		temp.setY(unit.name);
+		str = getVarName();
+		temp.setZ(str);
+		var.setName(str);
+		func.addVar(var);
+		midCode.push_back(temp);
+		tmp.setName(str);
 		tmp.setType(unit.type);
 		while (preRead() && (sym.content == "+" || sym.content == "-")) {
 			now--;
 			nextSym();			//+|-
+			temp.setOp(sym.content);
+			temp.setX(tmp.name);
 			isTerm(func, unit);
+			temp.setY(unit.name);
+			str = getVarName();
+			temp.setZ(str);
+			midCode.push_back(temp);
+			var.setName(str);
+			func.addVar(var);
+			tmp.setName(str);
 			tmp.setType("int");
 		}
 		now--;
@@ -1376,13 +1420,28 @@ int isExpression(Function& func, Expression& tmp)
 
 int isTerm(Function& func, Unit& unit)
 {
+	int count = 0;
+	MidCode temp;
+	Variable var;
+	string str;
 	Factor factor;
 	if (isFactor(func, factor)) {
+		unit.setName(factor.name);
 		unit.setType(factor.type);
+		temp.setX(factor.name);
 		while (preRead() && (sym.content == "*" || sym.content == "/")) {
+			count++;
 			now--;
 			nextSym();			//* | /
+			temp.setOp(sym.content);
 			isFactor(func, factor);
+			temp.setY(factor.name);
+			str = getVarName();
+			temp.setZ(str);
+			midCode.push_back(temp);
+			var.setName(str);
+			func.addVar(var);
+			unit.setName(str);
 			unit.setType("int");
 		}
 		now--;
@@ -1406,6 +1465,7 @@ int isFactor(Function& func, Factor& factor)
 			factor.setType(func.type);
 			now--;
 			isReturnFuncSent();
+			factor.setName("RET");
 		}
 		else {
 			now--;
@@ -1414,16 +1474,19 @@ int isFactor(Function& func, Factor& factor)
 			{
 				unit = globalFunc.name2Unit[sym.content];
 				factor.setType(unit.type);
+				factor.setName(sym.content);
 			}
 			else if (func.name2Unit.count(sym.content))
 			{
 				unit = func.name2Unit[sym.content];
 				factor.setType(unit.type);
+				factor.setName(sym.content);
 			}
 			if (preRead() && sym.content == "[") {
 				now--;
 				nextSym();			//'['
 				isExpression(func, exp);
+				factor.setName(factor.name + "[" + exp.name + "]");
 				if (exp.type != "int")
 				{
 					errorOutput(sym.raw_num, 9);
@@ -1440,16 +1503,19 @@ int isFactor(Function& func, Factor& factor)
 		nextSym();				//'('
 		isExpression(func, exp);
 		factor.setType("int");
+		factor.setName(exp.name);
 		checkRParent();				//')'
 	}
 	else if (sym.name == "PLUS" || sym.name == "MINU" || sym.name == "INTCON") {
 		now--;
 		isSignInt(unit);
+		factor.setName(unit.name);
 		factor.setType("int");
 	}
 	else if (sym.name == "CHARCON") {
 		now--;
 		isChar(unit);
+		factor.setName(sym.content);
 		factor.setType("char");
 	}
 	else {
@@ -1470,16 +1536,26 @@ int isStateHead(Function& func)
 
 int isMainFunc()
 {
+	MidCode temp;
 	nextSym();			//void
 	nextSym();			//main
-	Function func;
-	func.setName(sym.content);
+	temp.setOp("label");
+	temp.setX("main");
+	globalFunc.setName(sym.content);
 	nextSym();			//'('
 	checkRParent();			//')'
 	nextSym();			//'{'
-	isCompSentenses(func);
+	isCompSentenses(globalFunc);
 	nextSym();			//'}'
 //	outfile << "<主函数>" << endl;
+	ofstream midCodeOutput;
+	midCodeOutput.open("midcode.txt", ios::out);
+	midCodeOutput.close();
+	midCodeOutput.open("midcode.txt", ios::app);
+	for (int i = 0; i < midCode.size(); i++)
+	{
+		midCodeOutput << midCode[i].op << " " << midCode[i].x << " " << midCode[i].y << " " << midCode[i].z << " " << endl;
+	}
 	return 1;
 }
 

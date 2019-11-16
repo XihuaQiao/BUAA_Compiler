@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include"Class.h"
 #include<fstream>
 
@@ -10,6 +10,8 @@ void isSpace();
 void getWord();
 int nextSym();
 int preRead();
+string getVarName();
+string getLabelName();
 
 extern ofstream outfile;
 

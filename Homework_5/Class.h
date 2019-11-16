@@ -1,17 +1,10 @@
-#include<vector>
-#include<string.h>
+﻿#include<vector>
+#include<string>
 #include<stdio.h>
 #include<iostream>
 #include<map>
 #include"Source.h"
 using namespace std;
-
-class Program
-{
-public:
-	map<string, Function> name2Func;
-	map<string, Unit> name2Unit;
-};
 
 class Unit
 {
@@ -93,7 +86,13 @@ public:
 		consts.push_back(tmp);
 		name2Unit.insert(make_pair(tmp.name, (Unit)tmp));
 	}
+};
 
+class Program
+{
+public:
+	map<string, Function> name2Func;
+	map<string, Unit> name2Unit;
 };
 
 class Expression

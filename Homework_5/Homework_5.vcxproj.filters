@@ -21,12 +21,18 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="mips.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Class.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="mips.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

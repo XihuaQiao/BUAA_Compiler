@@ -787,7 +787,7 @@ int isTypeIdenti(Unit& unit)
 		now--;
 		return 0;
 	}
-}
+} 
 
 int isReturnFuncDef()
 {
@@ -1548,14 +1548,14 @@ int isMainFunc()
 	isCompSentenses(globalFunc);
 	nextSym();			//'}'
 //	outfile << "<主函数>" << endl;
-	ofstream midCodeOutput;
-	midCodeOutput.open("midcode.txt", ios::out);
-	midCodeOutput.close();
-	midCodeOutput.open("midcode.txt", ios::app);
-	for (int i = 0; i < midCode.size(); i++)
-	{
-		midCodeOutput << midCode[i].op << " " << midCode[i].x << " " << midCode[i].y << " " << midCode[i].z << " " << endl;
-	}
+	//ofstream midCodeOutput;
+	//midCodeOutput.open("midcode.txt", ios::out);
+	//midCodeOutput.close();
+	//midCodeOutput.open("midcode.txt", ios::app);
+	//for (int i = 0; i < midCode.size(); i++)
+	//{
+	//	midCodeOutput << midCode[i].op << " " << midCode[i].x << " " << midCode[i].y << " " << midCode[i].z << " " << endl;
+	//}
 	return 1;
 }
 

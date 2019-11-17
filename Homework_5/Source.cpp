@@ -310,7 +310,7 @@ int preRead() {
 
 int checkRepeat(Function& func, string name, int raw)
 {
-	cout << name << endl;
+//	cout << name << endl;
 	if (program.name2Func.count(name) || func.name2Unit.count(name)) {
 		errorOutput(raw, 2);
 		return 0;
@@ -1084,6 +1084,8 @@ int isLoopSent(Function& func)
 		label_1 = getLabelName();
 		label_2 = getLabelName();
 		temp.setX(label_1);
+		temp.setY("");
+		temp.setZ("");
 		midCode.push_back(temp);
 		now--;
 		nextSym();
@@ -1091,14 +1093,20 @@ int isLoopSent(Function& func)
 		isCondition(func);
 		temp.setOp("BZ");
 		temp.setX(label_2);
+		temp.setY("");
+		temp.setZ("");
 		midCode.push_back(temp);
 		checkRParent();		//')'
 		isSentense(func);
 		temp.setOp("GOTO");
 		temp.setX(label_1);
+		temp.setY("");
+		temp.setZ("");
 		midCode.push_back(temp);
 		temp.setOp("label");
 		temp.setX(label_2);
+		temp.setY("");
+		temp.setZ("");
 		midCode.push_back(temp);
 	}
 	else if (sym.content == "for") {
@@ -1118,35 +1126,45 @@ int isLoopSent(Function& func)
 		label_1 = getLabelName();
 		label_2 = getLabelName();
 		temp.setX(label_1);
+		temp.setY("");
+		temp.setZ("");
 		midCode.push_back(temp);
 		isCondition(func);
 		temp.setOp("BZ");
 		temp.setX(label_2);
+		temp.setY("");
+		temp.setZ("");
 		midCode.push_back(temp);
 		checkSemicn();			//';'
 		isIdenti(unit);
-		temp.setX(sym.content);
+		temp.setZ(sym.content);
 		nextSym();			//'='
 		isIdenti(unit);
-		temp.setY(sym.content);
+		temp.setX(sym.content);
 		nextSym();			//'(+|-)'
 		temp.setOp(sym.content);
 		isStepLen();
-		temp.setZ(sym.content);
+		temp.setY(sym.content);
 		checkRParent();			//')'
 		isSentense(func);
 		midCode.push_back(temp);
 		temp.setOp("GOTO");
 		temp.setX(label_1);
+		temp.setY("");
+		temp.setZ("");
 		midCode.push_back(temp);
 		temp.setOp("label");
 		temp.setX(label_2);
+		temp.setY("");
+		temp.setZ("");
 		midCode.push_back(temp);
 	}
 	else if (sym.content == "do") {
 		temp.setOp("label");
 		label_1 = getLabelName();
 		temp.setX(label_1);
+		temp.setY("");
+		temp.setZ("");
 		midCode.push_back(temp);
 		now--;
 		nextSym();
@@ -1164,6 +1182,8 @@ int isLoopSent(Function& func)
 		isCondition(func);
 		temp.setOp("BNZ");
 		temp.setX(label_1);
+		temp.setY("");
+		temp.setZ("");
 		midCode.push_back(temp);
 		checkRParent();		//')'
 	}
@@ -1210,12 +1230,16 @@ int isIfSent(Function& func)
 		nextSym();		//'else'
 		temp.setOp("label");
 		temp.setX(label_1);
+		temp.setY("");
+		temp.setZ("");
 		midCode.push_back(temp);
 		isSentense(func);	
 	}
 	else {
 		temp.setOp("label");
 		temp.setX(label_1);
+		temp.setY("");
+		temp.setZ("");
 		midCode.push_back(temp);
 	}
 	now--;
@@ -1474,6 +1498,7 @@ int isFactor(Function& func, Factor& factor)
 			{
 				unit = globalFunc.name2Unit[sym.content];
 				factor.setType(unit.type);
+				cout << sym.content << endl;
 				factor.setName(sym.content);
 			}
 			else if (func.name2Unit.count(sym.content))
@@ -1509,7 +1534,7 @@ int isFactor(Function& func, Factor& factor)
 	else if (sym.name == "PLUS" || sym.name == "MINU" || sym.name == "INTCON") {
 		now--;
 		isSignInt(unit);
-		factor.setName(unit.name);
+		factor.setName(unit.content);
 		factor.setType("int");
 	}
 	else if (sym.name == "CHARCON") {
@@ -1541,6 +1566,9 @@ int isMainFunc()
 	nextSym();			//main
 	temp.setOp("label");
 	temp.setX("main");
+	temp.setY("");
+	temp.setZ("");
+	midCode.push_back(temp);
 	globalFunc.setName(sym.content);
 	nextSym();			//'('
 	checkRParent();			//')'

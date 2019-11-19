@@ -1,64 +1,26 @@
-= int d 1 
-var int test  
 var int a  
 var int b  
-var int c  
-var int e[10]  
-function int foo  
+function int add  
 para int a  
 para int b  
 + 0 a $0 
 + $0 b $1 
-return $1   
-label main   
+= a $1  
 + 0 a $2 
-push $2   
-+ 0 b $3 
-push $3   
-call foo   
++ $2 b $3 
+return $3   
+function void main  
+= a 3  
+= b 'a'  
+use add   
+push a   
+push b   
+call add   
 + 0 RET $4 
-= a $4  
-printf Hello World   
-scanf test   
-+ 0 test $5 
-printf  $5  
-+ 0 d $6 
-printf  $6  
-+ 0 a $7 
-+ $7 b $8 
-+ $8 c $9 
-= d $9  
-label label_0   
-+ 0 a $10 
-+ 0 1 $11 
-cmp $10 == $11 
-BZ label_1   
-* a a $12 
-+ 0 $12 $13 
-= a $13  
-GOTO label_0   
-label label_1   
-+ 0 0 $14 
-= a $14  
-label label_2   
-+ 0 a $15 
-+ 0 10 $16 
-cmp $15 < $16 
-BZ label_3   
-+ 0 a $17 
-+ $17 1 $18 
-= a $18  
-+ a 1 a 
-GOTO label_2   
-label label_3   
-+ 0 a $19 
-+ 0 0 $20 
-cmp $19 == $20 
-BZ label_4   
-+ 0 a $21 
-+ $21 1 $22 
-= a $22  
-label label_4   
-+ 0 a $23 
-- $23 1 $24 
-= a $24  
+printf  int $4 
+printf  char '\n' 
+printf  int a 
+printf  char '\n' 
+printf  int b 
+printf  char '\n' 
+end    

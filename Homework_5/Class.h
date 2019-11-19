@@ -6,6 +6,19 @@
 #include"Source.h"
 using namespace std;
 
+#ifndef _CLASS_H_
+#define _CLASS_H_
+
+class singleWord
+{
+public:
+	string content;
+	string name;
+	int raw_num;
+	bool noRSingle;
+	bool noRDouble;
+};
+
 class Unit
 {
 public:
@@ -40,6 +53,7 @@ class Variable : public Unit
 {
 public:
 	bool var = false;
+	int size = 4;
 };
 
 class Factor : public Unit
@@ -51,6 +65,7 @@ public:
 class Function : public Unit
 {
 public:
+	int size = 0;
 	bool hasReturn = false;
 	//bool returnError = false;
 	bool existReturn = false;
@@ -63,20 +78,19 @@ public:
 	{
 		factors.push_back(factor);
 		name2Factor.insert(make_pair(factor.name, factor));
+		name2Unit.insert(make_pair(factor.name, (Unit)factor));
+		size = size + 4;
 	}
 	void addVar(Variable variable)
 	{
 		vars.push_back(variable);
 		name2Unit.insert(make_pair(variable.name, (Unit)variable));
+		size = size + variable.size;
 	}
 	void setExistReturn()
 	{
 		existReturn = true;
 	}
-	//void setReturnError()
-	//{
-	//	returnError = true;
-	//}
 	void setHasReturn()
 	{
 		hasReturn = true;
@@ -93,6 +107,11 @@ class Program
 public:
 	map<string, Function> name2Func;
 	map<string, Unit> name2Unit;
+	vector<Variable> vars;
+	void addVar(Variable var)
+	{
+		vars.push_back(var);
+	}
 };
 
 class Expression
@@ -135,3 +154,5 @@ public:
 		this->z = z;
 	}
 };
+
+#endif	_CLASS_H_

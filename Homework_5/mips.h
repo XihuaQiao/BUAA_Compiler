@@ -1,1 +1,16 @@
-#pragma once
+#include"Class.h"
+#include"Source.h"
+
+int nextMidcode();
+void mkGlobalOffset();
+void mkFuncOffset(Function func);
+void Add(string name1, string name2, string name3);
+void Minus(string name1, string name2, string name3);
+void Mult(string name1, string name2, string name3);
+void Div(string name1, string name2, string name3);
+void lwData(string name, string regName);
+void swData(string name, string regName);
+bool isNum(string str);
+void pushFactors();
+void basicOp();
+void controller();

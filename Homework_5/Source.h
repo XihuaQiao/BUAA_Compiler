@@ -13,17 +13,6 @@ int preRead();
 string getVarName();
 string getLabelName();
 
-extern ofstream outfile;
-
-class singleWord
-{
-public:
-	string content;
-	string name;
-	int raw_num;
-	bool noRSingle;
-	bool noRDouble;
-};
 
 void errorOutput(int raw_num, int code);
 int checkSemicn();
@@ -45,7 +34,7 @@ int isNonReturnFuncDef();
 int isFactorList(Function& func);
 int isCompSentenses(Function& func);
 int isSentenses(Function& func);
-int isValueList(Function& func);
+int isValueList(Function& tmp, Function& func);
 int isSentense(Function& func);
 int isCondition(Function& func);
 int isRelation();
@@ -56,7 +45,7 @@ int isPrintfSent(Function& func);
 int isScanfSent(Function& func);
 int isReturnSent(Function& func);
 int isChars();
-int isReturnFuncSent();
+int isReturnFuncSent(Function& tmp);
 int isExpression(Function& func, Expression& tmp);
 int isTerm(Function& func, Unit& unit);
 int isFactor(Function& func, Factor& factor);

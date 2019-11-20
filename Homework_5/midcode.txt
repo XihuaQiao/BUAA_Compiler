@@ -1,26 +1,110 @@
-var int a  
+const int _a +10 
+const int _b -20 
+const int _c 100 
+const int _d 200000 
+const char _X_ 'a' 
+const char Y 'G' 
+const char ZZ '_' 
+var int A[1000]  
 var int b  
-function int add  
-para int a  
-para int b  
-+ 0 a $0 
-+ $0 b $1 
-= a $1  
-+ 0 a $2 
-+ $2 b $3 
-return $3   
+var int c  
+var char x[1000]  
+var char z  
+var char g  
+var char f  
+function int aDd  
+para int __a  
+para int __b  
++ 0 __a $0 
++ $0 __b $1 
+return $1   
+function int I  
+para int __a  
+var int __r  
++ 0 __a $2 
++ $2 1 $3 
+= __r $3  
+return __r   
+function int number  
+return 10   
+function char _char  
+const char _r 'x' 
+return 'x'   
+function char __char  
+para char a  
+para char b  
+para int x  
++ 0 x $4 
+cmp $4 > 0 
+BZ label_0   
+return a   
+GOTO label_1   
+label label_0   
+return b   
+label label_1   
+function void print  
+printf 0 int  
+printf  char '\n' 
+return    
+return    
 function void main  
-= a 3  
-= b 'a'  
-use add   
-push a   
+= z '*'  
+= g '+'  
+use _char   
+call _char   
++ 0 RET $5 
+= f $5  
+= x[10] 'x'  
+= x[100] '+'  
+use print   
+call print   
+scanf int b  
+scanf char f  
+use I   
+push 100   
+call I   
++ 0 RET $6 
+= A[$6] 10  
+= A[100] 10  
+use aDd   
+push +10   
+push -20   
+call aDd   
++ 0 RET $7 
+printf 1 int $7 
+printf  char '\n' 
+use I   
+push 100   
+call I   
++ 0 RET $8 
+use number   
+call number   
++ $8 RET $9 
+printf  int $9 
+printf  char '\n' 
+use I   
+push 200000   
+call I   
++ 0 RET $10 
+use aDd   
+push -20   
+push +10   
+call aDd   
+use I   
+push 100   
+call I   
+* RET RET $11 
++ $10 $11 $12 
+/ +10 -20 $13 
++ $12 $13 $14 
+= c $14  
+use __char   
+push z   
+push g   
 push b   
-call add   
-+ 0 RET $4 
-printf  int $4 
+call __char   
++ 0 RET $15 
+printf  char $15 
 printf  char '\n' 
-printf  int a 
-printf  char '\n' 
-printf  int b 
-printf  char '\n' 
+return    
 end    

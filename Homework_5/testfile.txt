@@ -1,55 +1,45 @@
-﻿const int _a = +10;
-const int _b = -20;
-const int _c = 100, _d = 200000;
-const char _X_ = 'a';
-const char Y = 'G', ZZ = '_';
-int A[1000], b, c;
-char x[1000];
-char z, g, f;
+﻿const int Zsj1nb = 1, Zsj2nb = +1, Zsj3nb = -1;
+const int _To1Hard = 13, _ka = -5;
+const char str1 = '+', str2 = '-', str3 = '*', str4 = '/';
+const char str5 = '_', str6 = 'd', str7 = 'B';
+const char str8 = '1', _1str9 = '0';
 
-int aDd(int __a, int __b) {
-	return (__a + __b);
+int fib[100];
+
+int add(int a1, int a2) {
+    const int an = 5;
+    int a3;
+    a3 = a1 + a2;
+    return (a3);
 }
 
-int I(int __a) {
-	int __r;
-	__r = __a + 1;
-	return (__r);
-}
-
-int number() {
-	return (10);
-}
-
-char _char() {
-	const char _r = 'x';
-	return (_r);
-}
-
-char __char(char a, char b, int x) {
-	if (x > 0) return (a);
-	else return (b);
-}
-
-void print() {
-	printf ("Hello world!");
-	return;
+void fibna(int n) {
+    fib[n] = fib[n - 1] + fib[n - 2];
 }
 
 void main() {
-	z = '*';
-	g = '+';
-	f = _char();
-	x[10] = 'x';
-	x[_c] = '+';
-	print();
-	scanf (b);
-	scanf (f);
-	A[I(_c)] = 10;
-	A[_c] = 10;
-	printf ("%d\n", aDd(_a, _b));
-	printf (I(_c) + number());
-	c = I(_d) + aDd(_b, _a) * I(_c) + _a / _b;
-	printf(__char(z, g, b));
-	return;
+    int i;
+    i = 3;
+    i = +3;
+    fib[1] = 1;
+    fib[2] = 1;
+    for (i = 3; i < 15; i = i + 1) {
+        fibna(i);
+    }
+    for (i = 1; i < 15; i = i + 1) {
+        printf(fib[i]);
+    }
+    for (i = 1; i < 12; i = i + 1)
+    while(i != 0) 
+        i = i - 1;
+    {
+        i = _To1Hard;
+    }
+    while(i > 0) {
+        i = i - 1;
+    }
+    for (i = 10; i > 0; i = i - 1) {
+        ;
+    }
+    return;
 }

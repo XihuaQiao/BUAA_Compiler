@@ -11,6 +11,5 @@ void Div(string name1, string name2, string name3);
 void lwData(string name, string regName);
 void swData(string name, string regName);
 bool isNum(string str);
-void pushFactors();
 void basicOp();
 void controller();

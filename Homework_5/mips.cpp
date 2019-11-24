@@ -93,11 +93,15 @@ void Div(string name1, string name2, string name3)		// name1 = name2 % name3
 	orders.push_back(str);
 }
 
+//读取内存时，若是全局变量，存下的绝对位置为栈的上界，因此算offset时，需要t7 - offset，且符号表中为下界，因此数组情况需将offset - i * 4
+//若不是全局变量，则绝对位置为sp，即下界，因此offset，sp + offset, 数组的话直接offset + 4 * i
+
 void lwData(string name, string regName)
 {
 	string str;
 	int offset, i;
 	int temp = 0;
+	int sp = 0;
 	if (isNum(name) || name[0] == '\'') {
 		str = "li " + regName + ", " + name;
 		orders.push_back(str);
@@ -112,20 +116,46 @@ void lwData(string name, string regName)
 				break;
 			}
 		}
-		string tmp = name.substr(i + 1, name.size() - i - 1);
-		temp = stoi(tmp);
+		string tmp = name.substr(i + 1, name.size() - i - 2);
+		if (isNum(tmp)) {
+			temp = stoi(tmp);
+		}
+		else {
+			lwData(tmp, "$t5");
+			lwData("4", "$t3");
+			Mult("$t3", "$t3", "$t5");
+			sp = 1;
+		}
 		name = name.substr(0, i);
 	}
 	if (currFunc.name2Unit.count(name))
 	{
-		offset = name2position[name] + 4 * temp;
-		str = "lw " + regName + ", " + to_string(offset) + "($sp)";
-		orders.push_back(str);
+		if (sp == 0) {
+			offset = name2position[name] + 4 * temp;
+			str = "lw " + regName + ", " + to_string(offset) + "($sp)";
+			orders.push_back(str);
+		}
+		else {
+			Add("$t3", "$t3", to_string(name2position[name]));
+			Add("$t3", "$t3", "$sp");
+			str = "lw " + regName + ", ($t3)";
+			orders.push_back(str);
+		}
 	}
 	else if (globalFunc.name2Unit.count(name)) {
-		offset = globalName2position[name] + 4 * temp;
-		str = "lw " + regName + ", -" + to_string(offset) + "($t7)";
-		orders.push_back(str);
+		if (sp == 0) {
+			offset = globalName2position[name] - 4 * temp;
+			str = "lw " + regName + ", -" + to_string(offset) + "($t7)";
+			orders.push_back(str);
+		}
+		else {
+			str = "li $t4, " + to_string(globalName2position[name]);
+			orders.push_back(str);
+			Minus("$t3", "$t4", "$t3");
+			Minus("$t3", "$t7", "$t3");
+			str = "lw " + regName + ", ($t3)";
+			orders.push_back(str);
+		}
 	}
 }
 
@@ -134,6 +164,7 @@ void swData(string name, string regName)
 	string str;
 	int offset, i;
 	int temp = 0;
+	int sp = 0;
 	if (name[name.size() - 1] == ']')
 	{
 		for (i = 0; i < name.size(); i++)
@@ -144,23 +175,45 @@ void swData(string name, string regName)
 			}
 		}
 		string tmp = name.substr(i + 1, name.size() - i - 2);
-		if (isNum(temp)) {
+		if (isNum(tmp)) {
 			temp = stoi(tmp);
 		}
 		else {
+			lwData(tmp, "$t5");
+			lwData("4", "$t3");
+			Mult("$t3", "$t3", "$t5");
+			sp = 1;
 		}
 		name = name.substr(0, i);
 	}
 	if (currFunc.name2Unit.count(name))
 	{
-		offset = name2position[name] + temp * 4;
-		str = "sw " + regName + ", " + to_string(offset) + "($sp)";
-		orders.push_back(str);
+		if (sp == 0) {
+			offset = name2position[name] + 4 * temp;
+			str = "sw " + regName + ", " + to_string(offset) + "($sp)";
+			orders.push_back(str);
+		}
+		else {
+			Add("$t3", "$t3", to_string(name2position[name]));
+			Add("$t3", "$t3", "$sp");
+			str = "sw " + regName + ", ($t3)";
+			orders.push_back(str);
+		}
 	}
 	else if (globalFunc.name2Unit.count(name)) {
-		offset = globalName2position[name] +  temp * 4;
-		str = "sw " + regName + ", -" + to_string(offset) + "($t7)";
-		orders.push_back(str);
+		if (sp == 0) {
+			offset = globalName2position[name] - 4 * temp;
+			str = "sw " + regName + ", -" + to_string(offset) + "($t7)";
+			orders.push_back(str);
+		}
+		else {
+			str = "li $t4, " + to_string(globalName2position[name]);
+			orders.push_back(str);
+			Minus("$t3", "$t4", "$t3");
+			Minus("$t3", "$t7", "$t3");
+			str = "sw " + regName + ", ($t3)";
+			orders.push_back(str);
+		}
 	}
 }
 
@@ -359,7 +412,7 @@ void controller()		// $sp
 			}
 			else if ((cmp == "==" && mid.op == "BNZ") || (cmp == "!=" && mid.op == "BZ"))
 			{
-				str == "beq $t2, $0, " + mid.x;
+				str = "beq $t2, $0, " + mid.x;
 			}
 			else if ((cmp == "<" && mid.op == "BZ") || (cmp == ">=" && mid.op == "BNZ"))
 			{

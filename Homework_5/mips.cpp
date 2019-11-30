@@ -98,6 +98,7 @@ void Div(string name1, string name2, string name3)		// name1 = name2 % name3
 
 void lwData(string name, string regName)
 {
+	vector<string> strs;
 	string str;
 	int offset, i;
 	int temp = 0;
@@ -264,6 +265,16 @@ void basicOp()
 		swData(mid.z, "$t0");
 		return;
 	}
+	else if (mid.x == "0") {
+		name2 = "$0";
+		if (mid.y == "RET") {
+			name3 = "$t6";
+		}
+		else {
+			lwData(mid.y, "$t0");
+			name3 = "$t0";
+		}
+	}
 	else if (isNum(mid.x) || mid.x[0] == '\'') {
 		if (isNum(mid.x)) {
 			x = stoi(mid.x);
@@ -279,7 +290,7 @@ void basicOp()
 			name2 = "$t0";
 		}
 		name3 = to_string(x);
-	} 
+	}
 	else if (isNum(mid.y) || mid.y[0] == '\'') {
 		if (isNum(mid.y)) {
 			x = stoi(mid.y);
@@ -390,7 +401,9 @@ void controller()		// $sp
 			//	str = "sub $sp, $sp, " + to_string(currFunc.size);
 			//}
 			mkFuncOffset(program.name2Func[mid.y]);
-			str = "sub $sp, $sp, " + to_string(currFunc.size);
+			str = "sub $sp, $sp, " + to_string(currFunc.size + 4);
+			orders.push_back(str);
+			str = "sw $ra, " + to_string(currFunc.size) + "($sp)";
 			orders.push_back(str);
 		}
 		else if (str == "para") {
@@ -501,7 +514,9 @@ void controller()		// $sp
 				lwData(mid.x, "$t6");
 			}
 			if (currFunc.name != "main") {
-				str = "add $sp, $sp, " + to_string(currFunc.size);
+				str = "lw $ra, " + to_string(currFunc.size) + "($sp)";
+				orders.push_back(str);
+				str = "add $sp, $sp, " + to_string(currFunc.size + 4);
 				orders.push_back(str);
 				str = "jr $ra";
 				orders.push_back(str);
@@ -510,12 +525,13 @@ void controller()		// $sp
 		else if (str == "push") {			// 将所有的形参的值放入正确的地方
 			pushNum++;
 			lwData(mid.x, "$t0");
-			str = "sw $t0, " + to_string(pushNum * -4) + "($sp)";
+			str = "sw $t0, " + to_string(pushNum * -4 - 4) + "($sp)";
 			orders.push_back(str);				// 首先将形参放入栈下，然后才开栈
 		}
 		else if (str == "call") {			// 调用函数
 			str = "jal " + mid.x;
 			orders.push_back(str);
+			pushNum = 0;
 		}
 		else if (str == "end") {
 			str = "li $v0, 10";
@@ -525,7 +541,6 @@ void controller()		// $sp
 		}
 		else if (str == "use") {			// 先给出调用函数名，划分好该函数的栈空间大小			
 //			mkCurrFuncVars(currFunc.size - currFunc.factors.size() * 4);
-			pushNum = 0;
 		}
 		else {
 			continue;

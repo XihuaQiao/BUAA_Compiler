@@ -1,4 +1,4 @@
-﻿int g_list[20];
+int g_list[20];
 int testnum[10];
 int abs(int a){
 	g_list[0] = g_list[0] + 1;

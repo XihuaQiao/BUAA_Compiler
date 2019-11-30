@@ -723,6 +723,7 @@ int isVarDes(Function& func)
 		str3 = sym.content;
 	}
 	now = now - 3;
+	
 	return 1;
 }
 
@@ -825,6 +826,8 @@ int isReturnFuncDef()
 		nextSym();			// (
 		isFactorList(tmp);
 		checkRParent();		// )
+		functions.push_back(tmp);
+		program.name2Func.insert(make_pair(tmp.name, tmp));
 		nextSym();			// {
 		isCompSentenses(tmp);
 		nextSym();			// }
@@ -832,11 +835,12 @@ int isReturnFuncDef()
 		{
 			errorOutput(sym.raw_num, 8);
 		}
+		program.name2Func[tmp.name] = tmp;
 		//			outfile << "<有返回值函数定义>" << endl;
-		if (rec) {
-			functions.push_back(tmp);
-			program.name2Func.insert(make_pair(tmp.name, tmp));
-		}
+		//if (rec) {
+		//	functions.push_back(tmp);
+		//	program.name2Func.insert(make_pair(tmp.name, tmp));
+		//}
 		return 1;
 	}
 	else {
@@ -867,6 +871,8 @@ int isNonReturnFuncDef()
 		nextSym();			//'('
 		isFactorList(tmp);
 		checkRParent();			//')'
+		functions.push_back(tmp);
+		program.name2Func.insert(make_pair(tmp.name, tmp));
 		nextSym();			//'{'
 		isCompSentenses(tmp);
 		nextSym();			//'}'
@@ -875,6 +881,7 @@ int isNonReturnFuncDef()
 			functions.push_back(tmp);
 			program.name2Func.insert(make_pair(tmp.name, tmp));
 		}
+		program.name2Func[tmp.name] = tmp;
 		temp.setOp("return");
 		temp.setX("");
 		temp.setY("");
@@ -942,6 +949,7 @@ int isSentenses(Function& func)
 
 int isValueList(Function &tmp, Function& func)
 {
+	vector<MidCode> pushes;
 	MidCode temp;
 	temp.setOp("push");
 	preRead();
@@ -957,7 +965,7 @@ int isValueList(Function &tmp, Function& func)
 		temp.setX(exp.name);
 		temp.setY("");
 		temp.setZ("");
-		midCode.push_back(temp);
+		pushes.push_back(temp);
 		unit.setType(exp.type);
 		values.push_back(unit);
 		while (preRead() && sym.content == ",") {
@@ -965,11 +973,14 @@ int isValueList(Function &tmp, Function& func)
 			nextSym();		//','
 			isExpression(tmp, exp);
 			temp.setX(exp.name);
-			midCode.push_back(temp);
+			pushes.push_back(temp);
 			unit.setType(exp.type);
 			values.push_back(unit);
 		}
 		now--;
+	}
+	for (int i = 0; i < pushes.size(); i++) {
+		midCode.push_back(pushes[i]);
 	}
 	//	outfile << "<值参数表>" << endl;
 	if (values.size() != func.factors.size()) {
@@ -1076,6 +1087,12 @@ int isCondition(Function& func)
 		{
 			errorOutput(sym.raw_num, 6);
 		}
+		midCode.push_back(temp);
+	}
+	else if (sym.content == ")") {
+		now--;
+		temp.setY("!=");
+		temp.setZ("0");
 		midCode.push_back(temp);
 	}
 	else {
@@ -1389,6 +1406,17 @@ int isChars()
 	if (preRead() && sym.name == "STRCON") {
 		now--;
 		nextSym();
+		string str;
+		for (int i = 0; i < sym.content.size(); i++) {
+			if (sym.content[i] == '\\') {
+				str = str + "\\";
+				str = str + sym.content[i];
+			}
+			else {
+				str = str + sym.content[i];
+			}
+		}
+		sym.content = str;
 		//		outfile << "<字符串>" << endl;
 		return 1;
 	}

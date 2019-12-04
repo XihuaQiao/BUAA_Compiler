@@ -33,15 +33,29 @@ int nextMidcode()
 
 void mkGlobalOffset()			// 全局变量的偏移是相对于栈顶的偏移
 {
-	int temp = 0;
+	//int temp = 0;
+	string str;
+	//for (int i = 0; i < globalFunc.vars.size(); i++)
+	//{
+	//	Variable var = globalFunc.vars[i];
+	//	temp = temp + var.size;
+	//	globalName2position.insert(make_pair(var.name, temp));
+	//}
+	//str = "sub $sp, $sp, " + to_string(temp);
+	//orders.push_back(str);
+
 	for (int i = 0; i < globalFunc.vars.size(); i++)
 	{
 		Variable var = globalFunc.vars[i];
-		temp = temp + var.size;
-		globalName2position.insert(make_pair(var.name, temp));
+		if (var.size == 4) {
+			str = var.name + ": .word " + "0";
+			orders.push_back(str);
+		}
+		else if (var.size > 4) {
+			str = var.name + ": .space " + to_string(var.size);
+			orders.push_back(str);
+		}
 	}
-	string str = "sub $sp, $sp, " + to_string(temp);
-	orders.push_back(str);
 }
 
 void mkFuncOffset(Function func)
@@ -145,15 +159,21 @@ void lwData(string name, string regName)
 	}
 	else if (globalFunc.name2Unit.count(name)) {
 		if (sp == 0) {
-			offset = globalName2position[name] - 4 * temp;
-			str = "lw " + regName + ", -" + to_string(offset) + "($t7)";
+			//offset = globalName2position[name] - 4 * temp;
+			//str = "lw " + regName + ", -" + to_string(offset) + "($t7)";
+			offset = 4 * temp;
+			str = "lw " + regName + ", " + name + " + " + to_string(offset);			// 数组地址为最下方的地址，即向上偏移，+，基地址为[0]
 			orders.push_back(str);
 		}
 		else {
-			str = "li $t4, " + to_string(globalName2position[name]);
+			//str = "li $t4, " + to_string(globalName2position[name]);
+			//orders.push_back(str);
+			//Minus("$t3", "$t4", "$t3");
+			//Minus("$t3", "$t7", "$t3");
+			//str = "lw " + regName + ", ($t3)";
+			str = "la $t4, " + name;
 			orders.push_back(str);
-			Minus("$t3", "$t4", "$t3");
-			Minus("$t3", "$t7", "$t3");
+			Add("$t3", "$t4", "$t3");
 			str = "lw " + regName + ", ($t3)";
 			orders.push_back(str);
 		}
@@ -203,15 +223,21 @@ void swData(string name, string regName)
 	}
 	else if (globalFunc.name2Unit.count(name)) {
 		if (sp == 0) {
-			offset = globalName2position[name] - 4 * temp;
-			str = "sw " + regName + ", -" + to_string(offset) + "($t7)";
+			//offset = globalName2position[name] - 4 * temp;
+			//str = "sw " + regName + ", -" + to_string(offset) + "($t7)";
+			offset = 4 * temp;
+			str = "sw " + regName + ", " + name + " + " + to_string(offset);			// 数组地址为最下方的地址，即向上偏移，+，基地址为[0]
 			orders.push_back(str);
 		}
 		else {
-			str = "li $t4, " + to_string(globalName2position[name]);
+			//str = "li $t4, " + to_string(globalName2position[name]);
+			//orders.push_back(str);
+			//Minus("$t3", "$t4", "$t3");
+			//Minus("$t3", "$t7", "$t3");
+			//str = "sw " + regName + ", ($t3)";
+			str = "la $t4, " + name;
 			orders.push_back(str);
-			Minus("$t3", "$t4", "$t3");
-			Minus("$t3", "$t7", "$t3");
+			Add("$t3", "$t4", "$t3");
 			str = "sw " + regName + ", ($t3)";
 			orders.push_back(str);
 		}
@@ -361,11 +387,12 @@ void controller()		// $sp
 		str = "string_" + to_string(i) + ": .asciiz \"" + chars + "\"";
 		orders.push_back(str);
 	}
+	mkGlobalOffset();
 	str = ".text";
 	orders.push_back(str);
-	str = "la $t7, ($sp)";
-	orders.push_back(str);
-	mkGlobalOffset();
+	//str = "la $t7, ($sp)";
+	//orders.push_back(str);
+	//mkGlobalOffset();
 	str = "j main";
 	orders.push_back(str);
 	while (nextMidcode()) {

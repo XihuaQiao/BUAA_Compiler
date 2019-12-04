@@ -3,21 +3,21 @@ string_0: .asciiz "testnum[2] = "
 string_1: .asciiz "testnum[1] = "
 string_2: .asciiz "testnum[3] = "
 string_3: .asciiz "testnum[0] = "
+g_list: .space 80
+testnum: .space 40
 .text
-la $t7, ($sp)
-sub $sp, $sp, 120
 j main
 abs:
 sub $sp, $sp, 36
 sw $ra, 32($sp)
-lw $t0, -80($t7)
+lw $t0, g_list + 0
 add $t0, $0, $t0
 sw $t0, 24($sp)
 lw $t0, 24($sp)
 add $t0, $t0, 1
 sw $t0, 20($sp)
 lw $t0, 20($sp)
-sw $t0, -80($t7)
+sw $t0, g_list + 0
 lw $t0, 28($sp)
 add $t0, $0, $t0
 sw $t0, 16($sp)
@@ -64,9 +64,8 @@ lw $t5, 20($sp)
 li $t3, 4
 mult $t3, $t5
 mflo $t3
-li $t4, 80
-sub $t3, $t4, $t3
-sub $t3, $t7, $t3
+la $t4, g_list
+add $t3, $t4, $t3
 sw $t0, ($t3)
 lw $t0, 20($sp)
 add $t0, $0, $t0
@@ -78,14 +77,14 @@ lw $t0, 8($sp)
 sw $t0, 20($sp)
 j label_2
 label_3:
-lw $t0, -76($t7)
+lw $t0, g_list + 4
 add $t0, $0, $t0
 sw $t0, 4($sp)
 lw $t0, 4($sp)
 add $t0, $t0, 1
 sw $t0, 0($sp)
 lw $t0, 0($sp)
-sw $t0, -76($t7)
+sw $t0, g_list + 4
 lw $ra, 24($sp)
 add $sp, $sp, 28
 jr $ra
@@ -93,7 +92,7 @@ show:
 sub $sp, $sp, 24
 sw $ra, 20($sp)
 li $t0, 1
-sw $t0, -68($t7)
+sw $t0, g_list + 12
 li $t0, 0
 sw $t0, 16($sp)
 label_4:
@@ -108,9 +107,8 @@ lw $t5, 16($sp)
 li $t3, 4
 mult $t3, $t5
 mflo $t3
-li $t4, 80
-sub $t3, $t4, $t3
-sub $t3, $t7, $t3
+la $t4, g_list
+add $t3, $t4, $t3
 lw $t0, ($t3)
 add $t0, $0, $t0
 sw $t0, 8($sp)
@@ -137,7 +135,7 @@ times:
 sub $sp, $sp, 20
 sw $ra, 16($sp)
 li $t0, 1
-sw $t0, -72($t7)
+sw $t0, g_list + 8
 lw $t0, 12($sp)
 lw $t1, 8($sp)
 mult $t0, $t1
@@ -156,11 +154,11 @@ sw $ra, 40($sp)
 add $t0, $0, 1
 sw $t0, 20($sp)
 lw $t0, 20($sp)
-lw $t1, -68($t7)
+lw $t1, g_list + 12
 add $t0, $t0, $t1
 sw $t0, 16($sp)
 lw $t0, 16($sp)
-sw $t0, -68($t7)
+sw $t0, g_list + 12
 lw $t0, 36($sp)
 add $t0, $0, $t0
 sw $t0, 12($sp)
@@ -197,9 +195,8 @@ lw $t5, 48($sp)
 li $t3, 4
 mult $t3, $t5
 mflo $t3
-li $t4, 120
-sub $t3, $t4, $t3
-sub $t3, $t7, $t3
+la $t4, testnum
+add $t3, $t4, $t3
 lw $t0, ($t3)
 add $t0, $0, $t0
 sw $t0, 44($sp)
@@ -214,9 +211,8 @@ lw $t5, 36($sp)
 li $t3, 4
 mult $t3, $t5
 mflo $t3
-li $t4, 120
-sub $t3, $t4, $t3
-sub $t3, $t7, $t3
+la $t4, testnum
+add $t3, $t4, $t3
 lw $t1, ($t3)
 add $t0, $t0, $t1
 sw $t0, 32($sp)
@@ -225,9 +221,8 @@ lw $t5, 56($sp)
 li $t3, 4
 mult $t3, $t5
 mflo $t3
-li $t4, 120
-sub $t3, $t4, $t3
-sub $t3, $t7, $t3
+la $t4, testnum
+add $t3, $t4, $t3
 sw $t0, ($t3)
 lw $t0, 56($sp)
 add $t0, $0, $t0
@@ -250,9 +245,8 @@ lw $t5, 16($sp)
 li $t3, 4
 mult $t3, $t5
 mflo $t3
-li $t4, 120
-sub $t3, $t4, $t3
-sub $t3, $t7, $t3
+la $t4, testnum
+add $t3, $t4, $t3
 lw $t0, ($t3)
 add $t0, $0, $t0
 sw $t0, 12($sp)
@@ -267,9 +261,8 @@ lw $t5, 4($sp)
 li $t3, 4
 mult $t3, $t5
 mflo $t3
-li $t4, 120
-sub $t3, $t4, $t3
-sub $t3, $t7, $t3
+la $t4, testnum
+add $t3, $t4, $t3
 lw $t1, ($t3)
 add $t0, $t0, $t1
 sw $t0, 0($sp)
@@ -278,9 +271,8 @@ lw $t5, 56($sp)
 li $t3, 4
 mult $t3, $t5
 mflo $t3
-li $t4, 120
-sub $t3, $t4, $t3
-sub $t3, $t7, $t3
+la $t4, testnum
+add $t3, $t4, $t3
 sw $t0, ($t3)
 lw $ra, 60($sp)
 add $sp, $sp, 64
@@ -350,7 +342,7 @@ li, $a0, '\n'
 li $v0, 11
 syscall
 li $t0, 1
-sw $t0, -84($t7)
+sw $t0, testnum + 36
 add $t0, $0, 7
 sw $t0, 136($sp)
 lw $t0, 136($sp)
@@ -364,23 +356,21 @@ lw $t5, 128($sp)
 li $t3, 4
 mult $t3, $t5
 mflo $t3
-li $t4, 120
-sub $t3, $t4, $t3
-sub $t3, $t7, $t3
+la $t4, testnum
+add $t3, $t4, $t3
 sw $t0, ($t3)
 li $t0, 7
 sw $t0, -8($sp)
 jal fi
-lw $t0, -88($t7)
+lw $t0, testnum + 32
 add $t0, $0, $t0
 sw $t0, 124($sp)
 lw $t5, 124($sp)
 li $t3, 4
 mult $t3, $t5
 mflo $t3
-li $t4, 120
-sub $t3, $t4, $t3
-sub $t3, $t7, $t3
+la $t4, testnum
+add $t3, $t4, $t3
 lw $t0, ($t3)
 add $t0, $0, $t0
 sw $t0, 120($sp)
@@ -393,7 +383,7 @@ syscall
 li, $a0, '\n'
 li $v0, 11
 syscall
-lw $t0, -116($t7)
+lw $t0, testnum + 4
 add $t0, $0, $t0
 sw $t0, 116($sp)
 la $a0, string_1
@@ -405,30 +395,28 @@ syscall
 li, $a0, '\n'
 li $v0, 11
 syscall
-lw $t0, -100($t7)
+lw $t0, testnum + 20
 add $t0, $0, $t0
 sw $t0, 112($sp)
 lw $t5, 112($sp)
 li $t3, 4
 mult $t3, $t5
 mflo $t3
-li $t4, 120
-sub $t3, $t4, $t3
-sub $t3, $t7, $t3
+la $t4, testnum
+add $t3, $t4, $t3
 lw $t0, ($t3)
 add $t0, $0, $t0
 sw $t0, 108($sp)
 lw $t0, 108($sp)
-lw $t1, -84($t7)
+lw $t1, testnum + 36
 add $t0, $t0, $t1
 sw $t0, 104($sp)
 lw $t5, 104($sp)
 li $t3, 4
 mult $t3, $t5
 mflo $t3
-li $t4, 120
-sub $t3, $t4, $t3
-sub $t3, $t7, $t3
+la $t4, testnum
+add $t3, $t4, $t3
 lw $t0, ($t3)
 add $t0, $0, $t0
 sw $t0, 100($sp)
@@ -441,7 +429,7 @@ syscall
 li, $a0, '\n'
 li $v0, 11
 syscall
-lw $t0, -120($t7)
+lw $t0, testnum + 0
 add $t0, $0, $t0
 sw $t0, 96($sp)
 la $a0, string_3

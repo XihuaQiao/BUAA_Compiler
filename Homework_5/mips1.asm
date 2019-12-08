@@ -151,11 +151,8 @@ jr $ra
 sum4:
 sub $sp, $sp, 44
 sw $ra, 40($sp)
-li $t0, 1
-sw $t0, 20($sp)
-lw $t0, 20($sp)
-lw $t1, g_list + 12
-add $t0, $t0, $t1
+lw $t0, g_list + 12
+add $t0, $t0, 1
 sw $t0, 16($sp)
 lw $t0, 16($sp)
 sw $t0, g_list + 12
@@ -291,11 +288,9 @@ li $v0, 5
 syscall
 sw $v0, 188($sp)
 jal init
-li $t0, -2
-sw $t0, 172($sp)
 li $t0, 2
 sw $t0, -8($sp)
-lw $t0, 172($sp)
+li $t0, -2
 sw $t0, -12($sp)
 jal times
 add $t0, $0, $t6
@@ -306,15 +301,11 @@ jal abs
 add $t0, $0, $t6
 sw $t0, 164($sp)
 li $t0, -1
-sw $t0, 160($sp)
-lw $t0, 160($sp)
 sw $t0, -8($sp)
 jal abs
 add $t0, $0, $t6
 sw $t0, 156($sp)
 li $t0, -3
-sw $t0, 152($sp)
-lw $t0, 152($sp)
 sw $t0, -8($sp)
 jal abs
 add $t0, $0, $t6
@@ -343,12 +334,6 @@ li $v0, 11
 syscall
 li $t0, 1
 sw $t0, testnum + 36
-li $t0, 7
-sw $t0, 136($sp)
-li $t0, 105
-sw $t0, 132($sp)
-li $t0, 8
-sw $t0, 128($sp)
 li $t0, 2
 lw $t5, 128($sp)
 li $t3, 4
@@ -483,12 +468,8 @@ sw $t0, 68($sp)
 lw $t0, 68($sp)
 add $t0, $t0, 0
 sw $t0, 64($sp)
-li $t0, 43
-sw $t0, 60($sp)
-li $t0, 43
-sw $t0, 56($sp)
 lw $t0, 64($sp)
-lw $t1, 56($sp)
+li $t1, 43
 sub $t2, $t0, $t1
 bne $t2, $0, label_11
 li $t0, 0

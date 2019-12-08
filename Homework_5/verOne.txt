@@ -61,8 +61,7 @@ para int a
 para int b  
 para int c  
 para int d  
-= $18 1  
-+ $18 g_list[3] $19 
++ 1 g_list[3] $19 
 = g_list[3] $19  
 + 0 a $20 
 + $20 b $21 
@@ -109,22 +108,19 @@ call init
 use sum4   
 use abs   
 use times   
-= $38 -2  
 push 2   
-push $38   
+push -2   
 call times   
 + 0 RET $39 
 push $39   
 call abs   
 + 0 RET $40 
 use abs   
-= $41 -1  
-push $41   
+push -1   
 call abs   
 + 0 RET $42 
 use abs   
-= $43 -3  
-push $43   
+push -3   
 call abs   
 + 0 RET $44 
 use abs   
@@ -140,9 +136,6 @@ call sum4
 printf  int $46 
 printf  char '\n' 
 = testnum[9] 1  
-= $47 7  
-= $48 105  
-= $49 8  
 = testnum[$49] 2  
 use fi   
 push 7   
@@ -182,9 +175,7 @@ GOTO label_9
 label label_8   
 + 0 f $64 
 + $64 0 $65 
-= $66 43  
-= $67 43  
-cmp $65 == $67 
+cmp $65 == 43 
 BZ label_11   
 = i 0  
 label label_13   

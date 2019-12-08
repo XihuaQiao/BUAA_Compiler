@@ -136,7 +136,8 @@ int compute(string op, int a, int b) {
 
 void constOpt() {
 	BasicBlock curBlock;
-	MidCode tmp;
+	MidCode tmp, temp;
+	int cnt = 0;
 	valueOpt var1, var2, var3;
 	int value;
 	//vector<valueOpt> values;		
@@ -147,6 +148,7 @@ void constOpt() {
 		name2Var.clear();
 		curBlock = num2Block[i];
 		for (int j = 0; j < curBlock.midCodes.size(); j++) {
+			cnt++;
 			value = 0;
 			var1.init();
 			var2.init();
@@ -181,7 +183,9 @@ void constOpt() {
 					if (var1.isConst) {
 						if (var1.isChar) {						// isChar is used to print the Midcode which need char instead of int
 							string str;
-							str[0] = char(var1.value);
+							str[0] = '\'';
+							str[2] = '\'';
+							str[1] = char(var1.value);
 							tmp.setY(str);
 						}
 						else {
@@ -261,10 +265,30 @@ void constOpt() {
 						}
 						else {
 							if (name2Var.count(tmp.x) > 0 && name2Var[tmp.x].isConst) {
+								if (name2Var[tmp.x].isChar) {
+									string x;
+									x[0] = '\'';
+									x[2] = '\'';
+									x[1] = char(name2Var[tmp.x].value);
+									tmp.setX(x);
+								}
+								else {
+									tmp.setX(to_string(name2Var[tmp.x].value));
+								}
 								var1.setName(tmp.y);
 								name2Var.insert(make_pair(var1.name, var1));
 							}
 							else if (name2Var.count(tmp.y) > 0 && name2Var[tmp.y].isConst) {
+								if (name2Var[tmp.y].isChar) {
+									string y;
+									y[0] = '\'';
+									y[2] = '\'';
+									y[1] = char(name2Var[tmp.x].value);
+									tmp.setY(y);
+								}
+								else {
+									tmp.setY(to_string(name2Var[tmp.y].value));
+								}
 								var1.setName(tmp.x);
 								name2Var.insert(make_pair(var1.name, var1));
 							}
@@ -283,8 +307,44 @@ void constOpt() {
 			else {
 				newMidcodes.push_back(tmp);
 			}
+			if (tmp.op == "=" & tmp.x[0] == '$' && (isNum(tmp.y) || tmp.y[0] == '\'')) 
+			{
+				for (int t = j + 1; t < curBlock.midCodes.size(); t++) {
+					if (curBlock.midCodes[t].x == tmp.x) {
+						curBlock.midCodes[t].setX(tmp.y);
+					}
+					if (curBlock.midCodes[t].y == tmp.x) {
+						curBlock.midCodes[t].setY(tmp.y);
+					}
+					if (curBlock.midCodes[t].z == tmp.x) {
+						curBlock.midCodes[t].setZ(tmp.y);
+					}
+				}
+				for (int t = i + 1; t < num2Block.size(); t++) {
+					for (int k = 0; k < num2Block[t].midCodes.size(); k++) {
+						if (num2Block[t].midCodes[k].x == tmp.x) {
+							num2Block[t].midCodes[k].setX(tmp.y);
+						}
+						if (num2Block[t].midCodes[k].y == tmp.x) {
+							num2Block[t].midCodes[k].setY(tmp.y);
+						}
+						if (num2Block[t].midCodes[k].z == tmp.x) {
+							num2Block[t].midCodes[k].setZ(tmp.y);
+						}
+					}
+				}
+			}
 		}
-		num2Block[i].setVerOne(newMidcodes);
+		for (int j = 0; j < newMidcodes.size(); j++) {
+			tmp = newMidcodes[j];
+			if (tmp.op == "=" & tmp.x[0] == '$' && (isNum(tmp.y) || tmp.y[0] == '\'')) {
+				cout << tmp.x << endl;
+				continue;
+			}
+			else {
+				num2Block[i].addVerOne(tmp);
+			}
+		}
 	}
 }
 
@@ -305,4 +365,9 @@ void outVerOne() {
 	}
 	cout << cnt << endl;
 	verone.close();
+
+
+
+
+					
 }

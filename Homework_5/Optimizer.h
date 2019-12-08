@@ -44,8 +44,8 @@ public:
 		verOne.clear();
 	}
 
-	void setVerOne(vector<MidCode> verOne) {
-		this->verOne = verOne;
+	void addVerOne(MidCode tmp) {
+		verOne.push_back(tmp);
 	}
 };
 

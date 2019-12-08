@@ -9,6 +9,7 @@ extern vector<MidCode> midCode;
 extern Program program;
 extern Function globalFunc;
 extern map<int, string>num2Chars;
+extern vector<MidCode> versionOne;
 int layer = 0;				// 函数调用层数，主函数为第0层
 int extra = 0;				// 目前调用所有函数的栈大小之和，包括全局的栈
 Function currFunc;
@@ -21,9 +22,9 @@ int pushNum = 0;
 int nextMidcode()
 {
 	num++;
-	if (num < midCode.size())
+	if (num < versionOne.size())
 	{
-		mid = midCode[num];
+		mid = versionOne[num];
 		return 1;
 	}
 	else {
@@ -247,7 +248,7 @@ void swData(string name, string regName)
 bool isNum(string str)
 {
 	try {
-		int n = stoi(str);
+		stoi(str);
 		return true;
 	}
 	catch(exception e) {
@@ -378,7 +379,6 @@ void basicOp()
 
 void controller()		// $sp
 {
-	int offset;
 	string str;
 	str = ".data";
 	orders.push_back(str);

@@ -137,6 +137,7 @@ public:
 	string x = "";
 	string y = "";
 	string z = "";
+	bool opt = true;
 	void setOp(string op)
 	{
 		this->op = op;
@@ -152,6 +153,10 @@ public:
 	void setZ(string z)
 	{
 		this->z = z;
+	}
+	void setOpt() 
+	{
+		opt = false;
 	}
 };
 

@@ -1,5 +1,6 @@
 ﻿#include"Source.h"
 #include"mips.h"
+#include"Optimizer.h"
 using namespace std;
 #include<iostream>
 
@@ -13,6 +14,12 @@ int main()
 	getWord();
 	isProgram();
 	outfile.close();
+
+	createBlocks();
+	connectBlock();
+	constOpt();
+	outVerOne();
+
 	controller();
 	outfile.open("mips.txt", ios::out);
 	outfile.close();

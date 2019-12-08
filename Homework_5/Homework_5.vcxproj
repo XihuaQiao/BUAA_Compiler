@@ -125,11 +125,13 @@
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="mips.cpp" />
+    <ClCompile Include="optimizer.cpp" />
     <ClCompile Include="Source.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Class.h" />
     <ClInclude Include="mips.h" />
+    <ClInclude Include="Optimizer.h" />
     <ClInclude Include="Source.h" />
   </ItemGroup>
   <ItemGroup>

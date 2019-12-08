@@ -884,7 +884,7 @@ int isNonReturnFuncDef()
 		program.name2Func[tmp.name] = tmp;
 		temp.setOp("return");
 		temp.setX("");
-		temp.setY("");
+		temp.setY(tmp.name);
 		temp.setZ("");
 		midCode.push_back(temp);
 		return 1;
@@ -1375,6 +1375,7 @@ int isReturnSent(Function& func)
 		Expression expression;
 		isExpression(func, expression);
 		temp.setX(expression.name);
+		temp.setY(func.name);
 		midCode.push_back(temp);
 		if (!func.hasReturn)
 		{
@@ -1391,6 +1392,7 @@ int isReturnSent(Function& func)
 	}
 	else {
 		temp.setX("");
+		temp.setY(func.name);
 		midCode.push_back(temp);
 		if (func.hasReturn) {
 			errorOutput(sym.raw_num, 8);

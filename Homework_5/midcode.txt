@@ -10,11 +10,11 @@ cmp $2 < 0
 BZ label_0   
 - 0 a $3 
 + $3 +0 $4 
-return $4   
+return $4 abs  
 label label_0   
 + 0 a $5 
 + $5 -0 $6 
-return $6   
+return $6 abs  
 function void init  
 var int i  
 = i 0  
@@ -31,7 +31,7 @@ label label_3
 + 0 g_list[1] $10 
 + $10 1 $11 
 = g_list[1] $11  
-return    
+return  init  
 function void show  
 var int i  
 = g_list[3] 1  
@@ -48,14 +48,14 @@ printf  char '\n'
 = i $15  
 GOTO label_4   
 label label_5   
-return    
+return  show  
 function int times  
 para int a  
 para int b  
 = g_list[2] 1  
 * a b $16 
 + 0 $16 $17 
-return $17   
+return $17 times  
 function int sum4  
 para int a  
 para int b  
@@ -68,7 +68,7 @@ para int d
 + $20 b $21 
 + $21 c $22 
 + $22 d $23 
-return $23   
+return $23 sum4  
 function void fi  
 para int i  
 cmp i != 0 
@@ -94,9 +94,9 @@ label label_6
 - $35 -2 $36 
 + $34 testnum[$36] $37 
 = testnum[i] $37  
-return    
+return  fi  
 label label_7   
-return    
+return  fi  
 function void main  
 var int a  
 var int theSum  
@@ -224,5 +224,5 @@ use show
 call show   
 printf  int theSum 
 printf  char '\n' 
-return    
+return  main  
 end    

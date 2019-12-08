@@ -134,6 +134,13 @@ int compute(string op, int a, int b) {
 	}
 }
 
+string replaceSub(string str, string old_str, string new_str) {
+	if (str.find(old_str) != str.npos) {
+		str.replace(str.find(old_str), old_str.length(), new_str);
+	} 
+	return str;
+}
+
 void constOpt() {
 	BasicBlock curBlock;
 	MidCode tmp, temp;
@@ -310,27 +317,15 @@ void constOpt() {
 			if (tmp.op == "=" & tmp.x[0] == '$' && (isNum(tmp.y) || tmp.y[0] == '\'')) 
 			{
 				for (int t = j + 1; t < curBlock.midCodes.size(); t++) {
-					if (curBlock.midCodes[t].x == tmp.x) {
-						curBlock.midCodes[t].setX(tmp.y);
-					}
-					if (curBlock.midCodes[t].y == tmp.x) {
-						curBlock.midCodes[t].setY(tmp.y);
-					}
-					if (curBlock.midCodes[t].z == tmp.x) {
-						curBlock.midCodes[t].setZ(tmp.y);
-					}
+					curBlock.midCodes[t].setX(replaceSub(curBlock.midCodes[t].x, tmp.x, tmp.y));
+					curBlock.midCodes[t].setY(replaceSub(curBlock.midCodes[t].y, tmp.x, tmp.y));
+					curBlock.midCodes[t].setZ(replaceSub(curBlock.midCodes[t].z, tmp.x, tmp.y));
 				}
 				for (int t = i + 1; t < num2Block.size(); t++) {
 					for (int k = 0; k < num2Block[t].midCodes.size(); k++) {
-						if (num2Block[t].midCodes[k].x == tmp.x) {
-							num2Block[t].midCodes[k].setX(tmp.y);
-						}
-						if (num2Block[t].midCodes[k].y == tmp.x) {
-							num2Block[t].midCodes[k].setY(tmp.y);
-						}
-						if (num2Block[t].midCodes[k].z == tmp.x) {
-							num2Block[t].midCodes[k].setZ(tmp.y);
-						}
+						num2Block[t].midCodes[k].setX(replaceSub(num2Block[t].midCodes[k].x, tmp.x, tmp.y));
+						num2Block[t].midCodes[k].setY(replaceSub(num2Block[t].midCodes[k].y, tmp.x, tmp.y));
+						num2Block[t].midCodes[k].setZ(replaceSub(num2Block[t].midCodes[k].z, tmp.x, tmp.y));
 					}
 				}
 			}
@@ -364,10 +359,5 @@ void outVerOne() {
 		}
 	}
 	cout << cnt << endl;
-	verone.close();
-
-
-
-
-					
+	verone.close();					
 }

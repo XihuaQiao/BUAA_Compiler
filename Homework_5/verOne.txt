@@ -136,7 +136,7 @@ call sum4
 printf  int $46 
 printf  char '\n' 
 = testnum[9] 1  
-= testnum[$49] 2  
+= testnum[8] 2  
 use fi   
 push 7   
 call fi   

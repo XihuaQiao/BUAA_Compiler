@@ -335,13 +335,7 @@ syscall
 li $t0, 1
 sw $t0, testnum + 36
 li $t0, 2
-lw $t5, 128($sp)
-li $t3, 4
-mult $t3, $t5
-mflo $t3
-la $t4, testnum
-add $t3, $t4, $t3
-sw $t0, ($t3)
+sw $t0, testnum + 32
 li $t0, 7
 sw $t0, -8($sp)
 jal fi

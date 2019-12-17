@@ -8,9 +8,9 @@ int main()
 {
 	extern ofstream outfile;
 	extern vector<string>orders;
-	outfile.open("output.txt", ios::out);
+	outfile.open("error.txt", ios::out);
 	outfile.close();
-	outfile.open("output.txt", ios::app);
+	outfile.open("error.txt", ios::app);
 	getWord();
 	isProgram();
 	outfile.close();
@@ -18,7 +18,7 @@ int main()
 	createBlocks();
 	connectBlock();
 	constOpt();
-	outVerOne();
+	outVersion();
 
 	controller();
 	outfile.open("mips.txt", ios::out);

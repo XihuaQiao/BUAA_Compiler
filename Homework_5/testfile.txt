@@ -1,90 +1,129 @@
-﻿int g_list[20];
-int testnum[10];
-int abs(int a){
-	g_list[0] = g_list[0] + 1;
-	if(a < 0){
-		return (-a ++ 0);     
-	}     
-	return (a +-0); 
-}  
+﻿const int MAX_NUM = 128 ;
 
-void init(){     
-	int i;     
-	i = 0;     
-	while(i < 10){         
-		g_list[i] = 0;         
-		i = i + + 1;     
-	}    
-	g_list[1] = g_list[1] + 1; 
+int factorial(int n){
+   if(n<=1) return (1);
+
+   return(n*factorial(n-1)) ;
 }
 
-void show(){     
-	int i;     
-	g_list[3] = 1;     
-	i = 0;     
-	while(i < 4){         
-		printf(g_list[i]);         
-		i =i+1;    
-	} 
-}  
+int mod(int x, int y){
+   x=x-x/y*y;
 
-int times(int a, int b){
-	g_list[2] = 1;     
-	return (a * b); 
-}  
+   return (x) ;
+}
 
-int sum4(int a, int b, int c, int d){ 
-	g_list[3] = 1 + g_list[3];     
-	return (a + b + c + d); 
-}  
+void swap(int x, int y){
+    int temp;
 
-void fi(int i){
-	if(i){
-		testnum[i] = testnum[i++1] + testnum[i--2];
-		fi(i - 1); 
-	}  else{
-		testnum[i] = testnum[i++1] + testnum[i--2];  
-		return ;  
-	} 
-}   
+    printf("x = ", x) ;
+    printf("y = ", y) ;
+    temp = x;
+    x=y;
+    y=temp;
+    printf("SWAP x = ", x) ;
+    printf("SWAP y = ", y) ;
+}
 
-void main(){ 
-	int a;     
-	int theSum, i;    
-	char f;     
-	scanf(f, a);     
-	init();       
-	printf(sum4(abs(times(2, -2)), abs(-1), abs(-3), abs(22) ));   
-	testnum[9] = 1; 
-	testnum[7+'b' - 'a'] = 2;  
-	fi(7);    
-	printf("testnum[2] = ", testnum[testnum[8]]);  
-	printf("testnum[1] = ", testnum[1]); 
-	printf("testnum[3] = ", testnum[testnum[testnum[5]]+testnum[9]]);  
-	printf("testnum[0] = ", testnum[0]);       
-	theSum= 0;     
-	if( a > 10 ){         
-		i = 0;         
-		do{             
-			theSum = theSum + i;             
-			i = i + 1;         
-		}while(i < a);     
-	} else{         
-		if(f+0=='+'+0){             
-			i = 0;             
-			while(i < a+3){                 
-				theSum = theSum + i;                
-				i = i + 3;            
-			};         
-		} else{ 
-			i = 0;            
-			while(i < a+3){    
-				theSum = theSum - i;  
-				i = i + 3;             
-			};         
-		}     
-	}          
-	show();  
-	printf(theSum);      
-	return; 
+int full_num(int n, int j, int a){
+  return (n*100+j*10+a) ;
+}
+
+int flower_num(int n, int j, int a){
+  return (n*n*n+j*j*j+a*a*a) ;
+}
+
+void complete_flower_num()
+{
+  int k[128];
+  int i,j,n,s,x1,y;
+  int m,k2,h,leap,x2;
+  int a,b,c ;
+
+
+  for(j=2;j< MAX_NUM ;j=j+1)
+  {
+    n = -1;
+    s = j;
+    for(i=1; i<j; i=i+1)
+    {
+      x1 = (j/i) * i ;
+      if( mod(j,i) == 0 )
+      {
+        n = n + 1;
+        s = s - i;
+        if (n >= 128)
+           printf("OVERFLOW!") ;
+        else
+           k[n] = i;
+      }
+    }
+
+    if(s==0)
+    {
+      printf("complete number: ",j);
+      for(i=0;i<=n;i=i+1)
+        printf("  ",k[i]);
+      printf(" ") ;
+    }
+  }
+
+  printf("---------------------------------------------------------------");
+  printf("'water flower'number is:");
+  y = 0 ;
+  for(i=100;i<100+MAX_NUM;i=i+1){
+      n=i/100;
+      j=mod(i/10,10);
+      a=mod(i,10);
+      if(full_num(n,j,a)==flower_num(n, j, a)){
+        k[y] = i ;
+        y = y + 1 ;
+      }
+  }
+  for(i = 0 ; i<y ; i=i+1){
+    printf("  ", k[i]) ;
+  }
+  printf(" ") ;
+
+
+
+  printf("---------------------------------------------------------------");
+  h = 0 ;
+  leap = 1 ;
+  for(m = 2 ; m <= MAX_NUM ; m=m+1)
+  {
+    k2 = m / 2;
+    for(i=2; i<=k2; i=i+1){
+      x2 = (m/i)*i ;
+      if( mod(m,i) == 0)
+      {
+        leap=0;
+      }
+     }
+    if(leap == 1)
+    {
+      printf(" ",m);
+      h = h +1;
+
+      x2 = (h/10)*10 ;
+      if( x2 == h)
+        printf(" ");
+     }
+     leap=1;
+  }
+
+  printf("The total is ",h);
+
+}
+
+
+void main()
+{
+   int n ;
+
+   n = factorial(5) ;
+   printf("5 != ", n) ;
+
+   swap(5, 10 ) ;
+
+   complete_flower_num() ;
 }

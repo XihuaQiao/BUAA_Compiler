@@ -54,6 +54,12 @@ class Variable : public Unit
 public:
 	bool var = false;
 	int size = 4;
+	Variable(string _name) {
+		name = _name;
+	}
+	Variable() {
+		name = "";
+	}
 };
 
 class Factor : public Unit
@@ -74,6 +80,8 @@ public:
 	vector<Variable> consts;
 	map<string, Unit> name2Unit;
 	map<string, Factor> name2Factor;
+	map<string, int> name2Reg;
+
 	void addFactor(Factor factor)
 	{
 		factors.push_back(factor);
@@ -157,6 +165,20 @@ public:
 	void setOpt() 
 	{
 		opt = false;
+	}
+
+	MidCode(string _op, string _x, string _y, string _z) {
+		op = _op;
+		x = _x;
+		y = _y;
+		z = _z;
+	}
+
+	MidCode() {
+		op = "";
+		x = "";
+		y = "";
+		z = "";
 	}
 };
 

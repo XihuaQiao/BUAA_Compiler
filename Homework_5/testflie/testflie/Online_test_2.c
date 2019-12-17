@@ -25,7 +25,7 @@ void show(){
 	while(i < 4){         
 		printf(g_list[i]);         
 		i =i+1;    
-	} 
+	}
 }  
 
 int times(int a, int b){

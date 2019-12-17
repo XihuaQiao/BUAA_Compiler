@@ -1,0 +1,574 @@
+factorial
+block1
+out:	n 
+in:		
+def:	n 
+use:	
+in_blocks:	3 5 
+out_blocks:	3 2 
+function int factorial 
+para int n 
+cmp n <= 1
+BZ label_0  
+
+
+block2
+out:	n 
+in:		n 
+def:	
+use:	
+in_blocks:	1 
+out_blocks:	3 5 
+return 1 factorial 
+
+
+block3
+out:	n 
+in:		n 
+def:	$2 
+use:	n 
+in_blocks:	1 2 4 
+out_blocks:	1 4 
+label label_0  
+use factorial  
+- n 1 $2
+push $2  
+call factorial  
+
+
+block4
+out:	n 
+in:		n 
+def:	$3 
+use:	n 
+in_blocks:	3 
+out_blocks:	3 5 
+* n RET $3
+return $3 factorial 
+
+
+main
+block5
+out:	_complete_flower_num_0_$54 _complete_flower_num_0_$38 
+in:		_complete_flower_num_0_$54 _complete_flower_num_0_$38 
+def:	
+use:	
+in_blocks:	2 4 
+out_blocks:	1 6 
+function void main 
+var int n 
+use factorial  
+push 5  
+call factorial  
+
+
+block6
+out:	_complete_flower_num_0_j _complete_flower_num_0_$54 _complete_flower_num_0_$38 
+in:		_complete_flower_num_0_$54 _complete_flower_num_0_$38 
+def:	n _swap_6_x _swap_6_y _swap_6_temp _complete_flower_num_0_j 
+use:	
+in_blocks:	5 
+out_blocks:	7 
+= n RET 
+printf 16 int n
+printf  char '\n'
+= _swap_6_x 5 
+= _swap_6_y 10 
+var int _swap_6_temp 
+printf 0 int _swap_6_x
+printf  char '\n'
+printf 1 int _swap_6_y
+printf  char '\n'
+= _swap_6_temp _swap_6_x 
+= _swap_6_x _swap_6_y 
+= _swap_6_y _swap_6_temp 
+printf 2 int _swap_6_x
+printf  char '\n'
+printf 3 int _swap_6_y
+printf  char '\n'
+var int _complete_flower_num_0_k[128] 
+var int _complete_flower_num_0_i 
+var int _complete_flower_num_0_j 
+var int _complete_flower_num_0_n 
+var int _complete_flower_num_0_s 
+var int _complete_flower_num_0_x1 
+var int _complete_flower_num_0_y 
+var int _complete_flower_num_0_m 
+var int _complete_flower_num_0_k2 
+var int _complete_flower_num_0_h 
+var int _complete_flower_num_0_leap 
+var int _complete_flower_num_0_x2 
+var int _complete_flower_num_0_a 
+var int _complete_flower_num_0_b 
+var int _complete_flower_num_0_c 
+= _complete_flower_num_0_j 2 
+
+
+block7
+out:	_complete_flower_num_0_$54 _complete_flower_num_0_j _complete_flower_num_0_$38 
+in:		_complete_flower_num_0_j _complete_flower_num_0_$54 _complete_flower_num_0_$38 
+def:	
+use:	_complete_flower_num_0_j 
+in_blocks:	6 20 
+out_blocks:	21 8 
+label _complete_flower_num_0_label_2  
+cmp _complete_flower_num_0_j < 128
+BZ _complete_flower_num_0_label_3  
+
+
+block8
+out:	_complete_flower_num_0_i _complete_flower_num_0_j _complete_flower_num_0_s _complete_flower_num_0_n _complete_flower_num_0_$38 _complete_flower_num_0_$54 
+in:		_complete_flower_num_0_j _complete_flower_num_0_$38 _complete_flower_num_0_$54 
+def:	_complete_flower_num_0_n _complete_flower_num_0_s _complete_flower_num_0_i 
+use:	_complete_flower_num_0_j 
+in_blocks:	7 
+out_blocks:	9 
+= _complete_flower_num_0_n -1 
+= _complete_flower_num_0_s _complete_flower_num_0_j 
+= _complete_flower_num_0_i 1 
+
+
+block9
+out:	_complete_flower_num_0_s _complete_flower_num_0_j _complete_flower_num_0_n _complete_flower_num_0_$38 _complete_flower_num_0_i _complete_flower_num_0_$54 
+in:		_complete_flower_num_0_i _complete_flower_num_0_j _complete_flower_num_0_s _complete_flower_num_0_n _complete_flower_num_0_$38 _complete_flower_num_0_$54 
+def:	
+use:	_complete_flower_num_0_i _complete_flower_num_0_j 
+in_blocks:	8 14 
+out_blocks:	15 10 
+label _complete_flower_num_0_label_4  
+cmp _complete_flower_num_0_i < _complete_flower_num_0_j
+BZ _complete_flower_num_0_label_5  
+
+
+block10
+out:	_complete_flower_num_0_i _complete_flower_num_0_n _complete_flower_num_0_s _complete_flower_num_0_j _complete_flower_num_0_$38 _complete_flower_num_0_$54 
+in:		_complete_flower_num_0_j _complete_flower_num_0_i _complete_flower_num_0_n _complete_flower_num_0_s _complete_flower_num_0_$38 _complete_flower_num_0_$54 
+def:	_complete_flower_num_0_$26 _complete_flower_num_0_x1 _complete_flower_num_0__mod_0_x _complete_flower_num_0__mod_0_y _complete_flower_num_0__mod_0_$6 _complete_flower_num_0__mod_0_$7 _complete_flower_num_0_$30 
+use:	_complete_flower_num_0_j _complete_flower_num_0_i 
+in_blocks:	9 
+out_blocks:	14 11 
+/ _complete_flower_num_0_j _complete_flower_num_0_i _complete_flower_num_0_$26
+* _complete_flower_num_0_$26 _complete_flower_num_0_i _complete_flower_num_0_x1
+= _complete_flower_num_0__mod_0_x _complete_flower_num_0_j 
+= _complete_flower_num_0__mod_0_y _complete_flower_num_0_i 
+/ _complete_flower_num_0__mod_0_x _complete_flower_num_0__mod_0_y _complete_flower_num_0__mod_0_$6
+* _complete_flower_num_0__mod_0_$6 _complete_flower_num_0__mod_0_y _complete_flower_num_0__mod_0_$7
+- _complete_flower_num_0__mod_0_x _complete_flower_num_0__mod_0_$7 _complete_flower_num_0__mod_0_x
+= _complete_flower_num_0_$30 _complete_flower_num_0__mod_0_x 
+cmp _complete_flower_num_0_$30 == 0
+BZ _complete_flower_num_0_label_9  
+
+
+block11
+out:	_complete_flower_num_0_i _complete_flower_num_0_j _complete_flower_num_0_s _complete_flower_num_0_n _complete_flower_num_0_$38 _complete_flower_num_0_$54 
+in:		_complete_flower_num_0_n _complete_flower_num_0_s _complete_flower_num_0_i _complete_flower_num_0_j _complete_flower_num_0_$38 _complete_flower_num_0_$54 
+def:	
+use:	_complete_flower_num_0_n _complete_flower_num_0_s _complete_flower_num_0_i 
+in_blocks:	10 
+out_blocks:	13 12 
++ _complete_flower_num_0_n 1 _complete_flower_num_0_n
+- _complete_flower_num_0_s _complete_flower_num_0_i _complete_flower_num_0_s
+cmp _complete_flower_num_0_n >= 128
+BZ _complete_flower_num_0_label_8  
+
+
+block12
+out:	_complete_flower_num_0_i _complete_flower_num_0_j _complete_flower_num_0_s _complete_flower_num_0_n _complete_flower_num_0_$38 _complete_flower_num_0_$54 
+in:		_complete_flower_num_0_i _complete_flower_num_0_j _complete_flower_num_0_s _complete_flower_num_0_n _complete_flower_num_0_$38 _complete_flower_num_0_$54 
+def:	
+use:	
+in_blocks:	11 
+out_blocks:	14 
+printf 4 int 
+printf  char '\n'
+GOTO _complete_flower_num_0_label_9  
+
+
+block13
+out:	_complete_flower_num_0_i _complete_flower_num_0_j _complete_flower_num_0_s _complete_flower_num_0_n _complete_flower_num_0_$38 _complete_flower_num_0_$54 
+in:		_complete_flower_num_0_i _complete_flower_num_0_j _complete_flower_num_0_s _complete_flower_num_0_n _complete_flower_num_0_$38 _complete_flower_num_0_$54 
+def:	
+use:	
+in_blocks:	11 
+out_blocks:	14 
+label _complete_flower_num_0_label_8  
+[]= _complete_flower_num_0_n _complete_flower_num_0_i _complete_flower_num_0_k
+
+
+block14
+out:	_complete_flower_num_0_i _complete_flower_num_0_j _complete_flower_num_0_s _complete_flower_num_0_n _complete_flower_num_0_$38 _complete_flower_num_0_$54 
+in:		_complete_flower_num_0_i _complete_flower_num_0_j _complete_flower_num_0_s _complete_flower_num_0_n _complete_flower_num_0_$38 _complete_flower_num_0_$54 
+def:	
+use:	_complete_flower_num_0_i 
+in_blocks:	10 12 13 
+out_blocks:	9 
+label _complete_flower_num_0_label_9  
++ _complete_flower_num_0_i 1 _complete_flower_num_0_i
+GOTO _complete_flower_num_0_label_4  
+
+
+block15
+out:	_complete_flower_num_0_j _complete_flower_num_0_n _complete_flower_num_0_$38 _complete_flower_num_0_$54 
+in:		_complete_flower_num_0_s _complete_flower_num_0_j _complete_flower_num_0_n _complete_flower_num_0_$38 _complete_flower_num_0_$54 
+def:	
+use:	_complete_flower_num_0_s 
+in_blocks:	9 
+out_blocks:	20 16 
+label _complete_flower_num_0_label_5  
+cmp _complete_flower_num_0_s == 0
+BZ _complete_flower_num_0_label_10  
+
+
+block16
+out:	_complete_flower_num_0_i _complete_flower_num_0_n _complete_flower_num_0_j _complete_flower_num_0_$38 _complete_flower_num_0_$54 
+in:		_complete_flower_num_0_j _complete_flower_num_0_n _complete_flower_num_0_$38 _complete_flower_num_0_$54 
+def:	_complete_flower_num_0_i 
+use:	_complete_flower_num_0_j 
+in_blocks:	15 
+out_blocks:	17 
+printf 5 int _complete_flower_num_0_j
+printf  char '\n'
+= _complete_flower_num_0_i 0 
+
+
+block17
+out:	_complete_flower_num_0_j _complete_flower_num_0_$38 _complete_flower_num_0_i _complete_flower_num_0_$54 _complete_flower_num_0_n 
+in:		_complete_flower_num_0_i _complete_flower_num_0_n _complete_flower_num_0_j _complete_flower_num_0_$38 _complete_flower_num_0_$54 
+def:	
+use:	_complete_flower_num_0_i _complete_flower_num_0_n 
+in_blocks:	16 18 
+out_blocks:	19 18 
+label _complete_flower_num_0_label_12  
+cmp _complete_flower_num_0_i <= _complete_flower_num_0_n
+BZ _complete_flower_num_0_label_13  
+
+
+block18
+out:	_complete_flower_num_0_i _complete_flower_num_0_n _complete_flower_num_0_j _complete_flower_num_0_$38 _complete_flower_num_0_$54 
+in:		_complete_flower_num_0_$38 _complete_flower_num_0_i _complete_flower_num_0_n _complete_flower_num_0_j _complete_flower_num_0_$54 
+def:	
+use:	_complete_flower_num_0_$38 _complete_flower_num_0_i 
+in_blocks:	17 
+out_blocks:	17 
+[] _complete_flower_num_0_k _complete_flower_num_0_i _complete_flower_num_0_$38
+printf 6 int _complete_flower_num_0_$38
+printf  char '\n'
++ _complete_flower_num_0_i 1 _complete_flower_num_0_i
+GOTO _complete_flower_num_0_label_12  
+
+
+block19
+out:	_complete_flower_num_0_j _complete_flower_num_0_$54 _complete_flower_num_0_$38 
+in:		_complete_flower_num_0_j _complete_flower_num_0_$54 _complete_flower_num_0_$38 
+def:	
+use:	
+in_blocks:	17 
+out_blocks:	20 
+label _complete_flower_num_0_label_13  
+printf 7 int 
+printf  char '\n'
+
+
+block20
+out:	_complete_flower_num_0_j _complete_flower_num_0_$54 _complete_flower_num_0_$38 
+in:		_complete_flower_num_0_j _complete_flower_num_0_$54 _complete_flower_num_0_$38 
+def:	
+use:	_complete_flower_num_0_j 
+in_blocks:	15 19 
+out_blocks:	7 
+label _complete_flower_num_0_label_10  
++ _complete_flower_num_0_j 1 _complete_flower_num_0_j
+GOTO _complete_flower_num_0_label_2  
+
+
+block21
+out:	_complete_flower_num_0_i _complete_flower_num_0_y _complete_flower_num_0_$54 
+in:		_complete_flower_num_0_$54 
+def:	_complete_flower_num_0_y _complete_flower_num_0_i 
+use:	
+in_blocks:	7 
+out_blocks:	22 
+label _complete_flower_num_0_label_3  
+printf 8 int 
+printf  char '\n'
+printf 9 int 
+printf  char '\n'
+= _complete_flower_num_0_y 0 
+= _complete_flower_num_0_i 100 
+
+
+block22
+out:	_complete_flower_num_0_y _complete_flower_num_0_$54 _complete_flower_num_0_i 
+in:		_complete_flower_num_0_i _complete_flower_num_0_y _complete_flower_num_0_$54 
+def:	
+use:	_complete_flower_num_0_i 
+in_blocks:	21 25 
+out_blocks:	26 23 
+label _complete_flower_num_0_label_14  
+cmp _complete_flower_num_0_i < 228
+BZ _complete_flower_num_0_label_15  
+
+
+block23
+out:	_complete_flower_num_0_i _complete_flower_num_0_y _complete_flower_num_0_$54 
+in:		_complete_flower_num_0_i _complete_flower_num_0_y _complete_flower_num_0_$54 
+def:	_complete_flower_num_0_n _complete_flower_num_0_$45 _complete_flower_num_0__mod_1_x _complete_flower_num_0__mod_1_y _complete_flower_num_0__mod_1_$6 _complete_flower_num_0__mod_1_$7 _complete_flower_num_0_j _complete_flower_num_0__mod_2_x _complete_flower_num_0__mod_2_y _complete_flower_num_0__mod_2_$6 _complete_flower_num_0__mod_2_$7 _complete_flower_num_0_a _complete_flower_num_0__full_num_3_n _complete_flower_num_0__full_num_3_j _complete_flower_num_0__full_num_3_a _complete_flower_num_0__full_num_3_$9 _complete_flower_num_0__full_num_3_$11 _complete_flower_num_0__full_num_3_$12 _complete_flower_num_0__full_num_3_$13 _complete_flower_num_0_$49 _complete_flower_num_0__flower_num_4_n _complete_flower_num_0__flower_num_4_j _complete_flower_num_0__flower_num_4_a _complete_flower_num_0__flower_num_4_$14 _complete_flower_num_0__flower_num_4_$15 _complete_flower_num_0__flower_num_4_$17 _complete_flower_num_0__flower_num_4_$18 _complete_flower_num_0__flower_num_4_$19 _complete_flower_num_0__flower_num_4_$20 _complete_flower_num_0__flower_num_4_$21 _complete_flower_num_0__flower_num_4_$22 _complete_flower_num_0_$50 
+use:	_complete_flower_num_0_i 
+in_blocks:	22 
+out_blocks:	25 24 
+/ _complete_flower_num_0_i 100 _complete_flower_num_0_n
+/ _complete_flower_num_0_i 10 _complete_flower_num_0_$45
+= _complete_flower_num_0__mod_1_x _complete_flower_num_0_$45 
+= _complete_flower_num_0__mod_1_y 10 
+/ _complete_flower_num_0__mod_1_x _complete_flower_num_0__mod_1_y _complete_flower_num_0__mod_1_$6
+* _complete_flower_num_0__mod_1_$6 _complete_flower_num_0__mod_1_y _complete_flower_num_0__mod_1_$7
+- _complete_flower_num_0__mod_1_x _complete_flower_num_0__mod_1_$7 _complete_flower_num_0__mod_1_x
+= _complete_flower_num_0_j _complete_flower_num_0__mod_1_x 
+= _complete_flower_num_0__mod_2_x _complete_flower_num_0_i 
+= _complete_flower_num_0__mod_2_y 10 
+/ _complete_flower_num_0__mod_2_x _complete_flower_num_0__mod_2_y _complete_flower_num_0__mod_2_$6
+* _complete_flower_num_0__mod_2_$6 _complete_flower_num_0__mod_2_y _complete_flower_num_0__mod_2_$7
+- _complete_flower_num_0__mod_2_x _complete_flower_num_0__mod_2_$7 _complete_flower_num_0__mod_2_x
+= _complete_flower_num_0_a _complete_flower_num_0__mod_2_x 
+= _complete_flower_num_0__full_num_3_n _complete_flower_num_0_n 
+= _complete_flower_num_0__full_num_3_j _complete_flower_num_0_j 
+= _complete_flower_num_0__full_num_3_a _complete_flower_num_0_a 
+* _complete_flower_num_0__full_num_3_n 100 _complete_flower_num_0__full_num_3_$9
+* _complete_flower_num_0__full_num_3_j 10 _complete_flower_num_0__full_num_3_$11
++ _complete_flower_num_0__full_num_3_$9 _complete_flower_num_0__full_num_3_$11 _complete_flower_num_0__full_num_3_$12
++ _complete_flower_num_0__full_num_3_$12 _complete_flower_num_0__full_num_3_a _complete_flower_num_0__full_num_3_$13
+= _complete_flower_num_0_$49 _complete_flower_num_0__full_num_3_$13 
+= _complete_flower_num_0__flower_num_4_n _complete_flower_num_0_n 
+= _complete_flower_num_0__flower_num_4_j _complete_flower_num_0_j 
+= _complete_flower_num_0__flower_num_4_a _complete_flower_num_0_a 
+* _complete_flower_num_0__flower_num_4_n _complete_flower_num_0__flower_num_4_n _complete_flower_num_0__flower_num_4_$14
+* _complete_flower_num_0__flower_num_4_$14 _complete_flower_num_0__flower_num_4_n _complete_flower_num_0__flower_num_4_$15
+* _complete_flower_num_0__flower_num_4_j _complete_flower_num_0__flower_num_4_j _complete_flower_num_0__flower_num_4_$17
+* _complete_flower_num_0__flower_num_4_$17 _complete_flower_num_0__flower_num_4_j _complete_flower_num_0__flower_num_4_$18
++ _complete_flower_num_0__flower_num_4_$15 _complete_flower_num_0__flower_num_4_$18 _complete_flower_num_0__flower_num_4_$19
+* _complete_flower_num_0__flower_num_4_a _complete_flower_num_0__flower_num_4_a _complete_flower_num_0__flower_num_4_$20
+* _complete_flower_num_0__flower_num_4_$20 _complete_flower_num_0__flower_num_4_a _complete_flower_num_0__flower_num_4_$21
++ _complete_flower_num_0__flower_num_4_$19 _complete_flower_num_0__flower_num_4_$21 _complete_flower_num_0__flower_num_4_$22
+= _complete_flower_num_0_$50 _complete_flower_num_0__flower_num_4_$22 
+cmp _complete_flower_num_0_$49 == _complete_flower_num_0_$50
+BZ _complete_flower_num_0_label_16  
+
+
+block24
+out:	_complete_flower_num_0_i _complete_flower_num_0_y _complete_flower_num_0_$54 
+in:		_complete_flower_num_0_y _complete_flower_num_0_i _complete_flower_num_0_$54 
+def:	
+use:	_complete_flower_num_0_y 
+in_blocks:	23 
+out_blocks:	25 
+[]= _complete_flower_num_0_y _complete_flower_num_0_i _complete_flower_num_0_k
++ _complete_flower_num_0_y 1 _complete_flower_num_0_y
+
+
+block25
+out:	_complete_flower_num_0_i _complete_flower_num_0_y _complete_flower_num_0_$54 
+in:		_complete_flower_num_0_i _complete_flower_num_0_y _complete_flower_num_0_$54 
+def:	
+use:	_complete_flower_num_0_i 
+in_blocks:	23 24 
+out_blocks:	22 
+label _complete_flower_num_0_label_16  
++ _complete_flower_num_0_i 1 _complete_flower_num_0_i
+GOTO _complete_flower_num_0_label_14  
+
+
+block26
+out:	_complete_flower_num_0_i _complete_flower_num_0_y _complete_flower_num_0_$54 
+in:		_complete_flower_num_0_y _complete_flower_num_0_$54 
+def:	_complete_flower_num_0_i 
+use:	
+in_blocks:	22 
+out_blocks:	27 
+label _complete_flower_num_0_label_15  
+= _complete_flower_num_0_i 0 
+
+
+block27
+out:	_complete_flower_num_0_$54 _complete_flower_num_0_i _complete_flower_num_0_y 
+in:		_complete_flower_num_0_i _complete_flower_num_0_y _complete_flower_num_0_$54 
+def:	
+use:	_complete_flower_num_0_i _complete_flower_num_0_y 
+in_blocks:	26 28 
+out_blocks:	29 28 
+label _complete_flower_num_0_label_18  
+cmp _complete_flower_num_0_i < _complete_flower_num_0_y
+BZ _complete_flower_num_0_label_19  
+
+
+block28
+out:	_complete_flower_num_0_i _complete_flower_num_0_y _complete_flower_num_0_$54 
+in:		_complete_flower_num_0_$54 _complete_flower_num_0_i _complete_flower_num_0_y 
+def:	
+use:	_complete_flower_num_0_$54 _complete_flower_num_0_i 
+in_blocks:	27 
+out_blocks:	27 
+[] _complete_flower_num_0_k _complete_flower_num_0_i _complete_flower_num_0_$54
+printf 10 int _complete_flower_num_0_$54
+printf  char '\n'
++ _complete_flower_num_0_i 1 _complete_flower_num_0_i
+GOTO _complete_flower_num_0_label_18  
+
+
+block29
+out:	_complete_flower_num_0_m _complete_flower_num_0_h _complete_flower_num_0_leap 
+in:		
+def:	_complete_flower_num_0_h _complete_flower_num_0_leap _complete_flower_num_0_m 
+use:	
+in_blocks:	27 
+out_blocks:	30 
+label _complete_flower_num_0_label_19  
+printf 11 int 
+printf  char '\n'
+printf 12 int 
+printf  char '\n'
+= _complete_flower_num_0_h 0 
+= _complete_flower_num_0_leap 1 
+= _complete_flower_num_0_m 2 
+
+
+block30
+out:	_complete_flower_num_0_h _complete_flower_num_0_m _complete_flower_num_0_leap 
+in:		_complete_flower_num_0_m _complete_flower_num_0_h _complete_flower_num_0_leap 
+def:	
+use:	_complete_flower_num_0_m 
+in_blocks:	29 39 
+out_blocks:	40 31 
+label _complete_flower_num_0_label_20  
+cmp _complete_flower_num_0_m <= 128
+BZ _complete_flower_num_0_label_21  
+
+
+block31
+out:	_complete_flower_num_0_i _complete_flower_num_0_k2 _complete_flower_num_0_leap _complete_flower_num_0_m _complete_flower_num_0_h 
+in:		_complete_flower_num_0_m _complete_flower_num_0_leap _complete_flower_num_0_h 
+def:	_complete_flower_num_0_k2 _complete_flower_num_0_i 
+use:	_complete_flower_num_0_m 
+in_blocks:	30 
+out_blocks:	32 
+/ _complete_flower_num_0_m 2 _complete_flower_num_0_k2
+= _complete_flower_num_0_i 2 
+
+
+block32
+out:	_complete_flower_num_0_leap _complete_flower_num_0_m _complete_flower_num_0_h _complete_flower_num_0_i _complete_flower_num_0_k2 
+in:		_complete_flower_num_0_i _complete_flower_num_0_k2 _complete_flower_num_0_leap _complete_flower_num_0_m _complete_flower_num_0_h 
+def:	
+use:	_complete_flower_num_0_i _complete_flower_num_0_k2 
+in_blocks:	31 35 
+out_blocks:	36 33 
+label _complete_flower_num_0_label_22  
+cmp _complete_flower_num_0_i <= _complete_flower_num_0_k2
+BZ _complete_flower_num_0_label_23  
+
+
+block33
+out:	_complete_flower_num_0_i _complete_flower_num_0_k2 _complete_flower_num_0_leap _complete_flower_num_0_m _complete_flower_num_0_h 
+in:		_complete_flower_num_0_m _complete_flower_num_0_i _complete_flower_num_0_k2 _complete_flower_num_0_leap _complete_flower_num_0_h 
+def:	_complete_flower_num_0_$60 _complete_flower_num_0_x2 _complete_flower_num_0__mod_5_x _complete_flower_num_0__mod_5_y _complete_flower_num_0__mod_5_$6 _complete_flower_num_0__mod_5_$7 _complete_flower_num_0_$64 
+use:	_complete_flower_num_0_m _complete_flower_num_0_i 
+in_blocks:	32 
+out_blocks:	35 34 
+/ _complete_flower_num_0_m _complete_flower_num_0_i _complete_flower_num_0_$60
+* _complete_flower_num_0_$60 _complete_flower_num_0_i _complete_flower_num_0_x2
+= _complete_flower_num_0__mod_5_x _complete_flower_num_0_m 
+= _complete_flower_num_0__mod_5_y _complete_flower_num_0_i 
+/ _complete_flower_num_0__mod_5_x _complete_flower_num_0__mod_5_y _complete_flower_num_0__mod_5_$6
+* _complete_flower_num_0__mod_5_$6 _complete_flower_num_0__mod_5_y _complete_flower_num_0__mod_5_$7
+- _complete_flower_num_0__mod_5_x _complete_flower_num_0__mod_5_$7 _complete_flower_num_0__mod_5_x
+= _complete_flower_num_0_$64 _complete_flower_num_0__mod_5_x 
+cmp _complete_flower_num_0_$64 == 0
+BZ _complete_flower_num_0_label_24  
+
+
+block34
+out:	_complete_flower_num_0_i _complete_flower_num_0_k2 _complete_flower_num_0_leap _complete_flower_num_0_m _complete_flower_num_0_h 
+in:		_complete_flower_num_0_i _complete_flower_num_0_k2 _complete_flower_num_0_m _complete_flower_num_0_h 
+def:	_complete_flower_num_0_leap 
+use:	
+in_blocks:	33 
+out_blocks:	35 
+= _complete_flower_num_0_leap 0 
+
+
+block35
+out:	_complete_flower_num_0_i _complete_flower_num_0_k2 _complete_flower_num_0_leap _complete_flower_num_0_m _complete_flower_num_0_h 
+in:		_complete_flower_num_0_i _complete_flower_num_0_k2 _complete_flower_num_0_leap _complete_flower_num_0_m _complete_flower_num_0_h 
+def:	
+use:	_complete_flower_num_0_i 
+in_blocks:	33 34 
+out_blocks:	32 
+label _complete_flower_num_0_label_24  
++ _complete_flower_num_0_i 1 _complete_flower_num_0_i
+GOTO _complete_flower_num_0_label_22  
+
+
+block36
+out:	_complete_flower_num_0_m _complete_flower_num_0_h 
+in:		_complete_flower_num_0_leap _complete_flower_num_0_m _complete_flower_num_0_h 
+def:	
+use:	_complete_flower_num_0_leap 
+in_blocks:	32 
+out_blocks:	39 37 
+label _complete_flower_num_0_label_23  
+cmp _complete_flower_num_0_leap == 1
+BZ _complete_flower_num_0_label_28  
+
+
+block37
+out:	_complete_flower_num_0_m _complete_flower_num_0_h 
+in:		_complete_flower_num_0_m _complete_flower_num_0_h 
+def:	_complete_flower_num_0_$68 _complete_flower_num_0_x2 
+use:	_complete_flower_num_0_m _complete_flower_num_0_h 
+in_blocks:	36 
+out_blocks:	39 38 
+printf 13 int _complete_flower_num_0_m
+printf  char '\n'
++ _complete_flower_num_0_h 1 _complete_flower_num_0_h
+/ _complete_flower_num_0_h 10 _complete_flower_num_0_$68
+* _complete_flower_num_0_$68 10 _complete_flower_num_0_x2
+cmp _complete_flower_num_0_x2 == _complete_flower_num_0_h
+BZ _complete_flower_num_0_label_28  
+
+
+block38
+out:	_complete_flower_num_0_m _complete_flower_num_0_h 
+in:		_complete_flower_num_0_m _complete_flower_num_0_h 
+def:	
+use:	
+in_blocks:	37 
+out_blocks:	39 
+printf 14 int 
+printf  char '\n'
+
+
+block39
+out:	_complete_flower_num_0_m _complete_flower_num_0_h _complete_flower_num_0_leap 
+in:		_complete_flower_num_0_m _complete_flower_num_0_h 
+def:	_complete_flower_num_0_leap 
+use:	_complete_flower_num_0_m 
+in_blocks:	36 37 38 
+out_blocks:	30 
+label _complete_flower_num_0_label_28  
+= _complete_flower_num_0_leap 1 
++ _complete_flower_num_0_m 1 _complete_flower_num_0_m
+GOTO _complete_flower_num_0_label_20  
+
+
+block40
+out:	
+in:		_complete_flower_num_0_h 
+def:	
+use:	_complete_flower_num_0_h 
+in_blocks:	30 
+out_blocks:	
+label _complete_flower_num_0_label_21  
+printf 15 int _complete_flower_num_0_h
+printf  char '\n'
+end   
+
+

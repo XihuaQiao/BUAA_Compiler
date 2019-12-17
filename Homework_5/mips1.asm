@@ -1,551 +1,917 @@
 .data
-string_0: .asciiz "testnum[2] = "
-string_1: .asciiz "testnum[1] = "
-string_2: .asciiz "testnum[3] = "
-string_3: .asciiz "testnum[0] = "
-g_list: .space 80
-testnum: .space 40
+string_0: .asciiz "x = "
+string_1: .asciiz "y = "
+string_2: .asciiz "SWAP x = "
+string_3: .asciiz "SWAP y = "
+string_4: .asciiz "OVERFLOW!"
+string_5: .asciiz "complete number: "
+string_6: .asciiz "  "
+string_7: .asciiz " "
+string_8: .asciiz "---------------------------------------------------------------"
+string_9: .asciiz "'water flower'number is:"
+string_10: .asciiz "  "
+string_11: .asciiz " "
+string_12: .asciiz "---------------------------------------------------------------"
+string_13: .asciiz " "
+string_14: .asciiz " "
+string_15: .asciiz "The total is "
+string_16: .asciiz "5 != "
 .text
 j main
-abs:
-sub $sp, $sp, 36
-sw $ra, 32($sp)
-lw $t0, g_list + 0
-add $t0, $0, $t0
-sw $t0, 24($sp)
-lw $t0, 24($sp)
-add $t0, $t0, 1
-sw $t0, 20($sp)
-lw $t0, 20($sp)
-sw $t0, g_list + 0
-lw $t0, 28($sp)
-add $t0, $0, $t0
-sw $t0, 16($sp)
-lw $t0, 16($sp)
-li $t1, 0
-sub $t2, $t0, $t1
-bgez $t2, label_0
-lw $t0, 28($sp)
-sub $t0, $0, $t0
-sw $t0, 12($sp)
-lw $t0, 12($sp)
-add $t0, $t0, 0
-sw $t0, 8($sp)
-lw $t6, 8($sp)
-lw $ra, 32($sp)
-add $sp, $sp, 36
-jr $ra
-label_0:
-lw $t0, 28($sp)
-add $t0, $0, $t0
-sw $t0, 4($sp)
-lw $t0, 4($sp)
-add $t0, $t0, 0
-sw $t0, 0($sp)
-lw $t6, 0($sp)
-lw $ra, 32($sp)
-add $sp, $sp, 36
-jr $ra
-init:
+factorial:
 sub $sp, $sp, 28
 sw $ra, 24($sp)
-li $t0, 0
-sw $t0, 20($sp)
-label_2:
-lw $t0, 20($sp)
-add $t0, $0, $t0
-sw $t0, 16($sp)
-lw $t0, 16($sp)
-li $t1, 10
-sub $t2, $t0, $t1
-bgez $t2, label_3
-li $t0, 0
 lw $t5, 20($sp)
-li $t3, 4
-mult $t3, $t5
-mflo $t3
-la $t4, g_list
-add $t3, $t4, $t3
-sw $t0, ($t3)
-lw $t0, 20($sp)
-add $t0, $0, $t0
-sw $t0, 12($sp)
-lw $t0, 12($sp)
-add $t0, $t0, 1
-sw $t0, 8($sp)
-lw $t0, 8($sp)
-sw $t0, 20($sp)
-j label_2
-label_3:
-lw $t0, g_list + 4
-add $t0, $0, $t0
-sw $t0, 4($sp)
-lw $t0, 4($sp)
-add $t0, $t0, 1
-sw $t0, 0($sp)
-lw $t0, 0($sp)
-sw $t0, g_list + 4
+li $t1, 1
+sub $t0, $t5, $t1
+bgtz $t0, label_0
+li $v0, 1
 lw $ra, 24($sp)
 add $sp, $sp, 28
 jr $ra
-show:
-sub $sp, $sp, 24
-sw $ra, 20($sp)
-li $t0, 1
-sw $t0, g_list + 12
-li $t0, 0
-sw $t0, 16($sp)
-label_4:
-lw $t0, 16($sp)
-add $t0, $0, $t0
-sw $t0, 12($sp)
-lw $t0, 12($sp)
-li $t1, 4
-sub $t2, $t0, $t1
-bgez $t2, label_5
-lw $t5, 16($sp)
-li $t3, 4
-mult $t3, $t5
-mflo $t3
-la $t4, g_list
-add $t3, $t4, $t3
-lw $t0, ($t3)
-add $t0, $0, $t0
-sw $t0, 8($sp)
-lw $a0, 8($sp)
-li $v0, 1
-syscall
-li, $a0, '\n'
-li $v0, 11
-syscall
-lw $t0, 16($sp)
-add $t0, $0, $t0
-sw $t0, 4($sp)
-lw $t0, 4($sp)
-add $t0, $t0, 1
-sw $t0, 0($sp)
-lw $t0, 0($sp)
-sw $t0, 16($sp)
-j label_4
-label_5:
-lw $ra, 20($sp)
-add $sp, $sp, 24
+label_0:
+sub $t4, $t5, 1
+sub $sp, $sp, 4
+sw $t4, ($sp)
+sub $sp, $sp, 4
+sw $t5, ($sp)
+sw $t4, -8($sp)
+jal factorial
+lw $t5, ($sp)
+add $sp, $sp, 4
+lw $t4, ($sp)
+add $sp, $sp, 4
+mult $t5, $v0
+mflo $t4
+move $v0, $t4
+lw $ra, 24($sp)
+add $sp, $sp, 28
 jr $ra
-times:
-sub $sp, $sp, 20
-sw $ra, 16($sp)
-li $t0, 1
-sw $t0, g_list + 8
-lw $t0, 12($sp)
-lw $t1, 8($sp)
-mult $t0, $t1
-mflo $t0
-sw $t0, 4($sp)
-lw $t0, 4($sp)
-add $t0, $0, $t0
-sw $t0, 0($sp)
-lw $t6, 0($sp)
-lw $ra, 16($sp)
-add $sp, $sp, 20
+mod:
+sub $sp, $sp, 28
+sw $ra, 24($sp)
+lw $t7, 20($sp)
+lw $t6, 16($sp)
+div $t7, $t6
+mflo $t5
+mult $t5, $t6
+mflo $t4
+sub $t7, $t7, $t4
+move $v0, $t7
+lw $ra, 24($sp)
+add $sp, $sp, 28
 jr $ra
-sum4:
-sub $sp, $sp, 44
-sw $ra, 40($sp)
-lw $t0, g_list + 12
-add $t0, $t0, 1
-sw $t0, 16($sp)
-lw $t0, 16($sp)
-sw $t0, g_list + 12
-lw $t0, 36($sp)
-add $t0, $0, $t0
-sw $t0, 12($sp)
-lw $t0, 12($sp)
-lw $t1, 32($sp)
-add $t0, $t0, $t1
-sw $t0, 8($sp)
-lw $t0, 8($sp)
-lw $t1, 28($sp)
-add $t0, $t0, $t1
-sw $t0, 4($sp)
-lw $t0, 4($sp)
-lw $t1, 24($sp)
-add $t0, $t0, $t1
-sw $t0, 0($sp)
-lw $t6, 0($sp)
-lw $ra, 40($sp)
-add $sp, $sp, 44
-jr $ra
-fi:
-sub $sp, $sp, 64
-sw $ra, 60($sp)
-lw $t0, 56($sp)
-li $t1, 0
-sub $t2, $t0, $t1
-beq $t2, $0, label_6
-lw $t0, 56($sp)
-add $t0, $0, $t0
-sw $t0, 52($sp)
-lw $t0, 52($sp)
-add $t0, $t0, 1
-sw $t0, 48($sp)
-lw $t5, 48($sp)
-li $t3, 4
-mult $t3, $t5
-mflo $t3
-la $t4, testnum
-add $t3, $t4, $t3
-lw $t0, ($t3)
-add $t0, $0, $t0
-sw $t0, 44($sp)
-lw $t0, 56($sp)
-add $t0, $0, $t0
-sw $t0, 40($sp)
-lw $t0, 40($sp)
-sub $t0, $t0, -2
-sw $t0, 36($sp)
-lw $t0, 44($sp)
-lw $t5, 36($sp)
-li $t3, 4
-mult $t3, $t5
-mflo $t3
-la $t4, testnum
-add $t3, $t4, $t3
-lw $t1, ($t3)
-add $t0, $t0, $t1
-sw $t0, 32($sp)
-lw $t0, 32($sp)
-lw $t5, 56($sp)
-li $t3, 4
-mult $t3, $t5
-mflo $t3
-la $t4, testnum
-add $t3, $t4, $t3
-sw $t0, ($t3)
-lw $t0, 56($sp)
-add $t0, $0, $t0
-sw $t0, 28($sp)
-lw $t0, 28($sp)
-sub $t0, $t0, 1
-sw $t0, 24($sp)
-lw $t0, 24($sp)
-sw $t0, -8($sp)
-jal fi
-j label_7
-label_6:
-lw $t0, 56($sp)
-add $t0, $0, $t0
-sw $t0, 20($sp)
-lw $t0, 20($sp)
-add $t0, $t0, 1
-sw $t0, 16($sp)
-lw $t5, 16($sp)
-li $t3, 4
-mult $t3, $t5
-mflo $t3
-la $t4, testnum
-add $t3, $t4, $t3
-lw $t0, ($t3)
-add $t0, $0, $t0
-sw $t0, 12($sp)
-lw $t0, 56($sp)
-add $t0, $0, $t0
-sw $t0, 8($sp)
-lw $t0, 8($sp)
-sub $t0, $t0, -2
-sw $t0, 4($sp)
-lw $t0, 12($sp)
+swap:
+sub $sp, $sp, 16
+sw $ra, 12($sp)
+lw $t6, 8($sp)
 lw $t5, 4($sp)
-li $t3, 4
-mult $t3, $t5
-mflo $t3
-la $t4, testnum
-add $t3, $t4, $t3
-lw $t1, ($t3)
-add $t0, $t0, $t1
-sw $t0, 0($sp)
-lw $t0, 0($sp)
-lw $t5, 56($sp)
-li $t3, 4
-mult $t3, $t5
-mflo $t3
-la $t4, testnum
-add $t3, $t4, $t3
-sw $t0, ($t3)
-lw $ra, 60($sp)
-add $sp, $sp, 64
-jr $ra
-label_7:
-lw $ra, 60($sp)
-add $sp, $sp, 64
-jr $ra
-main:
-sub $sp, $sp, 196
-sw $ra, 192($sp)
-li $v0, 12
-syscall
-sw $v0, 176($sp)
-li $v0, 5
-syscall
-sw $v0, 188($sp)
-jal init
-li $t0, 2
-sw $t0, -8($sp)
-li $t0, -2
-sw $t0, -12($sp)
-jal times
-add $t0, $0, $t6
-sw $t0, 168($sp)
-lw $t0, 168($sp)
-sw $t0, -8($sp)
-jal abs
-add $t0, $0, $t6
-sw $t0, 164($sp)
-li $t0, -1
-sw $t0, -8($sp)
-jal abs
-add $t0, $0, $t6
-sw $t0, 156($sp)
-li $t0, -3
-sw $t0, -8($sp)
-jal abs
-add $t0, $0, $t6
-sw $t0, 148($sp)
-li $t0, 22
-sw $t0, -8($sp)
-jal abs
-add $t0, $0, $t6
-sw $t0, 144($sp)
-lw $t0, 164($sp)
-sw $t0, -8($sp)
-lw $t0, 156($sp)
-sw $t0, -12($sp)
-lw $t0, 148($sp)
-sw $t0, -16($sp)
-lw $t0, 144($sp)
-sw $t0, -20($sp)
-jal sum4
-add $t0, $0, $t6
-sw $t0, 140($sp)
-lw $a0, 140($sp)
-li $v0, 1
-syscall
-li, $a0, '\n'
-li $v0, 11
-syscall
-li $t0, 1
-sw $t0, testnum + 36
-li $t0, 2
-sw $t0, testnum + 32
-li $t0, 7
-sw $t0, -8($sp)
-jal fi
-lw $t0, testnum + 32
-add $t0, $0, $t0
-sw $t0, 124($sp)
-lw $t5, 124($sp)
-li $t3, 4
-mult $t3, $t5
-mflo $t3
-la $t4, testnum
-add $t3, $t4, $t3
-lw $t0, ($t3)
-add $t0, $0, $t0
-sw $t0, 120($sp)
 la $a0, string_0
 li $v0, 4
 syscall
-lw $a0, 120($sp)
+move $a0, $t6
 li $v0, 1
 syscall
 li, $a0, '\n'
 li $v0, 11
 syscall
-lw $t0, testnum + 4
-add $t0, $0, $t0
-sw $t0, 116($sp)
 la $a0, string_1
 li $v0, 4
 syscall
-lw $a0, 116($sp)
+move $a0, $t5
 li $v0, 1
 syscall
 li, $a0, '\n'
 li $v0, 11
 syscall
-lw $t0, testnum + 20
-add $t0, $0, $t0
-sw $t0, 112($sp)
-lw $t5, 112($sp)
-li $t3, 4
-mult $t3, $t5
-mflo $t3
-la $t4, testnum
-add $t3, $t4, $t3
-lw $t0, ($t3)
-add $t0, $0, $t0
-sw $t0, 108($sp)
-lw $t0, 108($sp)
-lw $t1, testnum + 36
-add $t0, $t0, $t1
-sw $t0, 104($sp)
-lw $t5, 104($sp)
-li $t3, 4
-mult $t3, $t5
-mflo $t3
-la $t4, testnum
-add $t3, $t4, $t3
-lw $t0, ($t3)
-add $t0, $0, $t0
-sw $t0, 100($sp)
+move $t4, $t6
+move $t6, $t5
+move $t5, $t4
 la $a0, string_2
 li $v0, 4
 syscall
-lw $a0, 100($sp)
+move $a0, $t6
 li $v0, 1
 syscall
 li, $a0, '\n'
 li $v0, 11
 syscall
-lw $t0, testnum + 0
-add $t0, $0, $t0
-sw $t0, 96($sp)
 la $a0, string_3
 li $v0, 4
 syscall
-lw $a0, 96($sp)
+move $a0, $t5
 li $v0, 1
 syscall
 li, $a0, '\n'
 li $v0, 11
 syscall
-li $t0, 0
-sw $t0, 184($sp)
-lw $t0, 188($sp)
-add $t0, $0, $t0
-sw $t0, 92($sp)
-lw $t0, 92($sp)
-li $t1, 10
-sub $t2, $t0, $t1
-blez $t2, label_8
-li $t0, 0
-sw $t0, 180($sp)
-label_10:
-lw $t0, 184($sp)
-add $t0, $0, $t0
-sw $t0, 88($sp)
-lw $t0, 88($sp)
-lw $t1, 180($sp)
-add $t0, $t0, $t1
-sw $t0, 84($sp)
-lw $t0, 84($sp)
-sw $t0, 184($sp)
-lw $t0, 180($sp)
-add $t0, $0, $t0
-sw $t0, 80($sp)
-lw $t0, 80($sp)
+lw $ra, 12($sp)
+add $sp, $sp, 16
+jr $ra
+full_num:
+sub $sp, $sp, 36
+sw $ra, 32($sp)
+lw $s0, 28($sp)
+lw $t9, 24($sp)
+lw $t8, 20($sp)
+la $t1, 100
+mult $s0, $t1
+mflo $t7
+la $t1, 10
+mult $t9, $t1
+mflo $t6
+add $t5, $t7, $t6
+add $t4, $t5, $t8
+move $v0, $t4
+lw $ra, 32($sp)
+add $sp, $sp, 36
+jr $ra
+flower_num:
+sub $sp, $sp, 52
+sw $ra, 48($sp)
+lw $s4, 44($sp)
+lw $s3, 40($sp)
+lw $s2, 36($sp)
+mult $s4, $s4
+mflo $s1
+mult $s1, $s4
+mflo $s0
+mult $s3, $s3
+mflo $t9
+mult $t9, $s3
+mflo $t8
+add $t7, $s0, $t8
+mult $s2, $s2
+mflo $t6
+mult $t6, $s2
+mflo $t5
+add $t4, $t7, $t5
+move $v0, $t4
+lw $ra, 48($sp)
+add $sp, $sp, 52
+jr $ra
+complete_flower_num:
+sub $sp, $sp, 964
+sw $ra, 960($sp)
+li $t0, 2
+sw $t0, 440($sp)
+label_2:
+lw $t0, 440($sp)
+li $t1, 128
+sub $t0, $t0, $t1
+bgez $t0, label_3
+li $t0, -1
+sw $t0, 436($sp)
+lw $s1, 440($sp)
+li $t0, 1
+sw $t0, 444($sp)
+label_4:
+lw $t0, 444($sp)
+lw $t1, 440($sp)
+sub $t0, $t0, $t1
+bgez $t0, label_5
+lw $t0, 440($sp)
+lw $t1, 444($sp)
+div $t0, $t1
+mflo $t9
+lw $t1, 444($sp)
+mult $t9, $t1
+mflo $t8
+lw $t7, 440($sp)
+lw $t6, 444($sp)
+div $t7, $t6
+mflo $t5
+mult $t5, $t6
+mflo $t4
+sub $t7, $t7, $t4
+move $s0, $t7
+j _mod_0
+_mod_0:
+move $t4, $s0
+bnez $t4, label_9
+lw $t0, 436($sp)
 add $t0, $t0, 1
-sw $t0, 76($sp)
-lw $t0, 76($sp)
-sw $t0, 180($sp)
-lw $t0, 180($sp)
-add $t0, $0, $t0
-sw $t0, 72($sp)
-lw $t0, 72($sp)
-lw $t1, 188($sp)
-sub $t2, $t0, $t1
-bltz $t2, label_10
+sw $t0, 436($sp)
+lw $t1, 444($sp)
+sub $s1, $s1, $t1
+lw $t0, 436($sp)
+li $t1, 128
+sub $t0, $t0, $t1
+bltz $t0, label_8
+la $a0, string_4
+li $v0, 4
+syscall
+li, $a0, '\n'
+li $v0, 11
+syscall
 j label_9
 label_8:
-lw $t0, 176($sp)
-add $t0, $0, $t0
-sw $t0, 68($sp)
-lw $t0, 68($sp)
-add $t0, $t0, 0
-sw $t0, 64($sp)
-lw $t0, 64($sp)
-li $t1, 43
-sub $t2, $t0, $t1
-bne $t2, $0, label_11
-li $t0, 0
-sw $t0, 180($sp)
-label_13:
-lw $t0, 180($sp)
-add $t0, $0, $t0
-sw $t0, 52($sp)
-lw $t0, 188($sp)
-add $t0, $0, $t0
-sw $t0, 48($sp)
-lw $t0, 48($sp)
-add $t0, $t0, 3
-sw $t0, 44($sp)
-lw $t0, 52($sp)
-lw $t1, 44($sp)
-sub $t2, $t0, $t1
-bgez $t2, label_14
-lw $t0, 184($sp)
-add $t0, $0, $t0
-sw $t0, 40($sp)
-lw $t0, 40($sp)
-lw $t1, 180($sp)
-add $t0, $t0, $t1
-sw $t0, 36($sp)
-lw $t0, 36($sp)
-sw $t0, 184($sp)
-lw $t0, 180($sp)
-add $t0, $0, $t0
-sw $t0, 32($sp)
-lw $t0, 32($sp)
-add $t0, $t0, 3
-sw $t0, 28($sp)
-lw $t0, 28($sp)
-sw $t0, 180($sp)
-j label_13
-label_14:
-j label_12
-label_11:
-li $t0, 0
-sw $t0, 180($sp)
-label_15:
-lw $t0, 180($sp)
-add $t0, $0, $t0
-sw $t0, 24($sp)
-lw $t0, 188($sp)
-add $t0, $0, $t0
-sw $t0, 20($sp)
-lw $t0, 20($sp)
-add $t0, $t0, 3
-sw $t0, 16($sp)
-lw $t0, 24($sp)
-lw $t1, 16($sp)
-sub $t2, $t0, $t1
-bgez $t2, label_16
-lw $t0, 184($sp)
-add $t0, $0, $t0
-sw $t0, 12($sp)
-lw $t0, 12($sp)
-lw $t1, 180($sp)
-sub $t0, $t0, $t1
-sw $t0, 8($sp)
-lw $t0, 8($sp)
-sw $t0, 184($sp)
-lw $t0, 180($sp)
-add $t0, $0, $t0
-sw $t0, 4($sp)
-lw $t0, 4($sp)
-add $t0, $t0, 3
-sw $t0, 0($sp)
-lw $t0, 0($sp)
-sw $t0, 180($sp)
-j label_15
-label_16:
-label_12:
+lw $t0, 444($sp)
+lw $t2, 436($sp)
+sll $t2, $t2, 2
+add $t2, $t2, 448
+add $t2, $t2, $sp
+sw $t0, ($t2)
 label_9:
-jal show
-lw $a0, 184($sp)
+lw $t0, 444($sp)
+add $t0, $t0, 1
+sw $t0, 444($sp)
+j label_4
+label_5:
+bnez $s1, label_10
+la $a0, string_5
+li $v0, 4
+syscall
+lw $a0, 440($sp)
 li $v0, 1
 syscall
 li, $a0, '\n'
 li $v0, 11
 syscall
+li $t0, 0
+sw $t0, 444($sp)
+label_12:
+lw $t0, 444($sp)
+lw $t1, 436($sp)
+sub $t0, $t0, $t1
+bgtz $t0, label_13
+lw $t2, 444($sp)
+sll $t2, $t2, 2
+add $t2, $t2, 448
+add $t2, $t2, $sp
+lw $t0, ($t2)
+add $t4, $0, $t0
+la $a0, string_6
+li $v0, 4
+syscall
+lw $t2, 444($sp)
+sll $t2, $t2, 2
+add $t2, $t2, 448
+add $t2, $t2, $sp
+lw $a0, ($t2)
+li $v0, 1
+syscall
+li, $a0, '\n'
+li $v0, 11
+syscall
+lw $t0, 444($sp)
+add $t0, $t0, 1
+sw $t0, 444($sp)
+j label_12
+label_13:
+la $a0, string_7
+li $v0, 4
+syscall
+li, $a0, '\n'
+li $v0, 11
+syscall
+label_10:
+lw $t0, 440($sp)
+add $t0, $t0, 1
+sw $t0, 440($sp)
+j label_2
+label_3:
+la $a0, string_8
+li $v0, 4
+syscall
+li, $a0, '\n'
+li $v0, 11
+syscall
+la $a0, string_9
+li $v0, 4
+syscall
+li, $a0, '\n'
+li $v0, 11
+syscall
+li $a3, 0
+li $t0, 100
+sw $t0, 444($sp)
+label_14:
+lw $t0, 444($sp)
+li $t1, 228
+sub $t0, $t0, $t1
+bgez $t0, label_15
+lw $t0, 444($sp)
+la $t1, 100
+div $t0, $t1
+mflo $t0
+sw $t0, 436($sp)
+lw $t0, 444($sp)
+la $t1, 10
+div $t0, $t1
+mflo $t8
+move $t7, $t8
+li $t6, 10
+div $t7, $t6
+mflo $t5
+mult $t5, $t6
+mflo $t4
+sub $t7, $t7, $t4
+move $t9, $t7
+j _mod_1
+_mod_1:
+sw $t9, 440($sp)
+lw $t7, 444($sp)
+li $t6, 10
+div $t7, $t6
+mflo $t5
+mult $t5, $t6
+mflo $t4
+sub $t7, $t7, $t4
+move $s1, $t7
+j _mod_2
+_mod_2:
+move $s7, $s1
+lw $s0, 436($sp)
+lw $t9, 440($sp)
+move $t8, $s7
+la $t1, 100
+mult $s0, $t1
+mflo $t7
+la $t1, 10
+mult $t9, $t1
+mflo $t6
+add $t5, $t7, $t6
+add $t4, $t5, $t8
+move $a2, $t4
+j _full_num_3
+_full_num_3:
+move $s5, $a2
+lw $s4, 436($sp)
+lw $s3, 440($sp)
+move $s2, $s7
+mult $s4, $s4
+mflo $s1
+mult $s1, $s4
+mflo $s0
+mult $s3, $s3
+mflo $t9
+mult $t9, $s3
+mflo $t8
+add $t7, $s0, $t8
+mult $s2, $s2
+mflo $t6
+mult $t6, $s2
+mflo $t5
+add $t4, $t7, $t5
+move $s6, $t4
+j _flower_num_4
+_flower_num_4:
+move $t4, $s6
+sub $t0, $s5, $t4
+bnez $t0,label_16
+lw $t0, 444($sp)
+lw $t2, 424($sp)
+sll $t2, $t2, 2
+add $t2, $t2, 448
+add $t2, $t2, $sp
+sw $t0, ($t2)
+add $a3, $a3, 1
+label_16:
+lw $t0, 444($sp)
+add $t0, $t0, 1
+sw $t0, 444($sp)
+j label_14
+label_15:
+li $t0, 0
+sw $t0, 444($sp)
+label_18:
+lw $t0, 444($sp)
+sub $t0, $t0, $a3
+bgez $t0, label_19
+lw $t2, 444($sp)
+sll $t2, $t2, 2
+add $t2, $t2, 448
+add $t2, $t2, $sp
+lw $t0, ($t2)
+add $t4, $0, $t0
+la $a0, string_10
+li $v0, 4
+syscall
+lw $t2, 444($sp)
+sll $t2, $t2, 2
+add $t2, $t2, 448
+add $t2, $t2, $sp
+lw $a0, ($t2)
+li $v0, 1
+syscall
+li, $a0, '\n'
+li $v0, 11
+syscall
+lw $t0, 444($sp)
+add $t0, $t0, 1
+sw $t0, 444($sp)
+j label_18
+label_19:
+la $a0, string_11
+li $v0, 4
+syscall
+li, $a0, '\n'
+li $v0, 11
+syscall
+la $a0, string_12
+li $v0, 4
+syscall
+li, $a0, '\n'
+li $v0, 11
+syscall
+li $s3, 0
+li $s2, 1
+li $s4, 2
+label_20:
+li $t1, 128
+sub $t0, $s4, $t1
+bgtz $t0, label_21
+la $t1, 2
+div $s4, $t1
+mflo $s1
+li $t0, 2
+sw $t0, 444($sp)
+label_22:
+lw $t0, 444($sp)
+sub $t0, $t0, $s1
+bgtz $t0, label_23
+lw $t1, 444($sp)
+div $s4, $t1
+mflo $t9
+lw $t1, 444($sp)
+mult $t9, $t1
+mflo $t8
+move $t7, $s4
+lw $t6, 444($sp)
+div $t7, $t6
+mflo $t5
+mult $t5, $t6
+mflo $t4
+sub $t7, $t7, $t4
+move $s0, $t7
+j _mod_5
+_mod_5:
+move $t4, $s0
+bnez $t4, label_24
+li $s2, 0
+label_24:
+lw $t0, 444($sp)
+add $t0, $t0, 1
+sw $t0, 444($sp)
+j label_22
+label_23:
+li $t1, 1
+sub $t0, $s2, $t1
+bnez $t0,label_28
+la $a0, string_13
+li $v0, 4
+syscall
+move $a0, $s4
+li $v0, 1
+syscall
+li, $a0, '\n'
+li $v0, 11
+syscall
+add $s3, $s3, 1
+la $t1, 10
+div $s3, $t1
+mflo $t4
+la $t1, 10
+mult $t4, $t1
+mflo $t8
+sub $t0, $t8, $s3
+bnez $t0,label_28
+la $a0, string_14
+li $v0, 4
+syscall
+li, $a0, '\n'
+li $v0, 11
+syscall
+label_28:
+li $s2, 1
+add $s4, $s4, 1
+j label_20
+label_21:
+la $a0, string_15
+li $v0, 4
+syscall
+move $a0, $s3
+li $v0, 1
+syscall
+li, $a0, '\n'
+li $v0, 11
+syscall
+lw $ra, 960($sp)
+add $sp, $sp, 964
+jr $ra
+main:
+sub $sp, $sp, 984
+sw $ra, 980($sp)
+sub $sp, $sp, 4
+sw $t4, ($sp)
+sub $sp, $sp, 4
+sw $t5, ($sp)
+li $t0, 5
+sw $t0, -8($sp)
+jal factorial
+lw $t5, ($sp)
+add $sp, $sp, 4
+lw $t4, ($sp)
+add $sp, $sp, 4
+move $t7, $v0
+la $a0, string_16
+li $v0, 4
+syscall
+move $a0, $t7
+li $v0, 1
+syscall
+li, $a0, '\n'
+li $v0, 11
+syscall
+li $t6, 5
+li $t5, 10
+la $a0, string_0
+li $v0, 4
+syscall
+move $a0, $t6
+li $v0, 1
+syscall
+li, $a0, '\n'
+li $v0, 11
+syscall
+la $a0, string_1
+li $v0, 4
+syscall
+move $a0, $t5
+li $v0, 1
+syscall
+li, $a0, '\n'
+li $v0, 11
+syscall
+move $t4, $t6
+move $t6, $t5
+move $t5, $t4
+la $a0, string_2
+li $v0, 4
+syscall
+move $a0, $t6
+li $v0, 1
+syscall
+li, $a0, '\n'
+li $v0, 11
+syscall
+la $a0, string_3
+li $v0, 4
+syscall
+move $a0, $t5
+li $v0, 1
+syscall
+li, $a0, '\n'
+li $v0, 11
+syscall
+j _swap_6
+_swap_6:
+li $t0, 2
+sw $t0, 440($sp)
+_complete_flower_num_0_label_2:
+lw $t0, 440($sp)
+li $t1, 128
+sub $t0, $t0, $t1
+bgez $t0, _complete_flower_num_0_label_3
+li $t0, -1
+sw $t0, 436($sp)
+lw $s1, 440($sp)
+li $t0, 1
+sw $t0, 444($sp)
+_complete_flower_num_0_label_4:
+lw $t0, 444($sp)
+lw $t1, 440($sp)
+sub $t0, $t0, $t1
+bgez $t0, _complete_flower_num_0_label_5
+lw $t0, 440($sp)
+lw $t1, 444($sp)
+div $t0, $t1
+mflo $t9
+lw $t1, 444($sp)
+mult $t9, $t1
+mflo $t8
+lw $t7, 440($sp)
+lw $t6, 444($sp)
+div $t7, $t6
+mflo $t5
+mult $t5, $t6
+mflo $t4
+sub $t7, $t7, $t4
+move $s0, $t7
+j _complete_flower_num_0__mod_0
+_complete_flower_num_0__mod_0:
+move $t4, $s0
+bnez $t4, _complete_flower_num_0_label_9
+lw $t0, 436($sp)
+add $t0, $t0, 1
+sw $t0, 436($sp)
+lw $t1, 444($sp)
+sub $s1, $s1, $t1
+lw $t0, 436($sp)
+li $t1, 128
+sub $t0, $t0, $t1
+bltz $t0, _complete_flower_num_0_label_8
+la $a0, string_4
+li $v0, 4
+syscall
+li, $a0, '\n'
+li $v0, 11
+syscall
+j _complete_flower_num_0_label_9
+_complete_flower_num_0_label_8:
+lw $t0, 444($sp)
+lw $t2, 436($sp)
+sll $t2, $t2, 2
+add $t2, $t2, 448
+add $t2, $t2, $sp
+sw $t0, ($t2)
+_complete_flower_num_0_label_9:
+lw $t0, 444($sp)
+add $t0, $t0, 1
+sw $t0, 444($sp)
+j _complete_flower_num_0_label_4
+_complete_flower_num_0_label_5:
+bnez $s1, _complete_flower_num_0_label_10
+la $a0, string_5
+li $v0, 4
+syscall
+lw $a0, 440($sp)
+li $v0, 1
+syscall
+li, $a0, '\n'
+li $v0, 11
+syscall
+li $t0, 0
+sw $t0, 444($sp)
+_complete_flower_num_0_label_12:
+lw $t0, 444($sp)
+lw $t1, 436($sp)
+sub $t0, $t0, $t1
+bgtz $t0, _complete_flower_num_0_label_13
+lw $t2, 444($sp)
+sll $t2, $t2, 2
+add $t2, $t2, 448
+add $t2, $t2, $sp
+lw $t0, ($t2)
+add $t4, $0, $t0
+la $a0, string_6
+li $v0, 4
+syscall
+lw $t2, 444($sp)
+sll $t2, $t2, 2
+add $t2, $t2, 448
+add $t2, $t2, $sp
+lw $a0, ($t2)
+li $v0, 1
+syscall
+li, $a0, '\n'
+li $v0, 11
+syscall
+lw $t0, 444($sp)
+add $t0, $t0, 1
+sw $t0, 444($sp)
+j _complete_flower_num_0_label_12
+_complete_flower_num_0_label_13:
+la $a0, string_7
+li $v0, 4
+syscall
+li, $a0, '\n'
+li $v0, 11
+syscall
+_complete_flower_num_0_label_10:
+lw $t0, 440($sp)
+add $t0, $t0, 1
+sw $t0, 440($sp)
+j _complete_flower_num_0_label_2
+_complete_flower_num_0_label_3:
+la $a0, string_8
+li $v0, 4
+syscall
+li, $a0, '\n'
+li $v0, 11
+syscall
+la $a0, string_9
+li $v0, 4
+syscall
+li, $a0, '\n'
+li $v0, 11
+syscall
+li $a3, 0
+li $t0, 100
+sw $t0, 444($sp)
+_complete_flower_num_0_label_14:
+lw $t0, 444($sp)
+li $t1, 228
+sub $t0, $t0, $t1
+bgez $t0, _complete_flower_num_0_label_15
+lw $t0, 444($sp)
+la $t1, 100
+div $t0, $t1
+mflo $t0
+sw $t0, 436($sp)
+lw $t0, 444($sp)
+la $t1, 10
+div $t0, $t1
+mflo $t8
+move $t7, $t8
+li $t6, 10
+div $t7, $t6
+mflo $t5
+mult $t5, $t6
+mflo $t4
+sub $t7, $t7, $t4
+move $t9, $t7
+j _complete_flower_num_0__mod_1
+_complete_flower_num_0__mod_1:
+sw $t9, 440($sp)
+lw $t7, 444($sp)
+li $t6, 10
+div $t7, $t6
+mflo $t5
+mult $t5, $t6
+mflo $t4
+sub $t7, $t7, $t4
+move $s1, $t7
+j _complete_flower_num_0__mod_2
+_complete_flower_num_0__mod_2:
+move $s7, $s1
+lw $s0, 436($sp)
+lw $t9, 440($sp)
+move $t8, $s7
+la $t1, 100
+mult $s0, $t1
+mflo $t7
+la $t1, 10
+mult $t9, $t1
+mflo $t6
+add $t5, $t7, $t6
+add $t4, $t5, $t8
+move $a2, $t4
+j _complete_flower_num_0__full_num_3
+_complete_flower_num_0__full_num_3:
+move $s5, $a2
+lw $s4, 436($sp)
+lw $s3, 440($sp)
+move $s2, $s7
+mult $s4, $s4
+mflo $s1
+mult $s1, $s4
+mflo $s0
+mult $s3, $s3
+mflo $t9
+mult $t9, $s3
+mflo $t8
+add $t7, $s0, $t8
+mult $s2, $s2
+mflo $t6
+mult $t6, $s2
+mflo $t5
+add $t4, $t7, $t5
+move $s6, $t4
+j _complete_flower_num_0__flower_num_4
+_complete_flower_num_0__flower_num_4:
+move $t4, $s6
+sub $t0, $s5, $t4
+bnez $t0,_complete_flower_num_0_label_16
+lw $t0, 444($sp)
+lw $t2, 424($sp)
+sll $t2, $t2, 2
+add $t2, $t2, 448
+add $t2, $t2, $sp
+sw $t0, ($t2)
+add $a3, $a3, 1
+_complete_flower_num_0_label_16:
+lw $t0, 444($sp)
+add $t0, $t0, 1
+sw $t0, 444($sp)
+j _complete_flower_num_0_label_14
+_complete_flower_num_0_label_15:
+li $t0, 0
+sw $t0, 444($sp)
+_complete_flower_num_0_label_18:
+lw $t0, 444($sp)
+sub $t0, $t0, $a3
+bgez $t0, _complete_flower_num_0_label_19
+lw $t2, 444($sp)
+sll $t2, $t2, 2
+add $t2, $t2, 448
+add $t2, $t2, $sp
+lw $t0, ($t2)
+add $t4, $0, $t0
+la $a0, string_10
+li $v0, 4
+syscall
+lw $t2, 444($sp)
+sll $t2, $t2, 2
+add $t2, $t2, 448
+add $t2, $t2, $sp
+lw $a0, ($t2)
+li $v0, 1
+syscall
+li, $a0, '\n'
+li $v0, 11
+syscall
+lw $t0, 444($sp)
+add $t0, $t0, 1
+sw $t0, 444($sp)
+j _complete_flower_num_0_label_18
+_complete_flower_num_0_label_19:
+la $a0, string_11
+li $v0, 4
+syscall
+li, $a0, '\n'
+li $v0, 11
+syscall
+la $a0, string_12
+li $v0, 4
+syscall
+li, $a0, '\n'
+li $v0, 11
+syscall
+li $s3, 0
+li $s2, 1
+li $s4, 2
+_complete_flower_num_0_label_20:
+li $t1, 128
+sub $t0, $s4, $t1
+bgtz $t0, _complete_flower_num_0_label_21
+la $t1, 2
+div $s4, $t1
+mflo $s1
+li $t0, 2
+sw $t0, 444($sp)
+_complete_flower_num_0_label_22:
+lw $t0, 444($sp)
+sub $t0, $t0, $s1
+bgtz $t0, _complete_flower_num_0_label_23
+lw $t1, 444($sp)
+div $s4, $t1
+mflo $t9
+lw $t1, 444($sp)
+mult $t9, $t1
+mflo $t8
+move $t7, $s4
+lw $t6, 444($sp)
+div $t7, $t6
+mflo $t5
+mult $t5, $t6
+mflo $t4
+sub $t7, $t7, $t4
+move $s0, $t7
+j _complete_flower_num_0__mod_5
+_complete_flower_num_0__mod_5:
+move $t4, $s0
+bnez $t4, _complete_flower_num_0_label_24
+li $s2, 0
+_complete_flower_num_0_label_24:
+lw $t0, 444($sp)
+add $t0, $t0, 1
+sw $t0, 444($sp)
+j _complete_flower_num_0_label_22
+_complete_flower_num_0_label_23:
+li $t1, 1
+sub $t0, $s2, $t1
+bnez $t0,_complete_flower_num_0_label_28
+la $a0, string_13
+li $v0, 4
+syscall
+move $a0, $s4
+li $v0, 1
+syscall
+li, $a0, '\n'
+li $v0, 11
+syscall
+add $s3, $s3, 1
+la $t1, 10
+div $s3, $t1
+mflo $t4
+la $t1, 10
+mult $t4, $t1
+mflo $t8
+sub $t0, $t8, $s3
+bnez $t0,_complete_flower_num_0_label_28
+la $a0, string_14
+li $v0, 4
+syscall
+li, $a0, '\n'
+li $v0, 11
+syscall
+_complete_flower_num_0_label_28:
+li $s2, 1
+add $s4, $s4, 1
+j _complete_flower_num_0_label_20
+_complete_flower_num_0_label_21:
+la $a0, string_15
+li $v0, 4
+syscall
+move $a0, $s3
+li $v0, 1
+syscall
+li, $a0, '\n'
+li $v0, 11
+syscall
+j _complete_flower_num_0
+_complete_flower_num_0:
 li $v0, 10
 syscall

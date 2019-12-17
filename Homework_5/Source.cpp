@@ -460,7 +460,13 @@ int isConstDef(Function& tmp)
 		nextSym();				// int
 		temp.setX(sym.content);
 		isIdenti(var);
-		temp.setY(sym.content);
+		if (tmp.name == globalFunc.name) {
+			temp.setY(sym.content = "_GLOBAL_" + sym.content);
+			var.name = sym.content;
+		}
+		else {
+			temp.setY(sym.content);
+		}
 		rec = checkRepeat(tmp, var.name, sym.raw_num);
 		nextSym();				// =
 		temp.setOp("const");
@@ -481,7 +487,13 @@ int isConstDef(Function& tmp)
 			now--;
 			nextSym();			// ,
 			isIdenti(var);
-			temp.setY(sym.content);
+			if (tmp.name == globalFunc.name) {
+				temp.setY(sym.content = "_GLOBAL_" + sym.content);
+				var.setName(sym.content);
+			}
+			else {
+				temp.setY(sym.content);
+			}
 			rec = checkRepeat(tmp, var.name, sym.raw_num);
 			nextSym();			// =
 			temp.setOp("const");
@@ -507,7 +519,13 @@ int isConstDef(Function& tmp)
 		nextSym();				//char
 		temp.setX(sym.content);
 		isIdenti(var);
-		temp.setY(sym.content);
+		if (tmp.name == globalFunc.name) {
+			temp.setY(sym.content = "_GLOBAL_" + sym.content);
+			var.name = sym.content;
+		}
+		else {
+			temp.setY(sym.content);
+		}
 		rec = checkRepeat(tmp, var.name, sym.raw_num);
 		nextSym();				//'='
 		temp.setOp("const");
@@ -529,7 +547,13 @@ int isConstDef(Function& tmp)
 			now--;
 			nextSym();			// ,
 			isIdenti(var);
-			temp.setY(sym.content);
+			if (tmp.name == globalFunc.name) {
+				temp.setY(sym.content = "_GLOBAL_" + sym.content);
+				var.name = sym.content;
+			}
+			else {
+				temp.setY(sym.content);
+			}
 			rec = checkRepeat(tmp, var.name, sym.raw_num);
 			nextSym();			// =
 			temp.setOp("const");
@@ -562,7 +586,6 @@ int isAssignSent(Function& func)
 	MidCode temp;
 	Unit unit;
 	isIdenti(unit);
-	temp.setX(sym.content);
 	if (func.name2Unit.count(unit.name) > 0)
 	{
 		unit = func.name2Unit[unit.name];
@@ -571,7 +594,7 @@ int isAssignSent(Function& func)
 			errorOutput(sym.raw_num, 10);
 		}
 	}
-	else if (globalFunc.name2Unit.count(unit.name))
+	else if (globalFunc.name2Unit.count(unit.name = "_GLOBAL_" + unit.name))
 	{
 		unit = globalFunc.name2Unit[unit.name];
 		if (unit.isConst)
@@ -579,18 +602,24 @@ int isAssignSent(Function& func)
 			errorOutput(sym.raw_num, 10);
 		}
 	}
+	temp.setX(unit.name);
 	if (preRead() && sym.content == "[") {
 		now--;
 		nextSym();			//'['
-		temp.x = temp.x + sym.content;
+		//temp.x = temp.x + sym.content;
 		isExpression(func, exp);
-		temp.x = temp.x + exp.name;
+		//temp.x = temp.x + exp.name;
+
+		temp.op = "[]=";
+		temp.z = temp.x;
+		temp.x = exp.name;
+
 		if (exp.type != "int")
 		{
 			errorOutput(sym.raw_num, 9);
 		}
 		checkRBrack();			//']'
-		temp.x = temp.x + sym.content;
+		//temp.x = temp.x + sym.content;
 	}
 	else {
 		now--;
@@ -598,10 +627,16 @@ int isAssignSent(Function& func)
 	if (preRead() && sym.content == "=") {
 		now--;
 		nextSym();
-		temp.setOp(sym.content);
-		isExpression(func, exp);
-		temp.setY(exp.name);
-		temp.setZ("");
+		if (temp.op == "[]=") {
+			isExpression(func, exp);
+			temp.setY(exp.name);
+		}
+		else {
+			temp.setOp(sym.content);
+			isExpression(func, exp);
+			temp.setY(exp.name);
+			temp.setZ("");
+		}
 		midCode.push_back(temp);
 		//		outfile << "<赋值语句>" << endl;
 		return 1;
@@ -735,7 +770,13 @@ int isVarDef(Function& func)
 	isTypeIdenti(var);
 	temp.setX(sym.content);
 	isIdenti(var);
-	temp.setY(sym.content);
+	if (func.name == globalFunc.name) {
+		temp.setY("_GLOBAL_" + sym.content);
+		var.setName(temp.y);
+	}
+	else {
+		temp.setY(sym.content);
+	}
 	temp.setZ("");
 	var.size = 4;
 	if (preRead() && sym.content == "[") {
@@ -764,7 +805,13 @@ int isVarDef(Function& func)
 		now--;
 		nextSym();				// ,
 		isIdenti(var);
-		temp.setY(sym.content);
+		if (func.name == globalFunc.name) {
+			temp.setY("_GLOBAL_" + sym.content);
+			var.setName(temp.y);
+		}
+		else {
+			temp.setY(sym.content);
+		}
 		var.size = 4;
 		if (preRead() && sym.content == "[") {
 			now--;
@@ -1340,7 +1387,7 @@ int isScanfSent(Function& func)
 	if (func.name2Unit.count(sym.content)) {
 		temp.setX(func.name2Unit[sym.content].type);
 	}
-	else if (globalFunc.name2Unit.count(sym.content)) {
+	else if (globalFunc.name2Unit.count(sym.content = "_GLOBAL_" + sym.content)) {
 		temp.setX(globalFunc.name2Unit[sym.content].type);
 	}
 	temp.setY(sym.content);
@@ -1352,7 +1399,7 @@ int isScanfSent(Function& func)
 		if (func.name2Unit.count(sym.content)) {
 			temp.setX(func.name2Unit[sym.content].type);
 		}
-		else if (globalFunc.name2Unit.count(sym.content)) {
+		else if (globalFunc.name2Unit.count(sym.content = "_GLOBAL_" + sym.content)) {
 			temp.setX(globalFunc.name2Unit[sym.content].type);
 		}
 		temp.setY(sym.content);
@@ -1381,13 +1428,13 @@ int isReturnSent(Function& func)
 		{
 			errorOutput(sym.raw_num, 7);
 		}
-		//if (func.hasReturn && expression.type != func.type) {			//  
-		//	if (expression.type != "")
-		//	{
-		//		errorOutput(sym.raw_num, 8);			/////////////////////////////////
-		//	}
-		//	//			if (func.type == "")
-		//}
+		if (func.hasReturn && expression.type != func.type) {			//  
+			if (expression.type != "")
+			{
+				errorOutput(sym.raw_num, 8);			/////////////////////////////////
+			}
+			//			if (func.type == "")
+		}
 		checkRParent();
 	}
 	else {
@@ -1506,7 +1553,7 @@ int isExpression(Function& func, Expression& tmp)
 		}
 		return 1;
 	}
-	else if (globalFunc.name2Unit.count(str3) 
+	else if (globalFunc.name2Unit.count(str3 = "_GLOBAL_" + str3) 
 		&& (str2 == ")" || str2 == "]" || str2 == "," || str2 == ";") && temp.op != "-") {
 		now = now - 2;
 		isIdenti(unit);
@@ -1515,7 +1562,7 @@ int isExpression(Function& func, Expression& tmp)
 			tmp.setName(globalFunc.name2Unit[str3].content);
 		}
 		else {
-			tmp.setName(sym.content);
+			tmp.setName(sym.content = "_GLOBAL_" + sym.content);
 		}
 		return 1;
 	}
@@ -1597,6 +1644,8 @@ int isFactor(Function& func, Factor& factor)
 	Unit unit;
 	Expression exp;
 	preRead();
+	MidCode temp;
+	Variable var;
 	if (sym.name == "IDENFR") {
 		if (program.name2Func.count(sym.content))
 		{
@@ -1621,7 +1670,7 @@ int isFactor(Function& func, Factor& factor)
 					factor.setName(sym.content);
 				}
 			}
-			else if (globalFunc.name2Unit.count(sym.content))
+			else if (globalFunc.name2Unit.count(sym.content = "_GLOBAL_" + sym.content))
 			{
 				unit = globalFunc.name2Unit[sym.content];
 				factor.setType(unit.type);
@@ -1636,7 +1685,17 @@ int isFactor(Function& func, Factor& factor)
 				now--;
 				nextSym();			//'['
 				isExpression(func, exp);
-				factor.setName(factor.name + "[" + exp.name + "]");
+
+				temp.op = "[]";
+				temp.x = factor.name;
+				temp.y = exp.name;
+				temp.z = getVarName();
+				var.setName(temp.z);
+				func.addVar(var);
+				midCode.push_back(temp);
+				//factor.setName(factor.name + "[" + exp.name + "]");
+				factor.setName(temp.z);
+
 				if (exp.type != "int")
 				{
 					errorOutput(sym.raw_num, 9);
@@ -1709,7 +1768,7 @@ int isMainFunc()
 	temp.setY("");
 	temp.setZ("");
 	midCode.push_back(temp);
-	outfile << "<主函数>" << endl;
+	// outfile << "<主函数>" << endl;
 	ofstream midCodeOutput;
 	midCodeOutput.open("midcode.txt", ios::out);
 	midCodeOutput.close();

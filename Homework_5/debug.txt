@@ -1,0 +1,4056 @@
++ 0 g_list[0] $0
++ g_list[0] 1 $1
+= g_list[0] $1 
++ 0 a $2
+cmp $2 < 0
+BZ label_0  
+- 0 a $3
++ $3 +0 $4
+return $4 abs 
+label label_0  
++ 0 a $5
++ $5 -0 $6
+return $6 abs 
+function void init 
+var int i 
+= i 0 
+label label_2  
++ 0 i $7
+cmp $7 < 10
+BZ label_3  
+= g_list[i] 0 
++ 0 i $8
++ $8 +1 $9
+= i $9 
+GOTO label_2  
+label label_3  
++ 0 g_list[1] $10
++ $10 1 $11
+= g_list[1] $11 
+return  init 
+function void show 
+var int i 
+= g_list[3] 1 
+= i 0 
+label label_4  
++ 0 i $12
+cmp $12 < 4
+BZ label_5  
++ 0 g_list[i] $13
+printf  int $13
+printf  char '\n'
++ 0 i $14
++ $14 1 $15
+= i $15 
+GOTO label_4  
+label label_5  
+return  show 
+function int times 
+para int a 
+para int b 
+= g_list[2] 1 
+* a b $16
++ 0 $16 $17
+return $17 times 
+function int sum4 
+para int a 
+para int b 
+para int c 
+para int d 
++ 1 g_list[3] $19
+= g_list[3] $19 
++ 0 a $20
++ $20 b $21
++ $21 c $22
++ $22 d $23
+return $23 sum4 
+function void fi 
+para int i 
+cmp i != 0
+BZ label_6  
++ 0 i $24
++ $24 +1 $25
++ 0 testnum[$25] $26
++ 0 i $27
+- $27 -2 $28
++ $26 testnum[$28] $29
+= testnum[i] $29 
+use fi  
++ 0 i $30
+- $30 1 $31
+push $31  
+call fi  
+GOTO label_7  
+label label_6  
++ 0 i $32
++ $32 +1 $33
++ 0 testnum[$33] $34
++ 0 i $35
+- $35 -2 $36
++ $34 testnum[$36] $37
+= testnum[i] $37 
+return  fi 
+label label_7  
+return  fi 
+function void main 
+var int a 
+var int theSum 
+var int i 
+var char f 
+scanf char f 
+scanf int a 
+use init  
+call init  
+use sum4  
+use abs  
+use times  
+push 2  
+push -2  
+call times  
++ 0 RET $39
+push $39  
+call abs  
++ 0 RET $40
+use abs  
+push -1  
+call abs  
++ 0 RET $42
+use abs  
+push -3  
+call abs  
++ 0 RET $44
+use abs  
+push 22  
+call abs  
++ 0 RET $45
+push $40  
+push $42  
+push $44  
+push $45  
+call sum4  
++ 0 RET $46
+printf  int $46
+printf  char '\n'
+= testnum[9] 1 
+= testnum[8] 2 
+use fi  
+push 7  
+call fi  
++ 0 testnum[8] $50
++ 0 testnum[$50] $51
+printf 0 int $51
+printf  char '\n'
++ 0 testnum[1] $52
+printf 1 int $52
+printf  char '\n'
++ 0 testnum[5] $53
++ 0 testnum[$53] $54
++ $54 testnum[9] $55
++ 0 testnum[$55] $56
+printf 2 int $56
+printf  char '\n'
++ 0 testnum[0] $57
+printf 3 int $57
+printf  char '\n'
+= theSum 0 
++ 0 a $58
+cmp $58 > 10
+BZ label_8  
+= i 0 
+label label_10  
++ 0 theSum $59
++ $59 i $60
+= theSum $60 
++ 0 i $61
++ $61 1 $62
+= i $62 
++ 0 i $63
+cmp $63 < a
+BNZ label_10  
+GOTO label_9  
+label label_8  
++ 0 f $64
++ $64 0 $65
+cmp $65 == 43
+BZ label_11  
+= i 0 
+label label_13  
++ 0 i $68
++ 0 a $69
++ $69 3 $70
+cmp $68 < $70
+BZ label_14  
++ 0 theSum $71
++ $71 i $72
+= theSum $72 
++ 0 i $73
++ $73 3 $74
+= i $74 
+GOTO label_13  
+label label_14  
+GOTO label_12  
+label label_11  
+= i 0 
+label label_15  
++ 0 i $75
++ 0 a $76
++ $76 3 $77
+cmp $75 < $77
+BZ label_16  
++ 0 theSum $78
+- $78 i $79
+= theSum $79 
++ 0 i $80
++ $80 3 $81
+= i $81 
+GOTO label_15  
+label label_16  
+label label_12  
+label label_9  
+use show  
+call show  
+printf  int theSum
+printf  char '\n'
+return  main 
+end   
+
+
++ 0 a $2
+cmp a < 0
+BZ label_0  
+- 0 a $3
++ $3 +0 $4
+return $4 abs 
+label label_0  
++ 0 a $5
++ $5 -0 $6
+return $6 abs 
+function void init 
+var int i 
+= i 0 
+label label_2  
++ 0 i $7
+cmp $7 < 10
+BZ label_3  
+= g_list[i] 0 
++ 0 i $8
++ $8 +1 $9
+= i $9 
+GOTO label_2  
+label label_3  
++ 0 g_list[1] $10
++ $10 1 $11
+= g_list[1] $11 
+return  init 
+function void show 
+var int i 
+= g_list[3] 1 
+= i 0 
+label label_4  
++ 0 i $12
+cmp $12 < 4
+BZ label_5  
++ 0 g_list[i] $13
+printf  int $13
+printf  char '\n'
++ 0 i $14
++ $14 1 $15
+= i $15 
+GOTO label_4  
+label label_5  
+return  show 
+function int times 
+para int a 
+para int b 
+= g_list[2] 1 
+* a b $16
++ 0 $16 $17
+return $17 times 
+function int sum4 
+para int a 
+para int b 
+para int c 
+para int d 
++ 1 g_list[3] $19
+= g_list[3] $19 
++ 0 a $20
++ $20 b $21
++ $21 c $22
++ $22 d $23
+return $23 sum4 
+function void fi 
+para int i 
+cmp i != 0
+BZ label_6  
++ 0 i $24
++ $24 +1 $25
++ 0 testnum[$25] $26
++ 0 i $27
+- $27 -2 $28
++ $26 testnum[$28] $29
+= testnum[i] $29 
+use fi  
++ 0 i $30
+- $30 1 $31
+push $31  
+call fi  
+GOTO label_7  
+label label_6  
++ 0 i $32
++ $32 +1 $33
++ 0 testnum[$33] $34
++ 0 i $35
+- $35 -2 $36
++ $34 testnum[$36] $37
+= testnum[i] $37 
+return  fi 
+label label_7  
+return  fi 
+function void main 
+var int a 
+var int theSum 
+var int i 
+var char f 
+scanf char f 
+scanf int a 
+use init  
+call init  
+use sum4  
+use abs  
+use times  
+push 2  
+push -2  
+call times  
++ 0 RET $39
+push $39  
+call abs  
++ 0 RET $40
+use abs  
+push -1  
+call abs  
++ 0 RET $42
+use abs  
+push -3  
+call abs  
++ 0 RET $44
+use abs  
+push 22  
+call abs  
++ 0 RET $45
+push $40  
+push $42  
+push $44  
+push $45  
+call sum4  
++ 0 RET $46
+printf  int $46
+printf  char '\n'
+= testnum[9] 1 
+= testnum[8] 2 
+use fi  
+push 7  
+call fi  
++ 0 testnum[8] $50
++ 0 testnum[$50] $51
+printf 0 int $51
+printf  char '\n'
++ 0 testnum[1] $52
+printf 1 int $52
+printf  char '\n'
++ 0 testnum[5] $53
++ 0 testnum[$53] $54
++ $54 testnum[9] $55
++ 0 testnum[$55] $56
+printf 2 int $56
+printf  char '\n'
++ 0 testnum[0] $57
+printf 3 int $57
+printf  char '\n'
+= theSum 0 
++ 0 a $58
+cmp $58 > 10
+BZ label_8  
+= i 0 
+label label_10  
++ 0 theSum $59
++ $59 i $60
+= theSum $60 
++ 0 i $61
++ $61 1 $62
+= i $62 
++ 0 i $63
+cmp $63 < a
+BNZ label_10  
+GOTO label_9  
+label label_8  
++ 0 f $64
++ $64 0 $65
+cmp $65 == 43
+BZ label_11  
+= i 0 
+label label_13  
++ 0 i $68
++ 0 a $69
++ $69 3 $70
+cmp $68 < $70
+BZ label_14  
++ 0 theSum $71
++ $71 i $72
+= theSum $72 
++ 0 i $73
++ $73 3 $74
+= i $74 
+GOTO label_13  
+label label_14  
+GOTO label_12  
+label label_11  
+= i 0 
+label label_15  
++ 0 i $75
++ 0 a $76
++ $76 3 $77
+cmp $75 < $77
+BZ label_16  
++ 0 theSum $78
+- $78 i $79
+= theSum $79 
++ 0 i $80
++ $80 3 $81
+= i $81 
+GOTO label_15  
+label label_16  
+label label_12  
+label label_9  
+use show  
+call show  
+printf  int theSum
+printf  char '\n'
+return  main 
+end   
+
+
++ 0 a $5
++ a -0 $6
+return $6 abs 
+function void init 
+var int i 
+= i 0 
+label label_2  
++ 0 i $7
+cmp $7 < 10
+BZ label_3  
+= g_list[i] 0 
++ 0 i $8
++ $8 +1 $9
+= i $9 
+GOTO label_2  
+label label_3  
++ 0 g_list[1] $10
++ $10 1 $11
+= g_list[1] $11 
+return  init 
+function void show 
+var int i 
+= g_list[3] 1 
+= i 0 
+label label_4  
++ 0 i $12
+cmp $12 < 4
+BZ label_5  
++ 0 g_list[i] $13
+printf  int $13
+printf  char '\n'
++ 0 i $14
++ $14 1 $15
+= i $15 
+GOTO label_4  
+label label_5  
+return  show 
+function int times 
+para int a 
+para int b 
+= g_list[2] 1 
+* a b $16
++ 0 $16 $17
+return $17 times 
+function int sum4 
+para int a 
+para int b 
+para int c 
+para int d 
++ 1 g_list[3] $19
+= g_list[3] $19 
++ 0 a $20
++ $20 b $21
++ $21 c $22
++ $22 d $23
+return $23 sum4 
+function void fi 
+para int i 
+cmp i != 0
+BZ label_6  
++ 0 i $24
++ $24 +1 $25
++ 0 testnum[$25] $26
++ 0 i $27
+- $27 -2 $28
++ $26 testnum[$28] $29
+= testnum[i] $29 
+use fi  
++ 0 i $30
+- $30 1 $31
+push $31  
+call fi  
+GOTO label_7  
+label label_6  
++ 0 i $32
++ $32 +1 $33
++ 0 testnum[$33] $34
++ 0 i $35
+- $35 -2 $36
++ $34 testnum[$36] $37
+= testnum[i] $37 
+return  fi 
+label label_7  
+return  fi 
+function void main 
+var int a 
+var int theSum 
+var int i 
+var char f 
+scanf char f 
+scanf int a 
+use init  
+call init  
+use sum4  
+use abs  
+use times  
+push 2  
+push -2  
+call times  
++ 0 RET $39
+push $39  
+call abs  
++ 0 RET $40
+use abs  
+push -1  
+call abs  
++ 0 RET $42
+use abs  
+push -3  
+call abs  
++ 0 RET $44
+use abs  
+push 22  
+call abs  
++ 0 RET $45
+push $40  
+push $42  
+push $44  
+push $45  
+call sum4  
++ 0 RET $46
+printf  int $46
+printf  char '\n'
+= testnum[9] 1 
+= testnum[8] 2 
+use fi  
+push 7  
+call fi  
++ 0 testnum[8] $50
++ 0 testnum[$50] $51
+printf 0 int $51
+printf  char '\n'
++ 0 testnum[1] $52
+printf 1 int $52
+printf  char '\n'
++ 0 testnum[5] $53
++ 0 testnum[$53] $54
++ $54 testnum[9] $55
++ 0 testnum[$55] $56
+printf 2 int $56
+printf  char '\n'
++ 0 testnum[0] $57
+printf 3 int $57
+printf  char '\n'
+= theSum 0 
++ 0 a $58
+cmp $58 > 10
+BZ label_8  
+= i 0 
+label label_10  
++ 0 theSum $59
++ $59 i $60
+= theSum $60 
++ 0 i $61
++ $61 1 $62
+= i $62 
++ 0 i $63
+cmp $63 < a
+BNZ label_10  
+GOTO label_9  
+label label_8  
++ 0 f $64
++ $64 0 $65
+cmp $65 == 43
+BZ label_11  
+= i 0 
+label label_13  
++ 0 i $68
++ 0 a $69
++ $69 3 $70
+cmp $68 < $70
+BZ label_14  
++ 0 theSum $71
++ $71 i $72
+= theSum $72 
++ 0 i $73
++ $73 3 $74
+= i $74 
+GOTO label_13  
+label label_14  
+GOTO label_12  
+label label_11  
+= i 0 
+label label_15  
++ 0 i $75
++ 0 a $76
++ $76 3 $77
+cmp $75 < $77
+BZ label_16  
++ 0 theSum $78
+- $78 i $79
+= theSum $79 
++ 0 i $80
++ $80 3 $81
+= i $81 
+GOTO label_15  
+label label_16  
+label label_12  
+label label_9  
+use show  
+call show  
+printf  int theSum
+printf  char '\n'
+return  main 
+end   
+
+
++ 0 i $7
+cmp i < 10
+BZ label_3  
+= g_list[i] 0 
++ 0 i $8
++ $8 +1 $9
+= i $9 
+GOTO label_2  
+label label_3  
++ 0 g_list[1] $10
++ $10 1 $11
+= g_list[1] $11 
+return  init 
+function void show 
+var int i 
+= g_list[3] 1 
+= i 0 
+label label_4  
++ 0 i $12
+cmp $12 < 4
+BZ label_5  
++ 0 g_list[i] $13
+printf  int $13
+printf  char '\n'
++ 0 i $14
++ $14 1 $15
+= i $15 
+GOTO label_4  
+label label_5  
+return  show 
+function int times 
+para int a 
+para int b 
+= g_list[2] 1 
+* a b $16
++ 0 $16 $17
+return $17 times 
+function int sum4 
+para int a 
+para int b 
+para int c 
+para int d 
++ 1 g_list[3] $19
+= g_list[3] $19 
++ 0 a $20
++ $20 b $21
++ $21 c $22
++ $22 d $23
+return $23 sum4 
+function void fi 
+para int i 
+cmp i != 0
+BZ label_6  
++ 0 i $24
++ $24 +1 $25
++ 0 testnum[$25] $26
++ 0 i $27
+- $27 -2 $28
++ $26 testnum[$28] $29
+= testnum[i] $29 
+use fi  
++ 0 i $30
+- $30 1 $31
+push $31  
+call fi  
+GOTO label_7  
+label label_6  
++ 0 i $32
++ $32 +1 $33
++ 0 testnum[$33] $34
++ 0 i $35
+- $35 -2 $36
++ $34 testnum[$36] $37
+= testnum[i] $37 
+return  fi 
+label label_7  
+return  fi 
+function void main 
+var int a 
+var int theSum 
+var int i 
+var char f 
+scanf char f 
+scanf int a 
+use init  
+call init  
+use sum4  
+use abs  
+use times  
+push 2  
+push -2  
+call times  
++ 0 RET $39
+push $39  
+call abs  
++ 0 RET $40
+use abs  
+push -1  
+call abs  
++ 0 RET $42
+use abs  
+push -3  
+call abs  
++ 0 RET $44
+use abs  
+push 22  
+call abs  
++ 0 RET $45
+push $40  
+push $42  
+push $44  
+push $45  
+call sum4  
++ 0 RET $46
+printf  int $46
+printf  char '\n'
+= testnum[9] 1 
+= testnum[8] 2 
+use fi  
+push 7  
+call fi  
++ 0 testnum[8] $50
++ 0 testnum[$50] $51
+printf 0 int $51
+printf  char '\n'
++ 0 testnum[1] $52
+printf 1 int $52
+printf  char '\n'
++ 0 testnum[5] $53
++ 0 testnum[$53] $54
++ $54 testnum[9] $55
++ 0 testnum[$55] $56
+printf 2 int $56
+printf  char '\n'
++ 0 testnum[0] $57
+printf 3 int $57
+printf  char '\n'
+= theSum 0 
++ 0 a $58
+cmp $58 > 10
+BZ label_8  
+= i 0 
+label label_10  
++ 0 theSum $59
++ $59 i $60
+= theSum $60 
++ 0 i $61
++ $61 1 $62
+= i $62 
++ 0 i $63
+cmp $63 < a
+BNZ label_10  
+GOTO label_9  
+label label_8  
++ 0 f $64
++ $64 0 $65
+cmp $65 == 43
+BZ label_11  
+= i 0 
+label label_13  
++ 0 i $68
++ 0 a $69
++ $69 3 $70
+cmp $68 < $70
+BZ label_14  
++ 0 theSum $71
++ $71 i $72
+= theSum $72 
++ 0 i $73
++ $73 3 $74
+= i $74 
+GOTO label_13  
+label label_14  
+GOTO label_12  
+label label_11  
+= i 0 
+label label_15  
++ 0 i $75
++ 0 a $76
++ $76 3 $77
+cmp $75 < $77
+BZ label_16  
++ 0 theSum $78
+- $78 i $79
+= theSum $79 
++ 0 i $80
++ $80 3 $81
+= i $81 
+GOTO label_15  
+label label_16  
+label label_12  
+label label_9  
+use show  
+call show  
+printf  int theSum
+printf  char '\n'
+return  main 
+end   
+
+
++ 0 i $8
++ i +1 $9
+= i $9 
+GOTO label_2  
+label label_3  
++ 0 g_list[1] $10
++ $10 1 $11
+= g_list[1] $11 
+return  init 
+function void show 
+var int i 
+= g_list[3] 1 
+= i 0 
+label label_4  
++ 0 i $12
+cmp $12 < 4
+BZ label_5  
++ 0 g_list[i] $13
+printf  int $13
+printf  char '\n'
++ 0 i $14
++ $14 1 $15
+= i $15 
+GOTO label_4  
+label label_5  
+return  show 
+function int times 
+para int a 
+para int b 
+= g_list[2] 1 
+* a b $16
++ 0 $16 $17
+return $17 times 
+function int sum4 
+para int a 
+para int b 
+para int c 
+para int d 
++ 1 g_list[3] $19
+= g_list[3] $19 
++ 0 a $20
++ $20 b $21
++ $21 c $22
++ $22 d $23
+return $23 sum4 
+function void fi 
+para int i 
+cmp i != 0
+BZ label_6  
++ 0 i $24
++ $24 +1 $25
++ 0 testnum[$25] $26
++ 0 i $27
+- $27 -2 $28
++ $26 testnum[$28] $29
+= testnum[i] $29 
+use fi  
++ 0 i $30
+- $30 1 $31
+push $31  
+call fi  
+GOTO label_7  
+label label_6  
++ 0 i $32
++ $32 +1 $33
++ 0 testnum[$33] $34
++ 0 i $35
+- $35 -2 $36
++ $34 testnum[$36] $37
+= testnum[i] $37 
+return  fi 
+label label_7  
+return  fi 
+function void main 
+var int a 
+var int theSum 
+var int i 
+var char f 
+scanf char f 
+scanf int a 
+use init  
+call init  
+use sum4  
+use abs  
+use times  
+push 2  
+push -2  
+call times  
++ 0 RET $39
+push $39  
+call abs  
++ 0 RET $40
+use abs  
+push -1  
+call abs  
++ 0 RET $42
+use abs  
+push -3  
+call abs  
++ 0 RET $44
+use abs  
+push 22  
+call abs  
++ 0 RET $45
+push $40  
+push $42  
+push $44  
+push $45  
+call sum4  
++ 0 RET $46
+printf  int $46
+printf  char '\n'
+= testnum[9] 1 
+= testnum[8] 2 
+use fi  
+push 7  
+call fi  
++ 0 testnum[8] $50
++ 0 testnum[$50] $51
+printf 0 int $51
+printf  char '\n'
++ 0 testnum[1] $52
+printf 1 int $52
+printf  char '\n'
++ 0 testnum[5] $53
++ 0 testnum[$53] $54
++ $54 testnum[9] $55
++ 0 testnum[$55] $56
+printf 2 int $56
+printf  char '\n'
++ 0 testnum[0] $57
+printf 3 int $57
+printf  char '\n'
+= theSum 0 
++ 0 a $58
+cmp $58 > 10
+BZ label_8  
+= i 0 
+label label_10  
++ 0 theSum $59
++ $59 i $60
+= theSum $60 
++ 0 i $61
++ $61 1 $62
+= i $62 
++ 0 i $63
+cmp $63 < a
+BNZ label_10  
+GOTO label_9  
+label label_8  
++ 0 f $64
++ $64 0 $65
+cmp $65 == 43
+BZ label_11  
+= i 0 
+label label_13  
++ 0 i $68
++ 0 a $69
++ $69 3 $70
+cmp $68 < $70
+BZ label_14  
++ 0 theSum $71
++ $71 i $72
+= theSum $72 
++ 0 i $73
++ $73 3 $74
+= i $74 
+GOTO label_13  
+label label_14  
+GOTO label_12  
+label label_11  
+= i 0 
+label label_15  
++ 0 i $75
++ 0 a $76
++ $76 3 $77
+cmp $75 < $77
+BZ label_16  
++ 0 theSum $78
+- $78 i $79
+= theSum $79 
++ 0 i $80
++ $80 3 $81
+= i $81 
+GOTO label_15  
+label label_16  
+label label_12  
+label label_9  
+use show  
+call show  
+printf  int theSum
+printf  char '\n'
+return  main 
+end   
+
+
++ 0 g_list[1] $10
++ g_list[1] 1 $11
+= g_list[1] $11 
+return  init 
+function void show 
+var int i 
+= g_list[3] 1 
+= i 0 
+label label_4  
++ 0 i $12
+cmp $12 < 4
+BZ label_5  
++ 0 g_list[i] $13
+printf  int $13
+printf  char '\n'
++ 0 i $14
++ $14 1 $15
+= i $15 
+GOTO label_4  
+label label_5  
+return  show 
+function int times 
+para int a 
+para int b 
+= g_list[2] 1 
+* a b $16
++ 0 $16 $17
+return $17 times 
+function int sum4 
+para int a 
+para int b 
+para int c 
+para int d 
++ 1 g_list[3] $19
+= g_list[3] $19 
++ 0 a $20
++ $20 b $21
++ $21 c $22
++ $22 d $23
+return $23 sum4 
+function void fi 
+para int i 
+cmp i != 0
+BZ label_6  
++ 0 i $24
++ $24 +1 $25
++ 0 testnum[$25] $26
++ 0 i $27
+- $27 -2 $28
++ $26 testnum[$28] $29
+= testnum[i] $29 
+use fi  
++ 0 i $30
+- $30 1 $31
+push $31  
+call fi  
+GOTO label_7  
+label label_6  
++ 0 i $32
++ $32 +1 $33
++ 0 testnum[$33] $34
++ 0 i $35
+- $35 -2 $36
++ $34 testnum[$36] $37
+= testnum[i] $37 
+return  fi 
+label label_7  
+return  fi 
+function void main 
+var int a 
+var int theSum 
+var int i 
+var char f 
+scanf char f 
+scanf int a 
+use init  
+call init  
+use sum4  
+use abs  
+use times  
+push 2  
+push -2  
+call times  
++ 0 RET $39
+push $39  
+call abs  
++ 0 RET $40
+use abs  
+push -1  
+call abs  
++ 0 RET $42
+use abs  
+push -3  
+call abs  
++ 0 RET $44
+use abs  
+push 22  
+call abs  
++ 0 RET $45
+push $40  
+push $42  
+push $44  
+push $45  
+call sum4  
++ 0 RET $46
+printf  int $46
+printf  char '\n'
+= testnum[9] 1 
+= testnum[8] 2 
+use fi  
+push 7  
+call fi  
++ 0 testnum[8] $50
++ 0 testnum[$50] $51
+printf 0 int $51
+printf  char '\n'
++ 0 testnum[1] $52
+printf 1 int $52
+printf  char '\n'
++ 0 testnum[5] $53
++ 0 testnum[$53] $54
++ $54 testnum[9] $55
++ 0 testnum[$55] $56
+printf 2 int $56
+printf  char '\n'
++ 0 testnum[0] $57
+printf 3 int $57
+printf  char '\n'
+= theSum 0 
++ 0 a $58
+cmp $58 > 10
+BZ label_8  
+= i 0 
+label label_10  
++ 0 theSum $59
++ $59 i $60
+= theSum $60 
++ 0 i $61
++ $61 1 $62
+= i $62 
++ 0 i $63
+cmp $63 < a
+BNZ label_10  
+GOTO label_9  
+label label_8  
++ 0 f $64
++ $64 0 $65
+cmp $65 == 43
+BZ label_11  
+= i 0 
+label label_13  
++ 0 i $68
++ 0 a $69
++ $69 3 $70
+cmp $68 < $70
+BZ label_14  
++ 0 theSum $71
++ $71 i $72
+= theSum $72 
++ 0 i $73
++ $73 3 $74
+= i $74 
+GOTO label_13  
+label label_14  
+GOTO label_12  
+label label_11  
+= i 0 
+label label_15  
++ 0 i $75
++ 0 a $76
++ $76 3 $77
+cmp $75 < $77
+BZ label_16  
++ 0 theSum $78
+- $78 i $79
+= theSum $79 
++ 0 i $80
++ $80 3 $81
+= i $81 
+GOTO label_15  
+label label_16  
+label label_12  
+label label_9  
+use show  
+call show  
+printf  int theSum
+printf  char '\n'
+return  main 
+end   
+
+
++ 0 i $12
+cmp i < 4
+BZ label_5  
++ 0 g_list[i] $13
+printf  int $13
+printf  char '\n'
++ 0 i $14
++ $14 1 $15
+= i $15 
+GOTO label_4  
+label label_5  
+return  show 
+function int times 
+para int a 
+para int b 
+= g_list[2] 1 
+* a b $16
++ 0 $16 $17
+return $17 times 
+function int sum4 
+para int a 
+para int b 
+para int c 
+para int d 
++ 1 g_list[3] $19
+= g_list[3] $19 
++ 0 a $20
++ $20 b $21
++ $21 c $22
++ $22 d $23
+return $23 sum4 
+function void fi 
+para int i 
+cmp i != 0
+BZ label_6  
++ 0 i $24
++ $24 +1 $25
++ 0 testnum[$25] $26
++ 0 i $27
+- $27 -2 $28
++ $26 testnum[$28] $29
+= testnum[i] $29 
+use fi  
++ 0 i $30
+- $30 1 $31
+push $31  
+call fi  
+GOTO label_7  
+label label_6  
++ 0 i $32
++ $32 +1 $33
++ 0 testnum[$33] $34
++ 0 i $35
+- $35 -2 $36
++ $34 testnum[$36] $37
+= testnum[i] $37 
+return  fi 
+label label_7  
+return  fi 
+function void main 
+var int a 
+var int theSum 
+var int i 
+var char f 
+scanf char f 
+scanf int a 
+use init  
+call init  
+use sum4  
+use abs  
+use times  
+push 2  
+push -2  
+call times  
++ 0 RET $39
+push $39  
+call abs  
++ 0 RET $40
+use abs  
+push -1  
+call abs  
++ 0 RET $42
+use abs  
+push -3  
+call abs  
++ 0 RET $44
+use abs  
+push 22  
+call abs  
++ 0 RET $45
+push $40  
+push $42  
+push $44  
+push $45  
+call sum4  
++ 0 RET $46
+printf  int $46
+printf  char '\n'
+= testnum[9] 1 
+= testnum[8] 2 
+use fi  
+push 7  
+call fi  
++ 0 testnum[8] $50
++ 0 testnum[$50] $51
+printf 0 int $51
+printf  char '\n'
++ 0 testnum[1] $52
+printf 1 int $52
+printf  char '\n'
++ 0 testnum[5] $53
++ 0 testnum[$53] $54
++ $54 testnum[9] $55
++ 0 testnum[$55] $56
+printf 2 int $56
+printf  char '\n'
++ 0 testnum[0] $57
+printf 3 int $57
+printf  char '\n'
+= theSum 0 
++ 0 a $58
+cmp $58 > 10
+BZ label_8  
+= i 0 
+label label_10  
++ 0 theSum $59
++ $59 i $60
+= theSum $60 
++ 0 i $61
++ $61 1 $62
+= i $62 
++ 0 i $63
+cmp $63 < a
+BNZ label_10  
+GOTO label_9  
+label label_8  
++ 0 f $64
++ $64 0 $65
+cmp $65 == 43
+BZ label_11  
+= i 0 
+label label_13  
++ 0 i $68
++ 0 a $69
++ $69 3 $70
+cmp $68 < $70
+BZ label_14  
++ 0 theSum $71
++ $71 i $72
+= theSum $72 
++ 0 i $73
++ $73 3 $74
+= i $74 
+GOTO label_13  
+label label_14  
+GOTO label_12  
+label label_11  
+= i 0 
+label label_15  
++ 0 i $75
++ 0 a $76
++ $76 3 $77
+cmp $75 < $77
+BZ label_16  
++ 0 theSum $78
+- $78 i $79
+= theSum $79 
++ 0 i $80
++ $80 3 $81
+= i $81 
+GOTO label_15  
+label label_16  
+label label_12  
+label label_9  
+use show  
+call show  
+printf  int theSum
+printf  char '\n'
+return  main 
+end   
+
+
++ 0 g_list[i] $13
+printf  int g_list[i]
+printf  char '\n'
++ 0 i $14
++ $14 1 $15
+= i $15 
+GOTO label_4  
+label label_5  
+return  show 
+function int times 
+para int a 
+para int b 
+= g_list[2] 1 
+* a b $16
++ 0 $16 $17
+return $17 times 
+function int sum4 
+para int a 
+para int b 
+para int c 
+para int d 
++ 1 g_list[3] $19
+= g_list[3] $19 
++ 0 a $20
++ $20 b $21
++ $21 c $22
++ $22 d $23
+return $23 sum4 
+function void fi 
+para int i 
+cmp i != 0
+BZ label_6  
++ 0 i $24
++ $24 +1 $25
++ 0 testnum[$25] $26
++ 0 i $27
+- $27 -2 $28
++ $26 testnum[$28] $29
+= testnum[i] $29 
+use fi  
++ 0 i $30
+- $30 1 $31
+push $31  
+call fi  
+GOTO label_7  
+label label_6  
++ 0 i $32
++ $32 +1 $33
++ 0 testnum[$33] $34
++ 0 i $35
+- $35 -2 $36
++ $34 testnum[$36] $37
+= testnum[i] $37 
+return  fi 
+label label_7  
+return  fi 
+function void main 
+var int a 
+var int theSum 
+var int i 
+var char f 
+scanf char f 
+scanf int a 
+use init  
+call init  
+use sum4  
+use abs  
+use times  
+push 2  
+push -2  
+call times  
++ 0 RET $39
+push $39  
+call abs  
++ 0 RET $40
+use abs  
+push -1  
+call abs  
++ 0 RET $42
+use abs  
+push -3  
+call abs  
++ 0 RET $44
+use abs  
+push 22  
+call abs  
++ 0 RET $45
+push $40  
+push $42  
+push $44  
+push $45  
+call sum4  
++ 0 RET $46
+printf  int $46
+printf  char '\n'
+= testnum[9] 1 
+= testnum[8] 2 
+use fi  
+push 7  
+call fi  
++ 0 testnum[8] $50
++ 0 testnum[$50] $51
+printf 0 int $51
+printf  char '\n'
++ 0 testnum[1] $52
+printf 1 int $52
+printf  char '\n'
++ 0 testnum[5] $53
++ 0 testnum[$53] $54
++ $54 testnum[9] $55
++ 0 testnum[$55] $56
+printf 2 int $56
+printf  char '\n'
++ 0 testnum[0] $57
+printf 3 int $57
+printf  char '\n'
+= theSum 0 
++ 0 a $58
+cmp $58 > 10
+BZ label_8  
+= i 0 
+label label_10  
++ 0 theSum $59
++ $59 i $60
+= theSum $60 
++ 0 i $61
++ $61 1 $62
+= i $62 
++ 0 i $63
+cmp $63 < a
+BNZ label_10  
+GOTO label_9  
+label label_8  
++ 0 f $64
++ $64 0 $65
+cmp $65 == 43
+BZ label_11  
+= i 0 
+label label_13  
++ 0 i $68
++ 0 a $69
++ $69 3 $70
+cmp $68 < $70
+BZ label_14  
++ 0 theSum $71
++ $71 i $72
+= theSum $72 
++ 0 i $73
++ $73 3 $74
+= i $74 
+GOTO label_13  
+label label_14  
+GOTO label_12  
+label label_11  
+= i 0 
+label label_15  
++ 0 i $75
++ 0 a $76
++ $76 3 $77
+cmp $75 < $77
+BZ label_16  
++ 0 theSum $78
+- $78 i $79
+= theSum $79 
++ 0 i $80
++ $80 3 $81
+= i $81 
+GOTO label_15  
+label label_16  
+label label_12  
+label label_9  
+use show  
+call show  
+printf  int theSum
+printf  char '\n'
+return  main 
+end   
+
+
++ 0 i $14
++ i 1 $15
+= i $15 
+GOTO label_4  
+label label_5  
+return  show 
+function int times 
+para int a 
+para int b 
+= g_list[2] 1 
+* a b $16
++ 0 $16 $17
+return $17 times 
+function int sum4 
+para int a 
+para int b 
+para int c 
+para int d 
++ 1 g_list[3] $19
+= g_list[3] $19 
++ 0 a $20
++ $20 b $21
++ $21 c $22
++ $22 d $23
+return $23 sum4 
+function void fi 
+para int i 
+cmp i != 0
+BZ label_6  
++ 0 i $24
++ $24 +1 $25
++ 0 testnum[$25] $26
++ 0 i $27
+- $27 -2 $28
++ $26 testnum[$28] $29
+= testnum[i] $29 
+use fi  
++ 0 i $30
+- $30 1 $31
+push $31  
+call fi  
+GOTO label_7  
+label label_6  
++ 0 i $32
++ $32 +1 $33
++ 0 testnum[$33] $34
++ 0 i $35
+- $35 -2 $36
++ $34 testnum[$36] $37
+= testnum[i] $37 
+return  fi 
+label label_7  
+return  fi 
+function void main 
+var int a 
+var int theSum 
+var int i 
+var char f 
+scanf char f 
+scanf int a 
+use init  
+call init  
+use sum4  
+use abs  
+use times  
+push 2  
+push -2  
+call times  
++ 0 RET $39
+push $39  
+call abs  
++ 0 RET $40
+use abs  
+push -1  
+call abs  
++ 0 RET $42
+use abs  
+push -3  
+call abs  
++ 0 RET $44
+use abs  
+push 22  
+call abs  
++ 0 RET $45
+push $40  
+push $42  
+push $44  
+push $45  
+call sum4  
++ 0 RET $46
+printf  int $46
+printf  char '\n'
+= testnum[9] 1 
+= testnum[8] 2 
+use fi  
+push 7  
+call fi  
++ 0 testnum[8] $50
++ 0 testnum[$50] $51
+printf 0 int $51
+printf  char '\n'
++ 0 testnum[1] $52
+printf 1 int $52
+printf  char '\n'
++ 0 testnum[5] $53
++ 0 testnum[$53] $54
++ $54 testnum[9] $55
++ 0 testnum[$55] $56
+printf 2 int $56
+printf  char '\n'
++ 0 testnum[0] $57
+printf 3 int $57
+printf  char '\n'
+= theSum 0 
++ 0 a $58
+cmp $58 > 10
+BZ label_8  
+= i 0 
+label label_10  
++ 0 theSum $59
++ $59 i $60
+= theSum $60 
++ 0 i $61
++ $61 1 $62
+= i $62 
++ 0 i $63
+cmp $63 < a
+BNZ label_10  
+GOTO label_9  
+label label_8  
++ 0 f $64
++ $64 0 $65
+cmp $65 == 43
+BZ label_11  
+= i 0 
+label label_13  
++ 0 i $68
++ 0 a $69
++ $69 3 $70
+cmp $68 < $70
+BZ label_14  
++ 0 theSum $71
++ $71 i $72
+= theSum $72 
++ 0 i $73
++ $73 3 $74
+= i $74 
+GOTO label_13  
+label label_14  
+GOTO label_12  
+label label_11  
+= i 0 
+label label_15  
++ 0 i $75
++ 0 a $76
++ $76 3 $77
+cmp $75 < $77
+BZ label_16  
++ 0 theSum $78
+- $78 i $79
+= theSum $79 
++ 0 i $80
++ $80 3 $81
+= i $81 
+GOTO label_15  
+label label_16  
+label label_12  
+label label_9  
+use show  
+call show  
+printf  int theSum
+printf  char '\n'
+return  main 
+end   
+
+
++ 0 $16 $17
+return $16 times 
+function int sum4 
+para int a 
+para int b 
+para int c 
+para int d 
++ 1 g_list[3] $19
+= g_list[3] $19 
++ 0 a $20
++ $20 b $21
++ $21 c $22
++ $22 d $23
+return $23 sum4 
+function void fi 
+para int i 
+cmp i != 0
+BZ label_6  
++ 0 i $24
++ $24 +1 $25
++ 0 testnum[$25] $26
++ 0 i $27
+- $27 -2 $28
++ $26 testnum[$28] $29
+= testnum[i] $29 
+use fi  
++ 0 i $30
+- $30 1 $31
+push $31  
+call fi  
+GOTO label_7  
+label label_6  
++ 0 i $32
++ $32 +1 $33
++ 0 testnum[$33] $34
++ 0 i $35
+- $35 -2 $36
++ $34 testnum[$36] $37
+= testnum[i] $37 
+return  fi 
+label label_7  
+return  fi 
+function void main 
+var int a 
+var int theSum 
+var int i 
+var char f 
+scanf char f 
+scanf int a 
+use init  
+call init  
+use sum4  
+use abs  
+use times  
+push 2  
+push -2  
+call times  
++ 0 RET $39
+push $39  
+call abs  
++ 0 RET $40
+use abs  
+push -1  
+call abs  
++ 0 RET $42
+use abs  
+push -3  
+call abs  
++ 0 RET $44
+use abs  
+push 22  
+call abs  
++ 0 RET $45
+push $40  
+push $42  
+push $44  
+push $45  
+call sum4  
++ 0 RET $46
+printf  int $46
+printf  char '\n'
+= testnum[9] 1 
+= testnum[8] 2 
+use fi  
+push 7  
+call fi  
++ 0 testnum[8] $50
++ 0 testnum[$50] $51
+printf 0 int $51
+printf  char '\n'
++ 0 testnum[1] $52
+printf 1 int $52
+printf  char '\n'
++ 0 testnum[5] $53
++ 0 testnum[$53] $54
++ $54 testnum[9] $55
++ 0 testnum[$55] $56
+printf 2 int $56
+printf  char '\n'
++ 0 testnum[0] $57
+printf 3 int $57
+printf  char '\n'
+= theSum 0 
++ 0 a $58
+cmp $58 > 10
+BZ label_8  
+= i 0 
+label label_10  
++ 0 theSum $59
++ $59 i $60
+= theSum $60 
++ 0 i $61
++ $61 1 $62
+= i $62 
++ 0 i $63
+cmp $63 < a
+BNZ label_10  
+GOTO label_9  
+label label_8  
++ 0 f $64
++ $64 0 $65
+cmp $65 == 43
+BZ label_11  
+= i 0 
+label label_13  
++ 0 i $68
++ 0 a $69
++ $69 3 $70
+cmp $68 < $70
+BZ label_14  
++ 0 theSum $71
++ $71 i $72
+= theSum $72 
++ 0 i $73
++ $73 3 $74
+= i $74 
+GOTO label_13  
+label label_14  
+GOTO label_12  
+label label_11  
+= i 0 
+label label_15  
++ 0 i $75
++ 0 a $76
++ $76 3 $77
+cmp $75 < $77
+BZ label_16  
++ 0 theSum $78
+- $78 i $79
+= theSum $79 
++ 0 i $80
++ $80 3 $81
+= i $81 
+GOTO label_15  
+label label_16  
+label label_12  
+label label_9  
+use show  
+call show  
+printf  int theSum
+printf  char '\n'
+return  main 
+end   
+
+
++ 0 a $20
++ a b $21
++ $21 c $22
++ $22 d $23
+return $23 sum4 
+function void fi 
+para int i 
+cmp i != 0
+BZ label_6  
++ 0 i $24
++ $24 +1 $25
++ 0 testnum[$25] $26
++ 0 i $27
+- $27 -2 $28
++ $26 testnum[$28] $29
+= testnum[i] $29 
+use fi  
++ 0 i $30
+- $30 1 $31
+push $31  
+call fi  
+GOTO label_7  
+label label_6  
++ 0 i $32
++ $32 +1 $33
++ 0 testnum[$33] $34
++ 0 i $35
+- $35 -2 $36
++ $34 testnum[$36] $37
+= testnum[i] $37 
+return  fi 
+label label_7  
+return  fi 
+function void main 
+var int a 
+var int theSum 
+var int i 
+var char f 
+scanf char f 
+scanf int a 
+use init  
+call init  
+use sum4  
+use abs  
+use times  
+push 2  
+push -2  
+call times  
++ 0 RET $39
+push $39  
+call abs  
++ 0 RET $40
+use abs  
+push -1  
+call abs  
++ 0 RET $42
+use abs  
+push -3  
+call abs  
++ 0 RET $44
+use abs  
+push 22  
+call abs  
++ 0 RET $45
+push $40  
+push $42  
+push $44  
+push $45  
+call sum4  
++ 0 RET $46
+printf  int $46
+printf  char '\n'
+= testnum[9] 1 
+= testnum[8] 2 
+use fi  
+push 7  
+call fi  
++ 0 testnum[8] $50
++ 0 testnum[$50] $51
+printf 0 int $51
+printf  char '\n'
++ 0 testnum[1] $52
+printf 1 int $52
+printf  char '\n'
++ 0 testnum[5] $53
++ 0 testnum[$53] $54
++ $54 testnum[9] $55
++ 0 testnum[$55] $56
+printf 2 int $56
+printf  char '\n'
++ 0 testnum[0] $57
+printf 3 int $57
+printf  char '\n'
+= theSum 0 
++ 0 a $58
+cmp $58 > 10
+BZ label_8  
+= i 0 
+label label_10  
++ 0 theSum $59
++ $59 i $60
+= theSum $60 
++ 0 i $61
++ $61 1 $62
+= i $62 
++ 0 i $63
+cmp $63 < a
+BNZ label_10  
+GOTO label_9  
+label label_8  
++ 0 f $64
++ $64 0 $65
+cmp $65 == 43
+BZ label_11  
+= i 0 
+label label_13  
++ 0 i $68
++ 0 a $69
++ $69 3 $70
+cmp $68 < $70
+BZ label_14  
++ 0 theSum $71
++ $71 i $72
+= theSum $72 
++ 0 i $73
++ $73 3 $74
+= i $74 
+GOTO label_13  
+label label_14  
+GOTO label_12  
+label label_11  
+= i 0 
+label label_15  
++ 0 i $75
++ 0 a $76
++ $76 3 $77
+cmp $75 < $77
+BZ label_16  
++ 0 theSum $78
+- $78 i $79
+= theSum $79 
++ 0 i $80
++ $80 3 $81
+= i $81 
+GOTO label_15  
+label label_16  
+label label_12  
+label label_9  
+use show  
+call show  
+printf  int theSum
+printf  char '\n'
+return  main 
+end   
+
+
++ 0 i $24
++ i +1 $25
++ 0 testnum[$25] $26
++ 0 i $27
+- $27 -2 $28
++ $26 testnum[$28] $29
+= testnum[i] $29 
+use fi  
++ 0 i $30
+- $30 1 $31
+push $31  
+call fi  
+GOTO label_7  
+label label_6  
++ 0 i $32
++ $32 +1 $33
++ 0 testnum[$33] $34
++ 0 i $35
+- $35 -2 $36
++ $34 testnum[$36] $37
+= testnum[i] $37 
+return  fi 
+label label_7  
+return  fi 
+function void main 
+var int a 
+var int theSum 
+var int i 
+var char f 
+scanf char f 
+scanf int a 
+use init  
+call init  
+use sum4  
+use abs  
+use times  
+push 2  
+push -2  
+call times  
++ 0 RET $39
+push $39  
+call abs  
++ 0 RET $40
+use abs  
+push -1  
+call abs  
++ 0 RET $42
+use abs  
+push -3  
+call abs  
++ 0 RET $44
+use abs  
+push 22  
+call abs  
++ 0 RET $45
+push $40  
+push $42  
+push $44  
+push $45  
+call sum4  
++ 0 RET $46
+printf  int $46
+printf  char '\n'
+= testnum[9] 1 
+= testnum[8] 2 
+use fi  
+push 7  
+call fi  
++ 0 testnum[8] $50
++ 0 testnum[$50] $51
+printf 0 int $51
+printf  char '\n'
++ 0 testnum[1] $52
+printf 1 int $52
+printf  char '\n'
++ 0 testnum[5] $53
++ 0 testnum[$53] $54
++ $54 testnum[9] $55
++ 0 testnum[$55] $56
+printf 2 int $56
+printf  char '\n'
++ 0 testnum[0] $57
+printf 3 int $57
+printf  char '\n'
+= theSum 0 
++ 0 a $58
+cmp $58 > 10
+BZ label_8  
+= i 0 
+label label_10  
++ 0 theSum $59
++ $59 i $60
+= theSum $60 
++ 0 i $61
++ $61 1 $62
+= i $62 
++ 0 i $63
+cmp $63 < a
+BNZ label_10  
+GOTO label_9  
+label label_8  
++ 0 f $64
++ $64 0 $65
+cmp $65 == 43
+BZ label_11  
+= i 0 
+label label_13  
++ 0 i $68
++ 0 a $69
++ $69 3 $70
+cmp $68 < $70
+BZ label_14  
++ 0 theSum $71
++ $71 i $72
+= theSum $72 
++ 0 i $73
++ $73 3 $74
+= i $74 
+GOTO label_13  
+label label_14  
+GOTO label_12  
+label label_11  
+= i 0 
+label label_15  
++ 0 i $75
++ 0 a $76
++ $76 3 $77
+cmp $75 < $77
+BZ label_16  
++ 0 theSum $78
+- $78 i $79
+= theSum $79 
++ 0 i $80
++ $80 3 $81
+= i $81 
+GOTO label_15  
+label label_16  
+label label_12  
+label label_9  
+use show  
+call show  
+printf  int theSum
+printf  char '\n'
+return  main 
+end   
+
+
++ 0 testnum[$25] $26
++ 0 i $27
+- $27 -2 $28
++ testnum[$25] testnum[$28] $29
+= testnum[i] $29 
+use fi  
++ 0 i $30
+- $30 1 $31
+push $31  
+call fi  
+GOTO label_7  
+label label_6  
++ 0 i $32
++ $32 +1 $33
++ 0 testnum[$33] $34
++ 0 i $35
+- $35 -2 $36
++ $34 testnum[$36] $37
+= testnum[i] $37 
+return  fi 
+label label_7  
+return  fi 
+function void main 
+var int a 
+var int theSum 
+var int i 
+var char f 
+scanf char f 
+scanf int a 
+use init  
+call init  
+use sum4  
+use abs  
+use times  
+push 2  
+push -2  
+call times  
++ 0 RET $39
+push $39  
+call abs  
++ 0 RET $40
+use abs  
+push -1  
+call abs  
++ 0 RET $42
+use abs  
+push -3  
+call abs  
++ 0 RET $44
+use abs  
+push 22  
+call abs  
++ 0 RET $45
+push $40  
+push $42  
+push $44  
+push $45  
+call sum4  
++ 0 RET $46
+printf  int $46
+printf  char '\n'
+= testnum[9] 1 
+= testnum[8] 2 
+use fi  
+push 7  
+call fi  
++ 0 testnum[8] $50
++ 0 testnum[$50] $51
+printf 0 int $51
+printf  char '\n'
++ 0 testnum[1] $52
+printf 1 int $52
+printf  char '\n'
++ 0 testnum[5] $53
++ 0 testnum[$53] $54
++ $54 testnum[9] $55
++ 0 testnum[$55] $56
+printf 2 int $56
+printf  char '\n'
++ 0 testnum[0] $57
+printf 3 int $57
+printf  char '\n'
+= theSum 0 
++ 0 a $58
+cmp $58 > 10
+BZ label_8  
+= i 0 
+label label_10  
++ 0 theSum $59
++ $59 i $60
+= theSum $60 
++ 0 i $61
++ $61 1 $62
+= i $62 
++ 0 i $63
+cmp $63 < a
+BNZ label_10  
+GOTO label_9  
+label label_8  
++ 0 f $64
++ $64 0 $65
+cmp $65 == 43
+BZ label_11  
+= i 0 
+label label_13  
++ 0 i $68
++ 0 a $69
++ $69 3 $70
+cmp $68 < $70
+BZ label_14  
++ 0 theSum $71
++ $71 i $72
+= theSum $72 
++ 0 i $73
++ $73 3 $74
+= i $74 
+GOTO label_13  
+label label_14  
+GOTO label_12  
+label label_11  
+= i 0 
+label label_15  
++ 0 i $75
++ 0 a $76
++ $76 3 $77
+cmp $75 < $77
+BZ label_16  
++ 0 theSum $78
+- $78 i $79
+= theSum $79 
++ 0 i $80
++ $80 3 $81
+= i $81 
+GOTO label_15  
+label label_16  
+label label_12  
+label label_9  
+use show  
+call show  
+printf  int theSum
+printf  char '\n'
+return  main 
+end   
+
+
++ 0 i $27
+- i -2 $28
++ testnum[$25] testnum[$28] $29
+= testnum[i] $29 
+use fi  
++ 0 i $30
+- $30 1 $31
+push $31  
+call fi  
+GOTO label_7  
+label label_6  
++ 0 i $32
++ $32 +1 $33
++ 0 testnum[$33] $34
++ 0 i $35
+- $35 -2 $36
++ $34 testnum[$36] $37
+= testnum[i] $37 
+return  fi 
+label label_7  
+return  fi 
+function void main 
+var int a 
+var int theSum 
+var int i 
+var char f 
+scanf char f 
+scanf int a 
+use init  
+call init  
+use sum4  
+use abs  
+use times  
+push 2  
+push -2  
+call times  
++ 0 RET $39
+push $39  
+call abs  
++ 0 RET $40
+use abs  
+push -1  
+call abs  
++ 0 RET $42
+use abs  
+push -3  
+call abs  
++ 0 RET $44
+use abs  
+push 22  
+call abs  
++ 0 RET $45
+push $40  
+push $42  
+push $44  
+push $45  
+call sum4  
++ 0 RET $46
+printf  int $46
+printf  char '\n'
+= testnum[9] 1 
+= testnum[8] 2 
+use fi  
+push 7  
+call fi  
++ 0 testnum[8] $50
++ 0 testnum[$50] $51
+printf 0 int $51
+printf  char '\n'
++ 0 testnum[1] $52
+printf 1 int $52
+printf  char '\n'
++ 0 testnum[5] $53
++ 0 testnum[$53] $54
++ $54 testnum[9] $55
++ 0 testnum[$55] $56
+printf 2 int $56
+printf  char '\n'
++ 0 testnum[0] $57
+printf 3 int $57
+printf  char '\n'
+= theSum 0 
++ 0 a $58
+cmp $58 > 10
+BZ label_8  
+= i 0 
+label label_10  
++ 0 theSum $59
++ $59 i $60
+= theSum $60 
++ 0 i $61
++ $61 1 $62
+= i $62 
++ 0 i $63
+cmp $63 < a
+BNZ label_10  
+GOTO label_9  
+label label_8  
++ 0 f $64
++ $64 0 $65
+cmp $65 == 43
+BZ label_11  
+= i 0 
+label label_13  
++ 0 i $68
++ 0 a $69
++ $69 3 $70
+cmp $68 < $70
+BZ label_14  
++ 0 theSum $71
++ $71 i $72
+= theSum $72 
++ 0 i $73
++ $73 3 $74
+= i $74 
+GOTO label_13  
+label label_14  
+GOTO label_12  
+label label_11  
+= i 0 
+label label_15  
++ 0 i $75
++ 0 a $76
++ $76 3 $77
+cmp $75 < $77
+BZ label_16  
++ 0 theSum $78
+- $78 i $79
+= theSum $79 
++ 0 i $80
++ $80 3 $81
+= i $81 
+GOTO label_15  
+label label_16  
+label label_12  
+label label_9  
+use show  
+call show  
+printf  int theSum
+printf  char '\n'
+return  main 
+end   
+
+
++ 0 i $30
+- i 1 $31
+push $31  
+call fi  
+GOTO label_7  
+label label_6  
++ 0 i $32
++ $32 +1 $33
++ 0 testnum[$33] $34
++ 0 i $35
+- $35 -2 $36
++ $34 testnum[$36] $37
+= testnum[i] $37 
+return  fi 
+label label_7  
+return  fi 
+function void main 
+var int a 
+var int theSum 
+var int i 
+var char f 
+scanf char f 
+scanf int a 
+use init  
+call init  
+use sum4  
+use abs  
+use times  
+push 2  
+push -2  
+call times  
++ 0 RET $39
+push $39  
+call abs  
++ 0 RET $40
+use abs  
+push -1  
+call abs  
++ 0 RET $42
+use abs  
+push -3  
+call abs  
++ 0 RET $44
+use abs  
+push 22  
+call abs  
++ 0 RET $45
+push $40  
+push $42  
+push $44  
+push $45  
+call sum4  
++ 0 RET $46
+printf  int $46
+printf  char '\n'
+= testnum[9] 1 
+= testnum[8] 2 
+use fi  
+push 7  
+call fi  
++ 0 testnum[8] $50
++ 0 testnum[$50] $51
+printf 0 int $51
+printf  char '\n'
++ 0 testnum[1] $52
+printf 1 int $52
+printf  char '\n'
++ 0 testnum[5] $53
++ 0 testnum[$53] $54
++ $54 testnum[9] $55
++ 0 testnum[$55] $56
+printf 2 int $56
+printf  char '\n'
++ 0 testnum[0] $57
+printf 3 int $57
+printf  char '\n'
+= theSum 0 
++ 0 a $58
+cmp $58 > 10
+BZ label_8  
+= i 0 
+label label_10  
++ 0 theSum $59
++ $59 i $60
+= theSum $60 
++ 0 i $61
++ $61 1 $62
+= i $62 
++ 0 i $63
+cmp $63 < a
+BNZ label_10  
+GOTO label_9  
+label label_8  
++ 0 f $64
++ $64 0 $65
+cmp $65 == 43
+BZ label_11  
+= i 0 
+label label_13  
++ 0 i $68
++ 0 a $69
++ $69 3 $70
+cmp $68 < $70
+BZ label_14  
++ 0 theSum $71
++ $71 i $72
+= theSum $72 
++ 0 i $73
++ $73 3 $74
+= i $74 
+GOTO label_13  
+label label_14  
+GOTO label_12  
+label label_11  
+= i 0 
+label label_15  
++ 0 i $75
++ 0 a $76
++ $76 3 $77
+cmp $75 < $77
+BZ label_16  
++ 0 theSum $78
+- $78 i $79
+= theSum $79 
++ 0 i $80
++ $80 3 $81
+= i $81 
+GOTO label_15  
+label label_16  
+label label_12  
+label label_9  
+use show  
+call show  
+printf  int theSum
+printf  char '\n'
+return  main 
+end   
+
+
++ 0 i $32
++ i +1 $33
++ 0 testnum[$33] $34
++ 0 i $35
+- $35 -2 $36
++ $34 testnum[$36] $37
+= testnum[i] $37 
+return  fi 
+label label_7  
+return  fi 
+function void main 
+var int a 
+var int theSum 
+var int i 
+var char f 
+scanf char f 
+scanf int a 
+use init  
+call init  
+use sum4  
+use abs  
+use times  
+push 2  
+push -2  
+call times  
++ 0 RET $39
+push $39  
+call abs  
++ 0 RET $40
+use abs  
+push -1  
+call abs  
++ 0 RET $42
+use abs  
+push -3  
+call abs  
++ 0 RET $44
+use abs  
+push 22  
+call abs  
++ 0 RET $45
+push $40  
+push $42  
+push $44  
+push $45  
+call sum4  
++ 0 RET $46
+printf  int $46
+printf  char '\n'
+= testnum[9] 1 
+= testnum[8] 2 
+use fi  
+push 7  
+call fi  
++ 0 testnum[8] $50
++ 0 testnum[$50] $51
+printf 0 int $51
+printf  char '\n'
++ 0 testnum[1] $52
+printf 1 int $52
+printf  char '\n'
++ 0 testnum[5] $53
++ 0 testnum[$53] $54
++ $54 testnum[9] $55
++ 0 testnum[$55] $56
+printf 2 int $56
+printf  char '\n'
++ 0 testnum[0] $57
+printf 3 int $57
+printf  char '\n'
+= theSum 0 
++ 0 a $58
+cmp $58 > 10
+BZ label_8  
+= i 0 
+label label_10  
++ 0 theSum $59
++ $59 i $60
+= theSum $60 
++ 0 i $61
++ $61 1 $62
+= i $62 
++ 0 i $63
+cmp $63 < a
+BNZ label_10  
+GOTO label_9  
+label label_8  
++ 0 f $64
++ $64 0 $65
+cmp $65 == 43
+BZ label_11  
+= i 0 
+label label_13  
++ 0 i $68
++ 0 a $69
++ $69 3 $70
+cmp $68 < $70
+BZ label_14  
++ 0 theSum $71
++ $71 i $72
+= theSum $72 
++ 0 i $73
++ $73 3 $74
+= i $74 
+GOTO label_13  
+label label_14  
+GOTO label_12  
+label label_11  
+= i 0 
+label label_15  
++ 0 i $75
++ 0 a $76
++ $76 3 $77
+cmp $75 < $77
+BZ label_16  
++ 0 theSum $78
+- $78 i $79
+= theSum $79 
++ 0 i $80
++ $80 3 $81
+= i $81 
+GOTO label_15  
+label label_16  
+label label_12  
+label label_9  
+use show  
+call show  
+printf  int theSum
+printf  char '\n'
+return  main 
+end   
+
+
++ 0 testnum[$33] $34
++ 0 i $35
+- $35 -2 $36
++ testnum[$33] testnum[$36] $37
+= testnum[i] $37 
+return  fi 
+label label_7  
+return  fi 
+function void main 
+var int a 
+var int theSum 
+var int i 
+var char f 
+scanf char f 
+scanf int a 
+use init  
+call init  
+use sum4  
+use abs  
+use times  
+push 2  
+push -2  
+call times  
++ 0 RET $39
+push $39  
+call abs  
++ 0 RET $40
+use abs  
+push -1  
+call abs  
++ 0 RET $42
+use abs  
+push -3  
+call abs  
++ 0 RET $44
+use abs  
+push 22  
+call abs  
++ 0 RET $45
+push $40  
+push $42  
+push $44  
+push $45  
+call sum4  
++ 0 RET $46
+printf  int $46
+printf  char '\n'
+= testnum[9] 1 
+= testnum[8] 2 
+use fi  
+push 7  
+call fi  
++ 0 testnum[8] $50
++ 0 testnum[$50] $51
+printf 0 int $51
+printf  char '\n'
++ 0 testnum[1] $52
+printf 1 int $52
+printf  char '\n'
++ 0 testnum[5] $53
++ 0 testnum[$53] $54
++ $54 testnum[9] $55
++ 0 testnum[$55] $56
+printf 2 int $56
+printf  char '\n'
++ 0 testnum[0] $57
+printf 3 int $57
+printf  char '\n'
+= theSum 0 
++ 0 a $58
+cmp $58 > 10
+BZ label_8  
+= i 0 
+label label_10  
++ 0 theSum $59
++ $59 i $60
+= theSum $60 
++ 0 i $61
++ $61 1 $62
+= i $62 
++ 0 i $63
+cmp $63 < a
+BNZ label_10  
+GOTO label_9  
+label label_8  
++ 0 f $64
++ $64 0 $65
+cmp $65 == 43
+BZ label_11  
+= i 0 
+label label_13  
++ 0 i $68
++ 0 a $69
++ $69 3 $70
+cmp $68 < $70
+BZ label_14  
++ 0 theSum $71
++ $71 i $72
+= theSum $72 
++ 0 i $73
++ $73 3 $74
+= i $74 
+GOTO label_13  
+label label_14  
+GOTO label_12  
+label label_11  
+= i 0 
+label label_15  
++ 0 i $75
++ 0 a $76
++ $76 3 $77
+cmp $75 < $77
+BZ label_16  
++ 0 theSum $78
+- $78 i $79
+= theSum $79 
++ 0 i $80
++ $80 3 $81
+= i $81 
+GOTO label_15  
+label label_16  
+label label_12  
+label label_9  
+use show  
+call show  
+printf  int theSum
+printf  char '\n'
+return  main 
+end   
+
+
++ 0 i $35
+- i -2 $36
++ testnum[$33] testnum[$36] $37
+= testnum[i] $37 
+return  fi 
+label label_7  
+return  fi 
+function void main 
+var int a 
+var int theSum 
+var int i 
+var char f 
+scanf char f 
+scanf int a 
+use init  
+call init  
+use sum4  
+use abs  
+use times  
+push 2  
+push -2  
+call times  
++ 0 RET $39
+push $39  
+call abs  
++ 0 RET $40
+use abs  
+push -1  
+call abs  
++ 0 RET $42
+use abs  
+push -3  
+call abs  
++ 0 RET $44
+use abs  
+push 22  
+call abs  
++ 0 RET $45
+push $40  
+push $42  
+push $44  
+push $45  
+call sum4  
++ 0 RET $46
+printf  int $46
+printf  char '\n'
+= testnum[9] 1 
+= testnum[8] 2 
+use fi  
+push 7  
+call fi  
++ 0 testnum[8] $50
++ 0 testnum[$50] $51
+printf 0 int $51
+printf  char '\n'
++ 0 testnum[1] $52
+printf 1 int $52
+printf  char '\n'
++ 0 testnum[5] $53
++ 0 testnum[$53] $54
++ $54 testnum[9] $55
++ 0 testnum[$55] $56
+printf 2 int $56
+printf  char '\n'
++ 0 testnum[0] $57
+printf 3 int $57
+printf  char '\n'
+= theSum 0 
++ 0 a $58
+cmp $58 > 10
+BZ label_8  
+= i 0 
+label label_10  
++ 0 theSum $59
++ $59 i $60
+= theSum $60 
++ 0 i $61
++ $61 1 $62
+= i $62 
++ 0 i $63
+cmp $63 < a
+BNZ label_10  
+GOTO label_9  
+label label_8  
++ 0 f $64
++ $64 0 $65
+cmp $65 == 43
+BZ label_11  
+= i 0 
+label label_13  
++ 0 i $68
++ 0 a $69
++ $69 3 $70
+cmp $68 < $70
+BZ label_14  
++ 0 theSum $71
++ $71 i $72
+= theSum $72 
++ 0 i $73
++ $73 3 $74
+= i $74 
+GOTO label_13  
+label label_14  
+GOTO label_12  
+label label_11  
+= i 0 
+label label_15  
++ 0 i $75
++ 0 a $76
++ $76 3 $77
+cmp $75 < $77
+BZ label_16  
++ 0 theSum $78
+- $78 i $79
+= theSum $79 
++ 0 i $80
++ $80 3 $81
+= i $81 
+GOTO label_15  
+label label_16  
+label label_12  
+label label_9  
+use show  
+call show  
+printf  int theSum
+printf  char '\n'
+return  main 
+end   
+
+
++ 0 testnum[8] $50
++ 0 testnum[testnum[8]] $51
+printf 0 int $51
+printf  char '\n'
++ 0 testnum[1] $52
+printf 1 int $52
+printf  char '\n'
++ 0 testnum[5] $53
++ 0 testnum[$53] $54
++ $54 testnum[9] $55
++ 0 testnum[$55] $56
+printf 2 int $56
+printf  char '\n'
++ 0 testnum[0] $57
+printf 3 int $57
+printf  char '\n'
+= theSum 0 
++ 0 a $58
+cmp $58 > 10
+BZ label_8  
+= i 0 
+label label_10  
++ 0 theSum $59
++ $59 i $60
+= theSum $60 
++ 0 i $61
++ $61 1 $62
+= i $62 
++ 0 i $63
+cmp $63 < a
+BNZ label_10  
+GOTO label_9  
+label label_8  
++ 0 f $64
++ $64 0 $65
+cmp $65 == 43
+BZ label_11  
+= i 0 
+label label_13  
++ 0 i $68
++ 0 a $69
++ $69 3 $70
+cmp $68 < $70
+BZ label_14  
++ 0 theSum $71
++ $71 i $72
+= theSum $72 
++ 0 i $73
++ $73 3 $74
+= i $74 
+GOTO label_13  
+label label_14  
+GOTO label_12  
+label label_11  
+= i 0 
+label label_15  
++ 0 i $75
++ 0 a $76
++ $76 3 $77
+cmp $75 < $77
+BZ label_16  
++ 0 theSum $78
+- $78 i $79
+= theSum $79 
++ 0 i $80
++ $80 3 $81
+= i $81 
+GOTO label_15  
+label label_16  
+label label_12  
+label label_9  
+use show  
+call show  
+printf  int theSum
+printf  char '\n'
+return  main 
+end   
+
+
++ 0 testnum[testnum[8]] $51
+printf 0 int testnum[testnum[8]]
+printf  char '\n'
++ 0 testnum[1] $52
+printf 1 int $52
+printf  char '\n'
++ 0 testnum[5] $53
++ 0 testnum[$53] $54
++ $54 testnum[9] $55
++ 0 testnum[$55] $56
+printf 2 int $56
+printf  char '\n'
++ 0 testnum[0] $57
+printf 3 int $57
+printf  char '\n'
+= theSum 0 
++ 0 a $58
+cmp $58 > 10
+BZ label_8  
+= i 0 
+label label_10  
++ 0 theSum $59
++ $59 i $60
+= theSum $60 
++ 0 i $61
++ $61 1 $62
+= i $62 
++ 0 i $63
+cmp $63 < a
+BNZ label_10  
+GOTO label_9  
+label label_8  
++ 0 f $64
++ $64 0 $65
+cmp $65 == 43
+BZ label_11  
+= i 0 
+label label_13  
++ 0 i $68
++ 0 a $69
++ $69 3 $70
+cmp $68 < $70
+BZ label_14  
++ 0 theSum $71
++ $71 i $72
+= theSum $72 
++ 0 i $73
++ $73 3 $74
+= i $74 
+GOTO label_13  
+label label_14  
+GOTO label_12  
+label label_11  
+= i 0 
+label label_15  
++ 0 i $75
++ 0 a $76
++ $76 3 $77
+cmp $75 < $77
+BZ label_16  
++ 0 theSum $78
+- $78 i $79
+= theSum $79 
++ 0 i $80
++ $80 3 $81
+= i $81 
+GOTO label_15  
+label label_16  
+label label_12  
+label label_9  
+use show  
+call show  
+printf  int theSum
+printf  char '\n'
+return  main 
+end   
+
+
++ 0 testnum[1] $52
+printf 1 int testnum[1]
+printf  char '\n'
++ 0 testnum[5] $53
++ 0 testnum[$53] $54
++ $54 testnum[9] $55
++ 0 testnum[$55] $56
+printf 2 int $56
+printf  char '\n'
++ 0 testnum[0] $57
+printf 3 int $57
+printf  char '\n'
+= theSum 0 
++ 0 a $58
+cmp $58 > 10
+BZ label_8  
+= i 0 
+label label_10  
++ 0 theSum $59
++ $59 i $60
+= theSum $60 
++ 0 i $61
++ $61 1 $62
+= i $62 
++ 0 i $63
+cmp $63 < a
+BNZ label_10  
+GOTO label_9  
+label label_8  
++ 0 f $64
++ $64 0 $65
+cmp $65 == 43
+BZ label_11  
+= i 0 
+label label_13  
++ 0 i $68
++ 0 a $69
++ $69 3 $70
+cmp $68 < $70
+BZ label_14  
++ 0 theSum $71
++ $71 i $72
+= theSum $72 
++ 0 i $73
++ $73 3 $74
+= i $74 
+GOTO label_13  
+label label_14  
+GOTO label_12  
+label label_11  
+= i 0 
+label label_15  
++ 0 i $75
++ 0 a $76
++ $76 3 $77
+cmp $75 < $77
+BZ label_16  
++ 0 theSum $78
+- $78 i $79
+= theSum $79 
++ 0 i $80
++ $80 3 $81
+= i $81 
+GOTO label_15  
+label label_16  
+label label_12  
+label label_9  
+use show  
+call show  
+printf  int theSum
+printf  char '\n'
+return  main 
+end   
+
+
++ 0 testnum[5] $53
++ 0 testnum[testnum[5]] $54
++ $54 testnum[9] $55
++ 0 testnum[$55] $56
+printf 2 int $56
+printf  char '\n'
++ 0 testnum[0] $57
+printf 3 int $57
+printf  char '\n'
+= theSum 0 
++ 0 a $58
+cmp $58 > 10
+BZ label_8  
+= i 0 
+label label_10  
++ 0 theSum $59
++ $59 i $60
+= theSum $60 
++ 0 i $61
++ $61 1 $62
+= i $62 
++ 0 i $63
+cmp $63 < a
+BNZ label_10  
+GOTO label_9  
+label label_8  
++ 0 f $64
++ $64 0 $65
+cmp $65 == 43
+BZ label_11  
+= i 0 
+label label_13  
++ 0 i $68
++ 0 a $69
++ $69 3 $70
+cmp $68 < $70
+BZ label_14  
++ 0 theSum $71
++ $71 i $72
+= theSum $72 
++ 0 i $73
++ $73 3 $74
+= i $74 
+GOTO label_13  
+label label_14  
+GOTO label_12  
+label label_11  
+= i 0 
+label label_15  
++ 0 i $75
++ 0 a $76
++ $76 3 $77
+cmp $75 < $77
+BZ label_16  
++ 0 theSum $78
+- $78 i $79
+= theSum $79 
++ 0 i $80
++ $80 3 $81
+= i $81 
+GOTO label_15  
+label label_16  
+label label_12  
+label label_9  
+use show  
+call show  
+printf  int theSum
+printf  char '\n'
+return  main 
+end   
+
+
++ 0 testnum[testnum[5]] $54
++ testnum[testnum[5]] testnum[9] $55
++ 0 testnum[$55] $56
+printf 2 int $56
+printf  char '\n'
++ 0 testnum[0] $57
+printf 3 int $57
+printf  char '\n'
+= theSum 0 
++ 0 a $58
+cmp $58 > 10
+BZ label_8  
+= i 0 
+label label_10  
++ 0 theSum $59
++ $59 i $60
+= theSum $60 
++ 0 i $61
++ $61 1 $62
+= i $62 
++ 0 i $63
+cmp $63 < a
+BNZ label_10  
+GOTO label_9  
+label label_8  
++ 0 f $64
++ $64 0 $65
+cmp $65 == 43
+BZ label_11  
+= i 0 
+label label_13  
++ 0 i $68
++ 0 a $69
++ $69 3 $70
+cmp $68 < $70
+BZ label_14  
++ 0 theSum $71
++ $71 i $72
+= theSum $72 
++ 0 i $73
++ $73 3 $74
+= i $74 
+GOTO label_13  
+label label_14  
+GOTO label_12  
+label label_11  
+= i 0 
+label label_15  
++ 0 i $75
++ 0 a $76
++ $76 3 $77
+cmp $75 < $77
+BZ label_16  
++ 0 theSum $78
+- $78 i $79
+= theSum $79 
++ 0 i $80
++ $80 3 $81
+= i $81 
+GOTO label_15  
+label label_16  
+label label_12  
+label label_9  
+use show  
+call show  
+printf  int theSum
+printf  char '\n'
+return  main 
+end   
+
+
++ 0 testnum[$55] $56
+printf 2 int testnum[$55]
+printf  char '\n'
++ 0 testnum[0] $57
+printf 3 int $57
+printf  char '\n'
+= theSum 0 
++ 0 a $58
+cmp $58 > 10
+BZ label_8  
+= i 0 
+label label_10  
++ 0 theSum $59
++ $59 i $60
+= theSum $60 
++ 0 i $61
++ $61 1 $62
+= i $62 
++ 0 i $63
+cmp $63 < a
+BNZ label_10  
+GOTO label_9  
+label label_8  
++ 0 f $64
++ $64 0 $65
+cmp $65 == 43
+BZ label_11  
+= i 0 
+label label_13  
++ 0 i $68
++ 0 a $69
++ $69 3 $70
+cmp $68 < $70
+BZ label_14  
++ 0 theSum $71
++ $71 i $72
+= theSum $72 
++ 0 i $73
++ $73 3 $74
+= i $74 
+GOTO label_13  
+label label_14  
+GOTO label_12  
+label label_11  
+= i 0 
+label label_15  
++ 0 i $75
++ 0 a $76
++ $76 3 $77
+cmp $75 < $77
+BZ label_16  
++ 0 theSum $78
+- $78 i $79
+= theSum $79 
++ 0 i $80
++ $80 3 $81
+= i $81 
+GOTO label_15  
+label label_16  
+label label_12  
+label label_9  
+use show  
+call show  
+printf  int theSum
+printf  char '\n'
+return  main 
+end   
+
+
++ 0 testnum[0] $57
+printf 3 int testnum[0]
+printf  char '\n'
+= theSum 0 
++ 0 a $58
+cmp $58 > 10
+BZ label_8  
+= i 0 
+label label_10  
++ 0 theSum $59
++ $59 i $60
+= theSum $60 
++ 0 i $61
++ $61 1 $62
+= i $62 
++ 0 i $63
+cmp $63 < a
+BNZ label_10  
+GOTO label_9  
+label label_8  
++ 0 f $64
++ $64 0 $65
+cmp $65 == 43
+BZ label_11  
+= i 0 
+label label_13  
++ 0 i $68
++ 0 a $69
++ $69 3 $70
+cmp $68 < $70
+BZ label_14  
++ 0 theSum $71
++ $71 i $72
+= theSum $72 
++ 0 i $73
++ $73 3 $74
+= i $74 
+GOTO label_13  
+label label_14  
+GOTO label_12  
+label label_11  
+= i 0 
+label label_15  
++ 0 i $75
++ 0 a $76
++ $76 3 $77
+cmp $75 < $77
+BZ label_16  
++ 0 theSum $78
+- $78 i $79
+= theSum $79 
++ 0 i $80
++ $80 3 $81
+= i $81 
+GOTO label_15  
+label label_16  
+label label_12  
+label label_9  
+use show  
+call show  
+printf  int theSum
+printf  char '\n'
+return  main 
+end   
+
+
++ 0 a $58
+cmp a > 10
+BZ label_8  
+= i 0 
+label label_10  
++ 0 theSum $59
++ $59 i $60
+= theSum $60 
++ 0 i $61
++ $61 1 $62
+= i $62 
++ 0 i $63
+cmp $63 < a
+BNZ label_10  
+GOTO label_9  
+label label_8  
++ 0 f $64
++ $64 0 $65
+cmp $65 == 43
+BZ label_11  
+= i 0 
+label label_13  
++ 0 i $68
++ 0 a $69
++ $69 3 $70
+cmp $68 < $70
+BZ label_14  
++ 0 theSum $71
++ $71 i $72
+= theSum $72 
++ 0 i $73
++ $73 3 $74
+= i $74 
+GOTO label_13  
+label label_14  
+GOTO label_12  
+label label_11  
+= i 0 
+label label_15  
++ 0 i $75
++ 0 a $76
++ $76 3 $77
+cmp $75 < $77
+BZ label_16  
++ 0 theSum $78
+- $78 i $79
+= theSum $79 
++ 0 i $80
++ $80 3 $81
+= i $81 
+GOTO label_15  
+label label_16  
+label label_12  
+label label_9  
+use show  
+call show  
+printf  int theSum
+printf  char '\n'
+return  main 
+end   
+
+
++ 0 theSum $59
++ theSum i $60
+= theSum $60 
++ 0 i $61
++ $61 1 $62
+= i $62 
++ 0 i $63
+cmp $63 < a
+BNZ label_10  
+GOTO label_9  
+label label_8  
++ 0 f $64
++ $64 0 $65
+cmp $65 == 43
+BZ label_11  
+= i 0 
+label label_13  
++ 0 i $68
++ 0 a $69
++ $69 3 $70
+cmp $68 < $70
+BZ label_14  
++ 0 theSum $71
++ $71 i $72
+= theSum $72 
++ 0 i $73
++ $73 3 $74
+= i $74 
+GOTO label_13  
+label label_14  
+GOTO label_12  
+label label_11  
+= i 0 
+label label_15  
++ 0 i $75
++ 0 a $76
++ $76 3 $77
+cmp $75 < $77
+BZ label_16  
++ 0 theSum $78
+- $78 i $79
+= theSum $79 
++ 0 i $80
++ $80 3 $81
+= i $81 
+GOTO label_15  
+label label_16  
+label label_12  
+label label_9  
+use show  
+call show  
+printf  int theSum
+printf  char '\n'
+return  main 
+end   
+
+
++ 0 i $61
++ i 1 $62
+= i $62 
++ 0 i $63
+cmp $63 < a
+BNZ label_10  
+GOTO label_9  
+label label_8  
++ 0 f $64
++ $64 0 $65
+cmp $65 == 43
+BZ label_11  
+= i 0 
+label label_13  
++ 0 i $68
++ 0 a $69
++ $69 3 $70
+cmp $68 < $70
+BZ label_14  
++ 0 theSum $71
++ $71 i $72
+= theSum $72 
++ 0 i $73
++ $73 3 $74
+= i $74 
+GOTO label_13  
+label label_14  
+GOTO label_12  
+label label_11  
+= i 0 
+label label_15  
++ 0 i $75
++ 0 a $76
++ $76 3 $77
+cmp $75 < $77
+BZ label_16  
++ 0 theSum $78
+- $78 i $79
+= theSum $79 
++ 0 i $80
++ $80 3 $81
+= i $81 
+GOTO label_15  
+label label_16  
+label label_12  
+label label_9  
+use show  
+call show  
+printf  int theSum
+printf  char '\n'
+return  main 
+end   
+
+
++ 0 i $63
+cmp i < a
+BNZ label_10  
+GOTO label_9  
+label label_8  
++ 0 f $64
++ $64 0 $65
+cmp $65 == 43
+BZ label_11  
+= i 0 
+label label_13  
++ 0 i $68
++ 0 a $69
++ $69 3 $70
+cmp $68 < $70
+BZ label_14  
++ 0 theSum $71
++ $71 i $72
+= theSum $72 
++ 0 i $73
++ $73 3 $74
+= i $74 
+GOTO label_13  
+label label_14  
+GOTO label_12  
+label label_11  
+= i 0 
+label label_15  
++ 0 i $75
++ 0 a $76
++ $76 3 $77
+cmp $75 < $77
+BZ label_16  
++ 0 theSum $78
+- $78 i $79
+= theSum $79 
++ 0 i $80
++ $80 3 $81
+= i $81 
+GOTO label_15  
+label label_16  
+label label_12  
+label label_9  
+use show  
+call show  
+printf  int theSum
+printf  char '\n'
+return  main 
+end   
+
+
++ 0 f $64
++ f 0 $65
+cmp $65 == 43
+BZ label_11  
+= i 0 
+label label_13  
++ 0 i $68
++ 0 a $69
++ $69 3 $70
+cmp $68 < $70
+BZ label_14  
++ 0 theSum $71
++ $71 i $72
+= theSum $72 
++ 0 i $73
++ $73 3 $74
+= i $74 
+GOTO label_13  
+label label_14  
+GOTO label_12  
+label label_11  
+= i 0 
+label label_15  
++ 0 i $75
++ 0 a $76
++ $76 3 $77
+cmp $75 < $77
+BZ label_16  
++ 0 theSum $78
+- $78 i $79
+= theSum $79 
++ 0 i $80
++ $80 3 $81
+= i $81 
+GOTO label_15  
+label label_16  
+label label_12  
+label label_9  
+use show  
+call show  
+printf  int theSum
+printf  char '\n'
+return  main 
+end   
+
+
++ 0 i $68
++ 0 a $69
++ $69 3 $70
+cmp i < $70
+BZ label_14  
++ 0 theSum $71
++ $71 i $72
+= theSum $72 
++ 0 i $73
++ $73 3 $74
+= i $74 
+GOTO label_13  
+label label_14  
+GOTO label_12  
+label label_11  
+= i 0 
+label label_15  
++ 0 i $75
++ 0 a $76
++ $76 3 $77
+cmp $75 < $77
+BZ label_16  
++ 0 theSum $78
+- $78 i $79
+= theSum $79 
++ 0 i $80
++ $80 3 $81
+= i $81 
+GOTO label_15  
+label label_16  
+label label_12  
+label label_9  
+use show  
+call show  
+printf  int theSum
+printf  char '\n'
+return  main 
+end   
+
+
++ 0 a $69
++ a 3 $70
+cmp i < $70
+BZ label_14  
++ 0 theSum $71
++ $71 i $72
+= theSum $72 
++ 0 i $73
++ $73 3 $74
+= i $74 
+GOTO label_13  
+label label_14  
+GOTO label_12  
+label label_11  
+= i 0 
+label label_15  
++ 0 i $75
++ 0 a $76
++ $76 3 $77
+cmp $75 < $77
+BZ label_16  
++ 0 theSum $78
+- $78 i $79
+= theSum $79 
++ 0 i $80
++ $80 3 $81
+= i $81 
+GOTO label_15  
+label label_16  
+label label_12  
+label label_9  
+use show  
+call show  
+printf  int theSum
+printf  char '\n'
+return  main 
+end   
+
+
++ 0 theSum $71
++ theSum i $72
+= theSum $72 
++ 0 i $73
++ $73 3 $74
+= i $74 
+GOTO label_13  
+label label_14  
+GOTO label_12  
+label label_11  
+= i 0 
+label label_15  
++ 0 i $75
++ 0 a $76
++ $76 3 $77
+cmp $75 < $77
+BZ label_16  
++ 0 theSum $78
+- $78 i $79
+= theSum $79 
++ 0 i $80
++ $80 3 $81
+= i $81 
+GOTO label_15  
+label label_16  
+label label_12  
+label label_9  
+use show  
+call show  
+printf  int theSum
+printf  char '\n'
+return  main 
+end   
+
+
++ 0 i $73
++ i 3 $74
+= i $74 
+GOTO label_13  
+label label_14  
+GOTO label_12  
+label label_11  
+= i 0 
+label label_15  
++ 0 i $75
++ 0 a $76
++ $76 3 $77
+cmp $75 < $77
+BZ label_16  
++ 0 theSum $78
+- $78 i $79
+= theSum $79 
++ 0 i $80
++ $80 3 $81
+= i $81 
+GOTO label_15  
+label label_16  
+label label_12  
+label label_9  
+use show  
+call show  
+printf  int theSum
+printf  char '\n'
+return  main 
+end   
+
+
++ 0 i $75
++ 0 a $76
++ $76 3 $77
+cmp i < $77
+BZ label_16  
++ 0 theSum $78
+- $78 i $79
+= theSum $79 
++ 0 i $80
++ $80 3 $81
+= i $81 
+GOTO label_15  
+label label_16  
+label label_12  
+label label_9  
+use show  
+call show  
+printf  int theSum
+printf  char '\n'
+return  main 
+end   
+
+
++ 0 a $76
++ a 3 $77
+cmp i < $77
+BZ label_16  
++ 0 theSum $78
+- $78 i $79
+= theSum $79 
++ 0 i $80
++ $80 3 $81
+= i $81 
+GOTO label_15  
+label label_16  
+label label_12  
+label label_9  
+use show  
+call show  
+printf  int theSum
+printf  char '\n'
+return  main 
+end   
+
+
++ 0 theSum $78
+- theSum i $79
+= theSum $79 
++ 0 i $80
++ $80 3 $81
+= i $81 
+GOTO label_15  
+label label_16  
+label label_12  
+label label_9  
+use show  
+call show  
+printf  int theSum
+printf  char '\n'
+return  main 
+end   
+
+
++ 0 i $80
++ i 3 $81
+= i $81 
+GOTO label_15  
+label label_16  
+label label_12  
+label label_9  
+use show  
+call show  
+printf  int theSum
+printf  char '\n'
+return  main 
+end   
+
+

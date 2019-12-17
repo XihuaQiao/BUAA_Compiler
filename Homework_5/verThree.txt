@@ -1,27 +1,22 @@
 const int _GLOBAL_MAX_NUM 128 
 function int factorial  
 para int n  
-+ 0 n $0 
-cmp $0 <= 1 
+cmp n <= 1 
 BZ label_0   
 return 1 factorial  
 label label_0   
 use factorial   
-+ 0 n $1 
-- $1 1 $2 
+- n 1 $2 
 push $2   
 call factorial   
 * n RET $3 
-+ 0 $3 $4 
-return $4 factorial  
+return $3 factorial  
 function int mod  
 para int x  
 para int y  
-+ 0 x $5 
 / x y $6 
 * $6 y $7 
-- $5 $7 $8 
-= x $8  
+- x $7 x 
 return x mod  
 function void swap  
 para int x  
@@ -44,9 +39,8 @@ para int n
 para int j  
 para int a  
 * n 100 $9 
-+ 0 $9 $10 
 * j 10 $11 
-+ $10 $11 $12 
++ $9 $11 $12 
 + $12 a $13 
 return $13 full_num  
 function int flower_num  
@@ -55,10 +49,9 @@ para int j
 para int a  
 * n n $14 
 * $14 n $15 
-+ 0 $15 $16 
 * j j $17 
 * $17 j $18 
-+ $16 $18 $19 
++ $15 $18 $19 
 * a a $20 
 * $20 a $21 
 + $19 $21 $22 
@@ -81,22 +74,16 @@ var int b
 var int c  
 = j 2  
 label label_2   
-+ 0 j $23 
-cmp $23 < 128 
+cmp j < 128 
 BZ label_3   
-- 0 1 $24 
-= n $24  
+= n -1  
 = s j  
 = i 1  
 label label_4   
-+ 0 i $25 
-cmp $25 < j 
+cmp i < j 
 BZ label_5   
 / j i $26 
-+ 0 $26 $27 
-* $27 i $28 
-+ 0 $28 $29 
-= x1 $29  
+* $26 i x1 
 use mod   
 push j   
 push i   
@@ -104,14 +91,9 @@ call mod
 + 0 RET $30 
 cmp $30 == 0 
 BZ label_6   
-+ 0 n $31 
-+ $31 1 $32 
-= n $32  
-+ 0 s $33 
-- $33 i $34 
-= s $34  
-+ 0 n $35 
-cmp $35 >= 128 
++ n 1 n 
+- s i s 
+cmp n >= 128 
 BZ label_8   
 printf 4 int  
 printf  char '\n' 
@@ -123,19 +105,16 @@ label label_6
 + i 1 i 
 GOTO label_4   
 label label_5   
-+ 0 s $36 
-cmp $36 == 0 
+cmp s == 0 
 BZ label_10   
 printf 5 int j 
 printf  char '\n' 
 = i 0  
 label label_12   
-+ 0 i $37 
-cmp $37 <= n 
+cmp i <= n 
 BZ label_13   
 [] k i $38 
-+ 0 $38 $39 
-printf 6 int $39 
+printf 6 int $38 
 printf  char '\n' 
 + i 1 i 
 GOTO label_12   
@@ -153,28 +132,20 @@ printf  char '\n'
 = y 0  
 = i 100  
 label label_14   
-+ 0 i $40 
-+ 0 100 $41 
-+ $41 128 $42 
-cmp $40 < $42 
+cmp i < 228 
 BZ label_15   
-/ i 100 $43 
-+ 0 $43 $44 
-= n $44  
+/ i 100 n 
 use mod   
 / i 10 $45 
-+ 0 $45 $46 
-push $46   
+push $45   
 push 10   
 call mod   
-+ 0 RET $47 
-= j $47  
++ 0 RET j 
 use mod   
 push i   
 push 10   
 call mod   
-+ 0 RET $48 
-= a $48  
++ 0 RET a 
 use full_num   
 push n   
 push j   
@@ -190,21 +161,17 @@ call flower_num
 cmp $49 == $50 
 BZ label_16   
 []= y i k 
-+ 0 y $51 
-+ $51 1 $52 
-= y $52  
++ y 1 y 
 label label_16   
 + i 1 i 
 GOTO label_14   
 label label_15   
 = i 0  
 label label_18   
-+ 0 i $53 
-cmp $53 < y 
+cmp i < y 
 BZ label_19   
 [] k i $54 
-+ 0 $54 $55 
-printf 10 int $55 
+printf 10 int $54 
 printf  char '\n' 
 + i 1 i 
 GOTO label_18   
@@ -217,22 +184,15 @@ printf  char '\n'
 = leap 1  
 = m 2  
 label label_20   
-+ 0 m $56 
-cmp $56 <= 128 
+cmp m <= 128 
 BZ label_21   
-/ m 2 $57 
-+ 0 $57 $58 
-= k2 $58  
+/ m 2 k2 
 = i 2  
 label label_22   
-+ 0 i $59 
-cmp $59 <= k2 
+cmp i <= k2 
 BZ label_23   
 / m i $60 
-+ 0 $60 $61 
-* $61 i $62 
-+ 0 $62 $63 
-= x2 $63  
+* $60 i x2 
 use mod   
 push m   
 push i   
@@ -245,21 +205,14 @@ label label_24
 + i 1 i 
 GOTO label_22   
 label label_23   
-+ 0 leap $65 
-cmp $65 == 1 
+cmp leap == 1 
 BZ label_26   
 printf 13 int m 
 printf  char '\n' 
-+ 0 h $66 
-+ $66 1 $67 
-= h $67  
++ h 1 h 
 / h 10 $68 
-+ 0 $68 $69 
-* $69 10 $70 
-+ 0 $70 $71 
-= x2 $71  
-+ 0 x2 $72 
-cmp $72 == h 
+* $68 10 x2 
+cmp x2 == h 
 BZ label_28   
 printf 14 int  
 printf  char '\n' 
@@ -277,8 +230,7 @@ var int n
 use factorial   
 push 5   
 call factorial   
-+ 0 RET $73 
-= n $73  
++ 0 RET n 
 printf 16 int n 
 printf  char '\n' 
 use swap   

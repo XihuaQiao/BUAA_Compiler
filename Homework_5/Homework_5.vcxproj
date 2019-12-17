@@ -123,13 +123,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="DAG.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="mips.cpp" />
+    <ClCompile Include="Mips_2.cpp" />
     <ClCompile Include="optimizer.cpp" />
     <ClCompile Include="Source.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Class.h" />
+    <ClInclude Include="DAG.h" />
     <ClInclude Include="mips.h" />
     <ClInclude Include="Optimizer.h" />
     <ClInclude Include="Source.h" />

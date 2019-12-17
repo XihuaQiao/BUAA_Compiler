@@ -1,0 +1,69 @@
+:
+
+factorial:
+n $t5
+$2 $t4
+$3 $t4
+
+main:
+_complete_flower_num_0_$54 -1
+_complete_flower_num_0_$38 $s2
+_complete_flower_num_0_j -1
+n $t7
+_swap_6_x $t6
+_swap_6_y $t5
+_swap_6_temp $t4
+_complete_flower_num_0_i -1
+_complete_flower_num_0_s $s1
+_complete_flower_num_0_n -1
+_complete_flower_num_0_$26 $s0
+_complete_flower_num_0_x1 $t9
+_complete_flower_num_0__mod_0_x $t8
+_complete_flower_num_0__mod_0_y $t7
+_complete_flower_num_0__mod_0_$6 $t6
+_complete_flower_num_0__mod_0_$7 $t5
+_complete_flower_num_0_$30 $t4
+_complete_flower_num_0_y -1
+_complete_flower_num_0_$45 -1
+_complete_flower_num_0__mod_1_x -1
+_complete_flower_num_0__mod_1_y -1
+_complete_flower_num_0__mod_1_$6 -1
+_complete_flower_num_0__mod_1_$7 -1
+_complete_flower_num_0__mod_2_x -1
+_complete_flower_num_0__mod_2_y -1
+_complete_flower_num_0__mod_2_$6 -1
+_complete_flower_num_0__mod_2_$7 -1
+_complete_flower_num_0_a -1
+_complete_flower_num_0__full_num_3_n -1
+_complete_flower_num_0__full_num_3_j -1
+_complete_flower_num_0__full_num_3_a -1
+_complete_flower_num_0__full_num_3_$9 -1
+_complete_flower_num_0__full_num_3_$11 $a3
+_complete_flower_num_0__full_num_3_$12 $a2
+_complete_flower_num_0__full_num_3_$13 $s7
+_complete_flower_num_0_$49 $s6
+_complete_flower_num_0__flower_num_4_n $s5
+_complete_flower_num_0__flower_num_4_j $s4
+_complete_flower_num_0__flower_num_4_a $s3
+_complete_flower_num_0__flower_num_4_$14 $s2
+_complete_flower_num_0__flower_num_4_$15 $s1
+_complete_flower_num_0__flower_num_4_$17 $s0
+_complete_flower_num_0__flower_num_4_$18 $t9
+_complete_flower_num_0__flower_num_4_$19 $t8
+_complete_flower_num_0__flower_num_4_$20 $t7
+_complete_flower_num_0__flower_num_4_$21 $t6
+_complete_flower_num_0__flower_num_4_$22 $t5
+_complete_flower_num_0_$50 $t4
+_complete_flower_num_0_m $s4
+_complete_flower_num_0_h $s3
+_complete_flower_num_0_leap $s2
+_complete_flower_num_0_k2 $s1
+_complete_flower_num_0_$60 $s0
+_complete_flower_num_0_x2 $t9
+_complete_flower_num_0__mod_5_x $t8
+_complete_flower_num_0__mod_5_y $t7
+_complete_flower_num_0__mod_5_$6 $t6
+_complete_flower_num_0__mod_5_$7 $t5
+_complete_flower_num_0_$64 $t4
+_complete_flower_num_0_$68 $t4
+

@@ -1,7 +1,7 @@
 #include"Class.h"
 #include"Source.h"
 
-int nextMidcode();
+
 void mkGlobalOffset();
 void mkFuncOffset(Function func);
 void Add(string name1, string name2, string name3);
@@ -13,3 +13,5 @@ void swData(string name, string regName);
 bool isNum(string str);
 void basicOp();
 void controller();
+string getReg(int i);
+int nextMidCode();

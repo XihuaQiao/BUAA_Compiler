@@ -1,4 +1,4 @@
-﻿const int _begini = 0, _endi = +18, testfg = -6;
+const int _begini = 0, _endi = +18, testfg = -6;
 const char testemm = "buaa1606";
 void main(){
     int a, b, i, testvar;
@@ -7,3 +7,8 @@ void main(){
     a = i
     printf(a);
 }
+
+
+2 o
+5 b
+7 k

@@ -4,6 +4,7 @@
 #include"Optimizer.h"
 
 extern vector<MidCode> versionFive;
+extern vector<MidCode> midCode;
 extern Program program;
 extern Function globalFunc;
 extern map<int, string>num2Chars;
@@ -107,14 +108,28 @@ void mkFuncOffset(Function func)
 
 void Add(string name1, string name2, string name3)
 {
-	string str = "add " + name1 + ", " + name2 + ", " + name3;
-	orders.push_back(str);
+	if (isNum(name2)) {
+		string str = "add " + name1 + ", " + name3 + ", " + name2;
+		orders.push_back(str);
+	}
+	else {
+		string str = "add " + name1 + ", " + name2 + ", " + name3;
+		orders.push_back(str);
+	}
 }
 
 void Minus(string name1, string name2, string name3)
 {
-	string str = "sub " + name1 + ", " + name2 + ", " + name3;
-	orders.push_back(str);
+	if (isNum(name2)) {
+		string str = "sub " + name1 + ", " + name3 + ", " + name2;
+		orders.push_back(str);
+		str = "sub " + name1 + ", " + "$0" + ", " + name1;
+		orders.push_back(str);
+	}
+	else {
+		string str = "sub " + name1 + ", " + name2 + ", " + name3;
+		orders.push_back(str);
+	}
 }
 
 void Mult(string name1, string name2, string name3)		// name1 = name2 * name3
@@ -346,18 +361,18 @@ void basicOp()
 			x = mid.x[1];
 		}
 		if (mid.y == "RET") {
-			name2 = "$v0";
+			name3 = "$v0";
 		}
 		else {
 			if (curFunc.name2Reg.count(mid.y) > 0 && curFunc.name2Reg[mid.y] != -1) {
-				name2 = getReg(curFunc.name2Reg[mid.y]);
+				name3 = getReg(curFunc.name2Reg[mid.y]);
 			}
 			else {
 				lwData(mid.y, "$t0");
-				name2 = "$t0";
+				name3 = "$t0";
 			}
 		}
-		name3 = to_string(x);
+		name2 = to_string(x);
 	}
 	else if (isNum(mid.y) || mid.y[0] == '\'') {
 		if (isNum(mid.y)) {
@@ -424,7 +439,12 @@ void basicOp()
 		}
 		break;
 	case '*':
-		if (isNum(name3) || name3.size() == 1) {
+		if (isNum(name2)) {
+			str = "la $t1, " + name2;
+			orders.push_back(str);
+			name2 = "$t1";
+		} 
+		else if (isNum(name3)) {
 			str = "la $t1, " + name3;
 			orders.push_back(str);
 			name3 = "$t1";
@@ -437,7 +457,12 @@ void basicOp()
 		}
 		break;
 	case '/':
-		if (isNum(name3) || name3.size() == 1) {
+		if (isNum(name2)) {
+			str = "la $t1, " + name2;
+			orders.push_back(str);
+			name2 = "$1";
+		}
+		else if (isNum(name3)) {
 			str = "la $t1, " + name3;
 			orders.push_back(str);
 			name3 = "$t1";
@@ -463,12 +488,12 @@ void controller()
 	string str;
 	str = ".data";
 	orders.push_back(str);
+	mkGlobalOffset();
 	for (int i = 0; i < num2Chars.size(); i++) {
 		string chars = num2Chars[i];
 		str = "string_" + to_string(i) + ": .asciiz \"" + chars + "\"";
 		orders.push_back(str);
 	}
-	mkGlobalOffset();
 	str = ".text";
 	orders.push_back(str);
 	str = "j main";
@@ -544,7 +569,7 @@ void controller()
 			orders.push_back(str);
 
 			for (int i = 0; i < curFunc.factors.size(); i++) {
-				if (curFunc.name2Reg[curFunc.factors[i].name] != -1) {
+				if (curFunc.name2Reg.count(curFunc.factors[i].name)  > 0 && curFunc.name2Reg[curFunc.factors[i].name] != -1) {
 					str = "lw " + getReg(curFunc.name2Reg[curFunc.factors[i].name]) + ", " + to_string(name2position[curFunc.factors[i].name]) + "($sp)";
 					orders.push_back(str);
 				}

@@ -14,9 +14,9 @@ class singleWord
 public:
 	string content;
 	string name;
-	int raw_num;
-	bool noRSingle;
-	bool noRDouble;
+	int raw_num = 0;
+	bool noRSingle = false;
+	bool noRDouble = false;
 };
 
 class Unit
@@ -182,4 +182,4 @@ public:
 	}
 };
 
-#endif	_CLASS_H_
+#endif

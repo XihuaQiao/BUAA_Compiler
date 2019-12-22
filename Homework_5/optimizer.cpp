@@ -338,7 +338,7 @@ void constOpt() {
 			else {
 				newMidcodes.push_back(tmp);
 			}
-			if (tmp.op == "=" & tmp.x[0] == '$' && (isNum(tmp.y) || tmp.y[0] == '\'')) 
+			if ((tmp.x[0] == '$') && (tmp.op == "=") && (isNum(tmp.y) || (tmp.y[0] == '\'')))
 			{
 				for (int t = j + 1; t < curBlock.midCodes.size(); t++) {
 					curBlock.midCodes[t].setX(replaceSub(curBlock.midCodes[t].x, tmp.x, tmp.y));
@@ -356,7 +356,7 @@ void constOpt() {
 		}
 		for (int j = 0; j < newMidcodes.size(); j++) {
 			tmp = newMidcodes[j];
-			if (tmp.op == "=" & tmp.x[0] == '$' && (isNum(tmp.y) || tmp.y[0] == '\'')) {
+			if ((tmp.x[0] == '$') && (tmp.op == "=") && (isNum(tmp.y) || (tmp.y[0] == '\''))) {
 				continue;
 			}
 			else {
@@ -395,7 +395,6 @@ void outVersion() {
 				<< " " << versionOne[i].y << " " << versionOne[i].z << " " << endl;
 		}
 	}
-
 	vertwo.close();	
 	removeExtraAssign();
 
@@ -426,7 +425,6 @@ void outVersion() {
 
 	verfour.close();
 	removeExtraLabel();
-
 	verfive.open("verFive.txt", ios::out);
 	verfive.close();
 	verfive.open("verFive.txt", ios::app);
@@ -442,7 +440,6 @@ void outVersion() {
 	verfive.close();
 
 	releaseFunc();
-
 	removeExtraGoto();
 
 	verfive.open("verFive.txt", ios::out);
@@ -457,7 +454,6 @@ void outVersion() {
 	}
 
 	verfive.close();
-
 	createBlocks2();
 	distributeReg();
 }
@@ -990,20 +986,41 @@ void distributeReg() {
 		}
 
 		// build edges
-		for (int i = 0; i < nodes.size(); i++) {
-			for (int j = 0; j < nodes.size(); j++) {
-				if (i != j) {
-					for (int t = 0; t < nums.size(); t++) {
-						bool flag1 = (contain(num2Block[nums[t]].inVars, nodes[i].name) || contain(num2Block[nums[t]].defVars, nodes[i].name));
-						bool flag2 = (contain(num2Block[nums[t]].inVars, nodes[j].name) || contain(num2Block[nums[t]].defVars, nodes[j].name));
-						if (flag1 && flag2) {
-							nodes[i].nodes.insert(j);
-							nodes[j].nodes.insert(i);
-						}
+
+		set<string> groups;
+		for (int t = 0; t < nums.size(); t++) {
+			groups.clear();
+			for (int i = 0; i < num2Block[nums[t]].inVars.size(); i++) {
+				groups.insert(num2Block[nums[t]].inVars[i]);
+			}
+			for (int i = 0; i < num2Block[nums[t]].defVars.size(); i++) {
+				groups.insert(num2Block[nums[t]].defVars[i]);
+			}
+			for (int i = 0; i < nodes.size(); i++) if (groups.find(nodes[i].name) != groups.end()) {
+				for (int j = i + 1; j < nodes.size(); j++) {
+					if (groups.find(nodes[j].name) != groups.end()) {
+						nodes[i].nodes.insert(j);
+						nodes[j].nodes.insert(i);
 					}
 				}
 			}
 		}
+
+		//for (int i = 0; i < nodes.size(); i++) {
+		//	for (int j = i + 1; j < nodes.size(); j++) {
+		//		if (i != j) {
+		//			for (int t = 0; t < nums.size(); t++) {
+		//				bool flag1 = (contain(num2Block[nums[t]].inVars, nodes[i].name) || contain(num2Block[nums[t]].defVars, nodes[i].name));
+		//				bool flag2 = (contain(num2Block[nums[t]].inVars, nodes[j].name) || contain(num2Block[nums[t]].defVars, nodes[j].name));
+		//				if (flag1 && flag2) {
+		//					nodes[i].nodes.insert(j);
+		//					nodes[j].nodes.insert(i);	
+		//				}
+		//			}
+		//			cout << i << " " << j << endl;
+		//		}
+		//	}
+		//}
 
 		do {
 			do {
@@ -1254,21 +1271,6 @@ void releaseFunc() {
 		}
 		tempCode.clear();
 	} while (record != 0);
-
-	for (int i = 0; i < versionFive.size(); i++) {
-		if (versionFive[i].op == "function" && name2Able[versionFive[i].y]) {
-			while (versionFive[i + 1].op != "function") { i++; }
-		}
-		else {
-			tempCode.push_back(versionFive[i]);
-		}
-	}
-
-	versionFive.clear();
-
-	for (int i = 0; i < tempCode.size(); i++) {
-		versionFive.push_back(tempCode[i]);
-	}
 //	cout << "hello" << endl;
 }
 

@@ -55,22 +55,22 @@ public:
 	void initVars() {
 		vars.clear();
 		for (int i = 0; i < inVars.size(); i++) {
-			if (!contain(vars, inVars[i])) {
+			if (!contain(vars, inVars[i]) && inVars[i].substr(0, 8) != "_GLOBAL_") {
 				vars.push_back(inVars[i]);
 			}
 		}
 		for (int i = 0; i < outVars.size(); i++) {
-			if (!contain(vars, outVars[i])) {
+			if (!contain(vars, outVars[i]) && outVars[i].substr(0, 8) != "_GLOBAL_") {
 				vars.push_back(outVars[i]);
 			}
 		}
 		for (int i = 0; i < useVars.size(); i++) {
-			if (!contain(vars, useVars[i])) {
+			if (!contain(vars, useVars[i]) && useVars[i].substr(0, 8) != "_GLOBAL_") {
 				vars.push_back(useVars[i]);
 			}
 		}
 		for (int i = 0; i < defVars.size(); i++) {
-			if (!contain(vars, defVars[i])) {
+			if (!contain(vars, defVars[i]) && defVars[i].substr(0, 8) != "_GLOBAL_") {
 				vars.push_back(defVars[i]);
 			}
 		}

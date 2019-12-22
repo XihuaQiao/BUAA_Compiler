@@ -91,12 +91,14 @@ void isSpace() {
 
 void getWord()
 {
+
 	in = fopen("testfile.txt", "r");
 	char ch;
 	int i = 0;
 	isSpace();
 	while ((ch = fgetc(in)) != EOF) {
 		singleWord temp;
+
 		if (isLetter(ch)) {
 			i = 0;
 			temp.content += ch;
@@ -281,6 +283,7 @@ void getWord()
 				break;
 			}
 		}
+
 	}
 	fclose(in);
 }
@@ -289,7 +292,6 @@ int nextSym() {
 	now++;
 	if (now < words.size()) {
 		sym = words[now];
-		//		outfile << sym.name << " " << sym.content << endl;
 		return 1;
 	}
 	else {
@@ -312,7 +314,6 @@ int preRead() {
 
 int checkRepeat(Function& func, string name, int raw)
 {
-//	cout << name << endl;
 	if (program.name2Func.count(name) || func.name2Unit.count(name)) {
 		errorOutput(raw, 2);
 		return 0;
@@ -745,7 +746,7 @@ int isVarDes(Function& func)
 	string str3 = sym.content;
 	while ((str1 == "INTTK" || str1 == "CHARTK")
 		&& (str2 == "IDENFR")
-		&& (str3 == "," || str3 == ";" || str3 == "[")
+		//&& (str3 == "," || str3 == ";" || str3 == "[")
 		) {
 		now = now - 3;
 		isVarDef(func);
@@ -799,7 +800,7 @@ int isVarDef(Function& func)
 		midCode.push_back(temp);
 	}
 	else {
-		now--;
+		//now--;
 	}
 	while (preRead() && sym.content == ",") {
 		now--;

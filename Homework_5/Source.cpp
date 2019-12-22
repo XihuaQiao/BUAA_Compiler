@@ -746,6 +746,7 @@ int isVarDes(Function& func)
 	string str3 = sym.content;
 	while ((str1 == "INTTK" || str1 == "CHARTK")
 		&& (str2 == "IDENFR")
+		&& str3 != "("
 		//&& (str3 == "," || str3 == ";" || str3 == "[")
 		) {
 		now = now - 3;

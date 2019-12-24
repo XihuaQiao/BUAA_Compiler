@@ -1137,8 +1137,8 @@ int isCondition(Function& func)
 			errorOutput(sym.raw_num, 6);
 		}
 		midCode.push_back(temp);
-	}
-	else if (sym.content == ")") {
+	} 
+	else if (sym.content == ")" || sym.content == ";") {
 		now--;
 		temp.setY("!=");
 		temp.setZ("0");
@@ -1358,6 +1358,10 @@ int isPrintfSent(Function& func)
 	else {
 		temp.setX("");
 	}
+	if (temp.x != "") {
+		midCode.push_back(temp);
+	}
+	temp.x = "";
 	if (preRead() && sym.content == ",") {
 		now--;
 		nextSym();
@@ -1651,11 +1655,16 @@ int isFactor(Function& func, Factor& factor)
 	if (sym.name == "IDENFR") {
 		if (program.name2Func.count(sym.content))
 		{
-			Function temp = program.name2Func[sym.content];
-			factor.setType(temp.type);
+			Function tmp = program.name2Func[sym.content];
+			factor.setType(tmp.type);
 			now--;
 			isReturnFuncSent(func);
-			factor.setName("RET");
+			temp.setOp("=");
+			temp.setX(getVarName());
+			func.addVar(temp.x);
+			temp.setY("RET");
+			midCode.push_back(temp);
+			factor.setName(temp.x);
 		}
 		else {
 			now--;

@@ -162,7 +162,7 @@ public:
 	{
 		this->z = z;
 	}
-	void setOpt() 
+	void setOpt()
 	{
 		opt = false;
 	}
@@ -179,6 +179,32 @@ public:
 		x = "";
 		y = "";
 		z = "";
+	}
+};
+
+class DAGNode {
+public:
+	string mainName;
+	string name;
+	int leftSon = -1;
+	int rightSon = -1;
+	bool flag = false;
+
+	MidCode mid = MidCode();
+
+	string x;
+	string y;
+	string z;
+
+	DAGNode(string _name) {
+		name = _name;
+		mainName = _name;
+	}
+
+	DAGNode(MidCode _mid) {
+		name = _mid.op;
+		mainName = _mid.op;
+		mid = _mid;
 	}
 };
 

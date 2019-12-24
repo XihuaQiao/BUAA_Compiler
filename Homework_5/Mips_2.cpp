@@ -498,7 +498,9 @@ void controller()
 	orders.push_back(str);
 	str = "j main";
 	orders.push_back(str);
+	int x = 0;
 	while (nextMidCode()) {
+	//	cout << x++ << endl;
 		string str = mid.op;
 		if (str == "=") {			// ¸³ÖµÓï¾ä
 			if ((curFunc.name2Reg.count(mid.y) > 0 && curFunc.name2Reg[mid.y] != -1) 
@@ -810,6 +812,11 @@ void controller()
 			while (versionFive[j - 1].op == "push") {
 				j--;
 			}
+
+			//while (midCode[j - 1].op == "push") {
+			//	j--;
+			//}
+
 			set<int> regs;
 			map<string, int>::iterator iter1, iter2;
 			for (iter1 = curFunc.name2Reg.begin(); iter1 != curFunc.name2Reg.end(); iter1++) {
@@ -829,6 +836,7 @@ void controller()
 			for (; j < num; j++) {
 				pushNum++;
 				mid = versionFive[j];
+				//mid = midCode[j];
 				if (curFunc.name2Reg.count(mid.x) > 0 && curFunc.name2Reg[mid.x] != -1) {
 					str = "sw " + getReg(curFunc.name2Reg[mid.x]) + ", " + to_string(pushNum * -4 - 4) + "($sp)";
 					orders.push_back(str);
@@ -841,6 +849,7 @@ void controller()
 			}
 
 			mid = versionFive[num];
+			//mid = midCode[num];
 			str = "jal " + mid.x;
 			orders.push_back(str);
 			pushNum = 0;

@@ -1,6 +1,7 @@
 #pragma once
 #include "Class.h"
 #include "mips.h"
+#include "DAG.h"
 #include<set>
 
 class BasicBlock;
@@ -30,6 +31,8 @@ void releaseFunc();
 string replaceSub(string str, string old_str, string new_str);
 string newName(string head, string name);
 void removeExtraGoto();
+
+class BasicBlock;
 
 
 using namespace std;

@@ -1,4 +1,5 @@
 ﻿#include "Optimizer.h"
+#include "Class.h"
 using namespace std;
 
 #define K 16
@@ -354,13 +355,16 @@ void constOpt() {
 				}
 			}
 		}
+		/////////////////////////////////////
+		num2Block[i].midCodes.clear();
 		for (int j = 0; j < newMidcodes.size(); j++) {
 			tmp = newMidcodes[j];
 			if ((tmp.x[0] == '$') && (tmp.op == "=") && (isNum(tmp.y) || (tmp.y[0] == '\''))) {
 				continue;
 			}
 			else {
-				num2Block[i].addVerOne(tmp);
+				//num2Block[i].addVerOne(tmp);
+				num2Block[i].addMidCode(tmp);
 			}
 		}
 	}
@@ -373,11 +377,19 @@ void outVersion() {
 	verone.open("verOne.txt", ios::app);
 	versionOne.clear();
 
+	//for (int i = 0; i < num2Block.size(); i++) {
+	//	for (int j = 0; j < num2Block[i].verOne.size(); j++) {
+	//		versionOne.push_back(num2Block[i].verOne[j]);
+	//		verone << num2Block[i].verOne[j].op << " " << num2Block[i].verOne[j].x
+	//			<< " " << num2Block[i].verOne[j].y << " " << num2Block[i].verOne[j].z << " " << endl;
+	//	}
+	//}
+
 	for (int i = 0; i < num2Block.size(); i++) {
-		for (int j = 0; j < num2Block[i].verOne.size(); j++) {
-			versionOne.push_back(num2Block[i].verOne[j]);
-			verone << num2Block[i].verOne[j].op << " " << num2Block[i].verOne[j].x
-				<< " " << num2Block[i].verOne[j].y << " " << num2Block[i].verOne[j].z << " " << endl;
+		for (int j = 0; j < num2Block[i].midCodes.size(); j++) {
+			versionOne.push_back(num2Block[i].midCodes[j]);
+			verone << num2Block[i].midCodes[j].op << " " << num2Block[i].midCodes[j].x
+				<< " " << num2Block[i].midCodes[j].y << " " << num2Block[i].midCodes[j].z << " " << endl;
 		}
 	}
 
@@ -456,6 +468,38 @@ void outVersion() {
 	verfive.close();
 	createBlocks2();
 	distributeReg();
+
+	DAGActive();
+	constOpt();
+
+	versionFive.clear();
+
+	for (map<string, vector<int>>::iterator iter_1 = funcName2Nums.begin(); iter_1 != funcName2Nums.end(); iter_1++) {
+		for (int i = 0; i < iter_1->second.size(); i++) {
+			for (int j = 0; j < num2Block[iter_1->second[i]].midCodes.size(); j++) {
+				if (num2Block[iter_1->second[i]].midCodes[j].op != "") 
+					versionFive.push_back(num2Block[iter_1->second[i]].midCodes[j]);
+			}
+		}
+	}
+
+	ofstream versix;
+
+	connectBlock();
+	buildInAndOUt();
+	distributeReg();
+
+	versix.open("verSix.txt", ios::out);
+	versix.close();
+	versix.open("verSix.txt", ios::app);
+
+	for (int i = 0; i < versionFive.size(); i++) {
+		if (versionFive[i].opt) {
+			versix << versionFive[i].op << " " << versionFive[i].x
+				<< " " << versionFive[i].y << " " << versionFive[i].z << " " << endl;
+		}
+	}
+
 }
 
 void removeExtraGoto() {
@@ -503,68 +547,6 @@ void removeExtraGoto() {
 		}
 	} while (record != 0);
 }
-
-//void removeExtraGoto() {
-//	vector<MidCode> tempCode;
-//	int record = 0;
-//	do {
-//		record = 0;
-//		for (int i = 0; i < versionFive.size() - 1; i++) {
-////			if (versionFive[i].op == "GOTO" && versionFive[i + 1].op == "label"
-////				&& versionFive[i + 1].x == versionFive[i].x) {
-////				bool dele = true;
-////				for (int j = 0; j < versionFive.size(); j++) {
-////					if (versionFive[j].x == versionFive[i].x && j != i) {
-////						dele = false;
-////						break;
-////					}
-////				}
-////				if (dele) {
-////					record++;
-//////					cout << versionFive[i].op << " " << versionFive[i].x << " " << versionFive[i].y << versionFive[i].z << endl;
-////					i++;
-////				}
-////				else {
-////					tempCode.push_back(versionFive[i]);
-////				}
-////			}
-////			else 
-//			if (versionFive[i + 1].x.size() > 3 && versionFive[i + 1].x.substr(versionFive[i + 1].x.size() - 3, 3) == "RET" && versionFive[i + 1].op == "=") {
-//				if (versionFive[i].z == versionFive[i + 1].y) {
-//					versionFive[i].z = versionFive[i + 1].x;
-//					tempCode.push_back(versionFive[i]);
-////					cout << versionFive[i].op << " " << versionFive[i].x << " " << versionFive[i].y << versionFive[i].z << endl;
-//					i++;
-//					record++;
-//				}
-//				else {
-//					tempCode.push_back(versionFive[i]);
-//				}
-//			}
-//			else if (versionFive[i + 1].y.size() > 3 && versionFive[i + 1].y.substr(versionFive[i + 1].y.size() - 3, 3) == "RET" && versionFive[i + 1].op == "=") {
-//				if (versionFive[i + 1].y == versionFive[i].z) {
-//					versionFive[i].z = versionFive[i + 1].x;
-//					tempCode.push_back(versionFive[i]);
-////					cout << versionFive[i].op << " " << versionFive[i].x << " " << versionFive[i].y << versionFive[i].z << endl;
-//					i++;
-//					record++;
-//				}
-//				else {
-//					tempCode.push_back(versionFive[i]);
-//				}
-//			}
-//			else {
-//				tempCode.push_back(versionFive[i]);
-//			}
-//		}
-//		tempCode.push_back(versionFive[versionFive.size() - 1]);
-//		versionFive.clear();
-//		for (int i = 0; i < tempCode.size(); i++) {
-//			versionFive.push_back(tempCode[i]);
-//		}
-//		tempCode.clear();
-//	} while (record != 0);
-//}
 
 void removeExtraZero() {
 	MidCode temp;
@@ -781,7 +763,7 @@ void buildInAndOUt() {
 					defNames.push_back(temp.x);
 				}
 			}
-			else if (isOp(temp)) {
+			else if (isOp(temp) || temp.op == "[]" || temp.op == "[]=") {
 				if (!contain(defNames, temp.x) && !contain(useNames, temp.x)
 					&& !isNum(temp.x) && temp.x[0] != '\'' && temp.x != "RET") {
 					useNames.push_back(temp.x);
@@ -1255,9 +1237,9 @@ void releaseFunc() {
 			else if (temp.op == "push" || (temp.op == "use" && name2Able[temp.x])) {
 				continue;
 			}
-			else if (versionFive[i].op == "function" && versionFive[i].y[0] == '_') {
-				continue;
-			}
+			//else if (versionFive[i].op == "function" && versionFive[i].y[0] == '_') {
+			//	continue;
+			//}
 			else {
 				if (versionFive[i].op == "function") {
 					curFuncName = versionFive[i].y;

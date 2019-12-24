@@ -1,201 +1,220 @@
-//#pragma once
-//#include"Optimizer.h"
-//#include"DAG.h"
-//using namespace std;
-//extern vector<MidCode> versionFive;
-//vector<MidCode> versionSix;
-//
-//void updateCodes() {
-//	MidCode temp;
-//	for (int i = 0; i < versionFive.size(); i++) {
-//		temp.op = versionFive[i].op;
-//		if (versionFive[i].op == "=" && versionFive[i].x.back() == ']') {			// 改变四元式 a[i] = t -> []= i t a
-//			temp.op = "[]=";
-//			int j;
-//			for (j = 0; j < versionFive[i].x.size(); j++) {
-//				if (versionFive[i].x[j] == '[') {
-//					break;
-//				}
-//			}
-//			temp.x = versionFive[i].x.substr(j, versionFive[i].x.size() - j - 2);
-//			temp.y = versionFive[i].y;
-//			temp.z = versionFive[i].x.substr(0, j + 1);
-//		}
-//		else if (versionFive[i].op == "=" && versionFive[i].y.back() == ']') {
-//			temp.op == "[]";
-//			int j;
-//			for (j = 0; j < versionFive[i].y.size(); j++) {
-//				if (versionFive[i].y[j] == '[') {
-//					break;
-//				}
-//			}
-//			temp.x = versionFive[i].y.substr(0, j + 1);
-//			temp.y = versionFive[i].y.substr(j, versionFive[i].y.size() - j - 2);
-//			temp.z = versionFive[i].x;
-//		}
-//	}
-//}
-//
-//void getContent(string name) {
-//	for (int i = 0; i < name.size(); i++) {
-//		if (name[i] == '[') {
-//
-//		}
-//	}
-//}
-//
-//map<string, DAGNode> getNodes(vector<MidCode> codes) {
-//	vector<DAGNode> DAGMap;					// DAG图
-//	map<string, int> name2Index;		// 名字到结点的映射
-//	vector<MidCode> head;
-//	vector<MidCode> end;
-//
-//	for (int i = 0; i < codes.size(); i++) {
-//		if (codes[i].op != "printf" || !isOp(codes[i]) || codes[i].op == "push" || codes[i])
-//	}
-//
-//	for (int i = 0; i < codes.size(); i++) {
-//		MidCode temp = codes[i];
-//		DAGNode tempNode;
-//		if (temp.op == "printf") {
-//			if (!name2Index.count(temp.z)) {
-//				DAGMap.push_back(DAGNode(temp.z, DAGMap.size()));						// 在DAG图中加入temp.z
-//				name2Index.insert(make_pair(temp.z, DAGMap.size() - 1));		// 向节点表中加入temp.z
-//				if (!isNum(temp.z) && temp.z[0] != '\'') {
-//					DAGMap.back().signal = "#0#" + DAGMap.back().mainname;
-//				}
-//			}
-//			tempNode = DAGNode(temp.op, DAGMap.size());
-//			tempNode.setX(temp.x);
-//			tempNode.setY(temp.y);
-//			tempNode.leftSon = name2Index[temp.z];
-//			DAGMap.push_back(tempNode);
-//		}
-//		else if (temp.op == "+" || temp.op == "-" || temp.op == "*" || temp.op == "/") {
-//			if (!name2Index.count(temp.x)) {
-//				DAGMap.push_back(DAGNode(temp.x, DAGMap.size()));
-//				name2Index.insert(make_pair(temp.x, DAGMap.size() - 1));
-//				if (!isNum(temp.x) && temp.x[0] != '\'') {
-//					DAGMap.back().signal = "#0#" + DAGMap.back().mainname;
-//				}
-//			}
-//			if (!name2Index.count(temp.y)) {
-//				DAGMap.push_back(DAGNode(temp.y, DAGMap.size()));
-//				name2Index.insert(make_pair(temp.y, DAGMap.size() - 1));
-//				if (!isNum(temp.y) && temp.x[0] != '\'') {
-//					DAGMap.back().signal = "#0#" + DAGMap.back().mainname;
-//				}
-//			}
-//
-//			if (temp.z[temp.z.size() - 1] == ']') {
-//
-//			}
-//
-//			int k = -1;
-//			for (int j = 0; j < DAGMap.size(); j++) {
-//				if (DAGMap[j].signal == temp.op && DAGMap[j].leftSon == name2Index[temp.x] && DAGMap[j].rightSon == name2Index[temp.y]) {
-//					k = j;
-//					break;
-//				}
-//			}
-//			if (k == -1) {
-//				tempNode = DAGNode(temp.z, DAGMap.size());
-//				tempNode.leftSon = name2Index[temp.x];
-//				tempNode.rightSon = name2Index[temp.y];
-//				tempNode.signal = temp.op;
-//				k = tempNode.index;
-//				DAGMap.push_back(tempNode);
-//			}
-//			if (name2Index.count(temp.z)) {
-//				name2Index[temp.z] = k;
-//			}
-//			else {
-//				name2Index.insert(make_pair(temp.z, k));
-//			}
-//		}
-//		else if (temp.op == "=") {
-//			if (!name2Index.count(temp.y)) {
-//				DAGMap.push_back(DAGNode(temp.y, DAGMap.size()));
-//				name2Index.insert(make_pair(temp.y, DAGMap.size() - 1));
-//				if (!isNum(temp.y) && temp.y[0] != '\'') {
-//					DAGMap.back().signal = "#0#" + DAGMap.back().mainname;
-//				}
-//			}
-//			if (!name2Index.count(temp.x)) {
-//				name2Index.insert(make_pair(temp.x, name2Index[temp.y]));
-//			}
-//			else {
-//				name2Index[temp.x] = name2Index[temp.y];
-//			}
-//		}
-//		else if (temp.op == "scanf") {
-//			if (!name2Index.count(temp.y)) {
-//				DAGMap.push_back(DAGNode(temp.y, DAGMap.size()));
-//				name2Index.insert(make_pair(temp.y, DAGMap.size() - 1));
-//				if (!isNum(temp.y) && temp.y[0] != '\'') {
-//					DAGMap.back().signal = "#0#" + DAGMap.back().mainname;
-//				}
-//			}
-//			tempNode = DAGNode(temp.op, DAGMap.size());
-//			tempNode.setX(temp.x);
-//			tempNode.setY("");
-//			tempNode.leftSon = name2Index[temp.y];
-//			DAGMap.push_back(tempNode);
-//		}
-//		else if (temp.op == "cmp") {
-//			if (!name2Index.count(temp.x)) {
-//				DAGMap.push_back(DAGNode(temp.x, DAGMap.size()));
-//				name2Index.insert(make_pair(temp.x, DAGMap.size() - 1));
-//				if (!isNum(temp.x) && temp.x[0] != '\'') {
-//					DAGMap.back().signal = "#0#" + DAGMap.back().mainname;
-//				}
-//			}
-//			if (!name2Index.count(temp.y)) {
-//				DAGMap.push_back(DAGNode(temp.y, DAGMap.size()));
-//				name2Index.insert(make_pair(temp.y, DAGMap.size() - 1));
-//				if (!isNum(temp.y) && temp.y[0] != '\'') {
-//					DAGMap.back().signal = "#0#" + DAGMap.back().mainname;
-//				}
-//			}
-//			tempNode = DAGNode(temp.op, DAGMap.size());
-//			tempNode.setX("");
-//			tempNode.setY(temp.y);
-//			tempNode.leftSon = name2Index[temp.x];
-//			tempNode.rightSon = name2Index[temp.z];
-//			DAGMap.push_back(tempNode);
-//		}
-//		else if (temp.op == "push") {
-//			if (!name2Index.count(temp.x)) {
-//				DAGMap.push_back(DAGNode(temp.x, DAGMap.size()));
-//				name2Index.insert(make_pair(temp.x, DAGMap.size() - 1));
-//				if (!isNum(temp.x) && temp.x[0] != '\'') {
-//					DAGMap.back().signal = "#0#" + DAGMap.back().mainname;
-//				}
-//			}
-//			tempNode = DAGNode(temp.op, DAGMap.size());
-//			tempNode.leftSon = name2Index[temp.x];
-//			DAGMap.push_back(tempNode);
-//		}
-//		else if (temp.op == "return") {
-//			if (!name2Index.count(temp.x)) {
-//				DAGMap.push_back(DAGNode(temp.x, DAGMap.size()));
-//				name2Index.insert(make_pair(temp.x, DAGMap.size() - 1));
-//				if (!isNum(temp.x) && temp.x[0] != '\'') {
-//					DAGMap.back().signal = "#0#" + DAGMap.back().mainname;
-//				}
-//			}
-//			tempNode = DAGNode(temp.op, DAGMap.size());
-//			tempNode.leftSon = name2Index[temp.x];
-//			tempNode.setY(temp.y);
-//			DAGMap.push_back(tempNode);
-//		}
-//		else if (temp.op == "use" || temp.op == "BZ" || temp.op == "BNZ" || temp.op == "label" || temp.op == "GOTO") {
-//			tempNode = DAGNode(temp.op, DAGMap.size());
-//			tempNode.setX(temp.x);
-//		}
-//	}
-//}
-//
-//void buildDAG(vector<MidCode> codes) {
-//
-//}
+#include "DAG.h"
+#include "Optimizer.h"
+#include "Class.h"
+
+vector<int> flag;
+
+void DAGActive() {
+	extern map<int, BasicBlock> num2Block;
+	extern map<string, vector<int>> funcName2Nums;
+	map<int, BasicBlock> temp;
+	vector<int> nums;
+	for (map<string, vector<int>>::iterator iter_1 = funcName2Nums.begin(); iter_1 != funcName2Nums.end(); iter_1++) {
+		nums = iter_1->second;
+		for (int j = 0; j < nums.size(); j++) {
+			temp[nums[j]] = DAGOptimizer(num2Block[nums[j]]);
+		}
+	}
+
+	num2Block.clear();
+	for (map<int, BasicBlock>::iterator iter = temp.begin(); iter != temp.end(); iter++) {
+		num2Block[iter->first] = iter->second;
+	}
+}
+
+bool find(vector<string> strs, string str) {
+	for (int i = 0; i < strs.size(); i++) {
+		if (strs[i] == str) return true;
+	}
+	return false;
+}
+
+BasicBlock DAGOptimizer(BasicBlock block) {
+	map<string, int>name2Index;
+	vector<DAGNode> graph;
+
+	for (int i = 0; i < block.midCodes.size(); i++) {
+		MidCode temp = block.midCodes[i];
+		if (temp.op == "=") {										// 赋值，直接将x在节点表内指向y的index
+			if (name2Index.find(temp.y) == name2Index.end()) {
+				name2Index.insert(make_pair(temp.y, graph.size()));
+				graph.push_back(DAGNode(temp.y));
+			}
+			if (name2Index.find(temp.x) != name2Index.end()) {
+				if (graph[name2Index[temp.x]].mainName == temp.x) {
+					graph[name2Index[temp.x]].flag = true;
+				}
+			}
+			name2Index[temp.x] = name2Index[temp.y];
+			graph[name2Index[temp.x]].flag = false;
+		}
+		else if (isOp(temp) || temp.op == "[]" || temp.op == "[]=") {					// 运算，首先得到x 和 y的index，若不在节点表内则建点
+			if (name2Index.find(temp.x) == name2Index.end()) {
+				name2Index.insert(make_pair(temp.x, graph.size()));
+				graph.push_back(DAGNode(temp.x));
+			}
+			if (name2Index.find(temp.y) == name2Index.end()) {
+				name2Index.insert(make_pair(temp.y, graph.size()));
+				graph.push_back(DAGNode(temp.y));
+			}
+			int index = -1;
+			for (int j = 0; j < graph.size(); j++) {
+				if (graph[j].name == temp.op
+					&& graph[j].leftSon == name2Index[temp.x]
+					&& graph[j].rightSon == name2Index[temp.y]) {
+					index = j;
+					break;
+				}
+			}
+			if (name2Index.find(temp.z) != name2Index.end()) {
+				if (graph[name2Index[temp.z]].mainName == temp.z) {
+					graph[name2Index[temp.z]].flag = true;
+				}
+			}
+			if (index == -1 || graph[index].name == "[]=") {
+				graph.push_back(DAGNode(temp.op));
+				graph.back().mainName = temp.z;
+				graph.back().leftSon = name2Index[temp.x];
+				graph.back().rightSon = name2Index[temp.y];
+				name2Index[temp.z] = graph.size() - 1;
+			}
+			else {
+				if (graph[index].flag == true || find(block.outVars, temp.z)) {
+					graph[index].mainName = temp.z;
+					graph[index].flag = false;
+				}
+				name2Index[temp.z] = index;
+			}
+		}
+		else if (temp.op == "cmp") {
+			if (name2Index.find(temp.x) == name2Index.end()) {
+				name2Index.insert(make_pair(temp.x, graph.size()));
+				graph.push_back(DAGNode(temp.x));
+			}
+			if (name2Index.find(temp.z) == name2Index.end()) {
+				name2Index.insert(make_pair(temp.z, graph.size()));
+				graph.push_back(DAGNode(temp.z));
+			}
+			graph.push_back(DAGNode(temp));
+			graph.back().leftSon = name2Index[temp.x];
+			graph.back().rightSon = name2Index[temp.z];
+		}
+		else if (temp.op == "printf") {
+			if (name2Index.find(temp.z) == name2Index.end()) {
+				name2Index.insert(make_pair(temp.z, graph.size()));
+				graph.push_back(DAGNode(temp.z));
+			}
+			graph.push_back(DAGNode(temp.op));
+			graph.back().x = temp.x;
+			graph.back().y = temp.y;
+			graph.back().leftSon = name2Index[temp.z];
+		}
+		else if (temp.op == "push") {
+			if (name2Index.find(temp.x) == name2Index.end()) {
+				name2Index.insert(make_pair(temp.x, graph.size()));
+				graph.push_back(DAGNode(temp.x));
+			}
+			graph.push_back(DAGNode(temp.op));
+			graph.back().leftSon = name2Index[temp.x];
+		}
+		else if (temp.op == "scanf") {
+			if (name2Index.find(temp.y) != name2Index.end()) {
+				if (graph[name2Index[temp.y]].mainName == temp.y) {
+					graph[name2Index[temp.y]].flag = true;
+				}
+			}
+			graph.push_back(DAGNode(temp));
+			graph.back().mainName = temp.y;
+			name2Index[temp.y] = graph.size() - 1;
+		}
+		else if (temp.op == "return") {
+			if (name2Index.find(temp.x) == name2Index.end()) {
+				name2Index.insert(make_pair(temp.x, graph.size()));
+				graph.push_back(DAGNode(temp.x));
+			}
+			graph.push_back(DAGNode(temp));
+			graph.back().leftSon = name2Index[temp.x];
+		}
+		else {
+			graph.push_back(DAGNode(temp));
+		}
+	}
+
+	flag.clear();
+	for (int i = 0; i < graph.size(); i++) {
+		flag.push_back(0);
+	}
+
+	return exportCode(name2Index, graph, block);
+}
+
+void DFS(vector<DAGNode> graph, int num) {
+	if (num == -1) {
+		return;
+	}
+	else if (flag[num] == 1) {
+		return;
+	}
+	flag[num] = 1;
+	DFS(graph, graph[num].leftSon);
+	DFS(graph, graph[num].rightSon);
+	return;
+}
+
+BasicBlock exportCode(map<string, int> name2Index, vector<DAGNode> graph, BasicBlock tempBlock) {
+	BasicBlock block;
+	for (map<string, int>::iterator iter = name2Index.begin(); iter != name2Index.end(); iter++) {
+		if (find(tempBlock.outVars, iter->first) || iter->first.substr(0, 8) == "_GLOBAL_") {
+			DFS(graph, iter->second);
+		}
+	}
+
+	for (int i = 0; i < graph.size(); i++) {
+//		cout << i << endl;
+		DAGNode temp = graph[i];
+		//if (flag[i] == 0) {
+		//	continue;
+		//}
+		if (temp.name == "printf") {
+			block.addMidCode(MidCode(temp.name, temp.x, temp.y, graph[temp.leftSon].mainName));
+		}
+		else if (temp.name == "+" || temp.name == "-" || temp.name == "*"
+			|| temp.name == "/" || temp.name == "[]" || temp.name == "[]=") {
+			block.addMidCode(MidCode(temp.name, graph[temp.leftSon].mainName, graph[temp.rightSon].mainName, temp.mainName));
+		}
+		else if (temp.name == "push") {
+			block.addMidCode(MidCode(temp.name, graph[temp.leftSon].mainName, "", ""));
+		}
+		else if (temp.name == "return") {
+			block.addMidCode(MidCode(temp.name, graph[temp.leftSon].mainName, temp.mid.y, temp.mid.z));
+		}
+		else if (temp.name == "cmp") {
+			block.addMidCode(MidCode(temp.name, graph[temp.leftSon].mainName, temp.mid.y, graph[temp.rightSon].mainName));
+		}
+		else if (isNum(temp.name) || temp.name[0] == '\'') {
+
+		} 
+		else if (graph[i].leftSon == -1 && graph[i].rightSon == -1 && graph[i].mid.op == "") {
+
+		}
+		else {
+			block.addMidCode(temp.mid);
+		}
+
+		for (int j = 0; j < tempBlock.outVars.size(); j++) {
+			if (name2Index.find(tempBlock.outVars[j]) != name2Index.end() && name2Index[tempBlock.outVars[j]] == i
+				&& tempBlock.outVars[j] != temp.mainName) {
+				block.addMidCode(MidCode("=", tempBlock.outVars[j], temp.mainName, ""));
+			}
+		}
+		
+		for (map<string, int>::iterator iter = name2Index.begin(); iter != name2Index.end(); iter++) {
+			if (iter->first.substr(0, 8) == "_GLOBAL_" && i == iter->second && iter->first != temp.mainName) {
+				block.addMidCode(MidCode("=", iter->first, temp.mainName, ""));
+			}
+		}
+	}
+
+	return block;
+}
+
